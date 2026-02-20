@@ -1,0 +1,119 @@
+================================================================================
+🎌 JAPANESE MASTER ACADEMY v2.0 - CURSO COMPLETO DE JAPONÉS
+================================================================================
+
+¡Tu aplicación para aprender japonés de forma interactiva!
+
+================================================================================
+📋 CARACTERÍSTICAS PRINCIPALES:
+================================================================================
+
+✅ SISTEMA DE ESCRITURA JAPONESA:
+   • Hiragana completo (46 caracteres + combinaciones)
+   • Katakana completo (46 caracteres + combinaciones)
+   • Kanji por niveles JLPT (N5 a N1)
+
+✅ VOCABULARIO:
+   • 3000+ palabras organizadas por categorías
+   • Hiragana básico, Números, Colores, Tiempo, Familia
+   • Saludos, Comida, Animales, Cuerpo, Rutinas
+   • Lugares, Adjetivos, Naturaleza, Transporte
+   • Emociones, Escuela, Katakana, Cultura
+   • Negocios, Vocabulario avanzado, Maestría
+
+✅ GRAMÁTICA JAPONESA:
+   • Partículas (は、が、を、に、で、へ)
+   • Formas です/ます
+   • Forma て y sus usos
+   • Negación, Pasado, Condicionales
+   • Keigo (lenguaje honorífico)
+   • Formas causativa y pasiva
+
+✅ VERBOS JAPONESES:
+   • Ichidan (る verbos)
+   • Godan (う verbos)
+   • Verbos irregulares (する、来る)
+   • Conjugación forma て
+
+✅ FRASES Y EXPRESIONES:
+   • Saludos (おはようございます、こんにちは...)
+   • Expresiones cotidianas (いただきます、ただいま...)
+   • Frases de viaje
+   • Japonés de negocios
+   • Keigo (lenguaje formal de servicio)
+   • Slang y expresiones coloquiales
+
+✅ FUNCIONES INTERACTIVAS:
+   • 🎤 Práctica de Pronunciación con Score (0-100%)
+   • 📖 Palabras clickeables en lecturas (muestra traducción)
+   • 👤 Sistema de Usuarios (registro/login)
+   • 🎁 7 días de prueba gratis automática
+   • 💳 Pagos por Transferencia/USDT/BTC
+   • 📱 Contacto directo por WhatsApp
+
+✅ 12 JUEGOS EDUCATIVOS COMPLETOS:
+   1. Memory Match
+   2. Hangman (Ahorcado)
+   3. Word Scramble
+   4. Vocabulary Quiz
+   5. Spelling Bee
+   6. Translation Challenge
+   7. Listening Game
+   8. Match Words
+   9. Fill the Gap
+   10. Speed Round
+   11. Categories
+   12. Sentence Builder
+
+================================================================================
+📚 NIVELES JLPT:
+================================================================================
+
+🟢 N5 - Principiante (Hiragana, vocabulario básico, partículas básicas)
+🟢 N4 - Elemental (Katakana, gramática básica, forma て)
+🟡 N3 - Intermedio (Kanji básico, gramática intermedia, condicionales)
+🟠 N2 - Avanzado (Kanji intermedio, keigo, expresiones formales)
+🔴 N1 - Maestría (Kanji avanzado, literatura, expresiones complejas)
+
+================================================================================
+🚀 CÓMO USAR:
+================================================================================
+
+1. Sube todos los archivos a tu hosting (Netlify, Vercel, etc.)
+2. Configura Firebase con tus credenciales
+3. ¡Listo! Los usuarios pueden registrarse y empezar
+
+================================================================================
+📁 ARCHIVOS DEL PROYECTO:
+================================================================================
+
+index.html          → Aplicación principal
+admin-panel.html    → Panel de administración
+manifest.json       → Configuración PWA
+service-worker.js   → Cache y funcionamiento offline
+icon-*.png          → Iconos de la app (72px a 512px)
+icon.svg            → Icono fuente vectorial
+logo.svg            → Logo completo vectorial
+logo-*.png          → Variantes del logo
+
+================================================================================
+💰 MONETIZACIÓN:
+================================================================================
+
+• Plan Mensual: $4.99/mes
+• Plan Anual: $49.99/año
+• Trial gratuito de 7 días
+• Pagos por transferencia, USDT o BTC
+• Contacto por WhatsApp para pagos
+
+================================================================================
+⚙️ TECNOLOGÍAS:
+================================================================================
+
+• HTML5 + CSS3 + JavaScript (vanilla)
+• Firebase (Auth + Realtime Database)
+• PWA (Progressive Web App)
+• Web Speech API (pronunciación japonesa ja-JP)
+• Responsive Design
+
+================================================================================

@@ -1,0 +1,122 @@
+================================================================================
+🔥 CONFIGURACIÓN DE FIREBASE - Japanese Master Academy
+================================================================================
+
+PASO 1: CREAR PROYECTO EN FIREBASE
+================================================================================
+
+1. Ve a https://firebase.google.com
+2. Click "Comenzar" o "Get Started"
+3. Inicia sesión con tu Gmail
+4. Click "Crear un proyecto"
+5. Nombre: japanese-master-academy
+6. Google Analytics: NO (desactívalo)
+7. Click "Crear proyecto"
+
+PASO 2: ACTIVAR REALTIME DATABASE
+================================================================================
+
+1. En el menú izquierdo: "Compilación" → "Realtime Database"
+2. Click "Crear base de datos"
+3. Ubicación: United States (us-central1)
+4. Reglas de seguridad: "Comenzar en modo de prueba"
+5. Click "Habilitar"
+
+PASO 3: OBTENER CONFIGURACIÓN
+================================================================================
+
+1. Click en el ícono de engranaje ⚙️ → "Configuración del proyecto"
+2. Scroll abajo hasta "Tus apps"
+3. Click en el ícono </> (Web)
+4. Nombre: "Japanese Master Academy Web"
+5. NO marques Firebase Hosting
+6. Click "Registrar app"
+7. Verás un código como este:
+
+   const firebaseConfig = {
+     apiKey: "AIzaSyB.....................",
+     authDomain: "japanese-master-academy.firebaseapp.com",
+     databaseURL: "https://japanese-master-academy-default-rtdb.firebaseio.com",
+     projectId: "japanese-master-academy",
+     storageBucket: "japanese-master-academy.appspot.com",
+     messagingSenderId: "123456789",
+     appId: "1:123456789:web:abcdef123456"
+   };
+
+8. COPIA ESTOS VALORES
+
+PASO 4: ACTIVAR AUTENTICACIÓN (Para el Panel Admin)
+================================================================================
+
+1. Menú izquierdo: "Compilación" → "Authentication"
+2. Click "Comenzar"
+3. Pestaña "Método de acceso"
+4. Click "Correo electrónico/contraseña"
+5. Activar "Correo electrónico/contraseña"
+6. Click "Guardar"
+7. Pestaña "Users" → "Agregar usuario"
+8. Agrega TU email y una contraseña (este será tu acceso admin)
+
+PASO 5: CONFIGURAR REGLAS DE LA BASE DE DATOS
+================================================================================
+
+1. Ve a Realtime Database → pestaña "Reglas"
+2. Reemplaza todo con:
+
+{
+  "rules": {
+    "premium_users": {
+      ".read": true,
+      ".write": "auth != null"
+    }
+  }
+}
+
+3. Click "Publicar"
+
+PASO 6: ACTUALIZAR TUS ARCHIVOS
+================================================================================
+
+Abre index.html y busca "FIREBASE_CONFIG", reemplaza con tus valores:
+
+const FIREBASE_CONFIG = {
+  apiKey: "TU_API_KEY_AQUI",              // ← Pega tu apiKey
+  authDomain: "TU_PROYECTO.firebaseapp.com",
+  databaseURL: "https://TU_PROYECTO-default-rtdb.firebaseio.com",
+  projectId: "TU_PROYECTO",
+  storageBucket: "TU_PROYECTO.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "TU_APP_ID"
+};
+
+Haz lo mismo en admin-panel.html (busca firebaseConfig)
+
+También cambia ADMIN_EMAIL en admin-panel.html por TU email.
+
+PASO 7: SUBIR A GITHUB
+================================================================================
+
+1. Sube todos los archivos a tu repositorio
+2. Activa GitHub Pages
+3. Tu app estará en: https://tuusuario.github.io/japanese-master-academy
+4. Tu panel admin: https://tuusuario.github.io/japanese-master-academy/admin-panel.html
+
+================================================================================
+📱 CÓMO USAR EL SISTEMA
+================================================================================
+
+CUANDO ALGUIEN PAGA:
+
+1. Recibes comprobante por WhatsApp
+2. Te dicen su EMAIL registrado en la app
+3. Abres tu panel admin: tuapp.com/admin-panel.html
+4. Inicias sesión con tu email/contraseña
+5. Escribes el email del cliente
+6. Seleccionas el plan (mensual o anual)
+7. Click "Activar Premium"
+8. ¡LISTO! El cliente ya tiene acceso Premium
+
+NO HAY CÓDIGOS QUE COMPARTIR.
+El acceso está vinculado a su email.
+
+================================================================================
