@@ -1930,388 +1930,414 @@ const modalVerbs = [];
 
 // ============================================
 // GRAMMAR DATABASE
+
+// ============================================
+// GRAMÁTICA JAPONESA COMPLETA
 // ============================================
 const grammarDB = {
   basics: [
     {
-      title: 'Articles (a, an, the)',
-      titleEs: 'Artículos',
-      icon: '📰',
-      content: `
-        <h3>Artículos Indefinidos: A / AN</h3>
-        <p><strong>A</strong> se usa antes de consonantes: a book, a car, a dog</p>
-        <p><strong>AN</strong> se usa antes de vocales: an apple, an egg, an idea</p>
-        
-        <div class="example-box">
-          <div class="example-label">📝 Ejemplos:</div>
-          <div class="example-english">I have <strong>a</strong> cat.</div>
-          <div class="example-spanish">Tengo un gato.</div>
-          <div class="example-english">She is <strong>an</strong> engineer.</div>
-          <div class="example-spanish">Ella es ingeniera.</div>
-        </div>
-
-        <h3>Artículo Definido: THE</h3>
-        <p>Se usa cuando hablamos de algo específico o ya mencionado.</p>
-        
-        <div class="example-box">
-          <div class="example-english"><strong>The</strong> sun is bright.</div>
-          <div class="example-spanish">El sol está brillante.</div>
-          <div class="example-english">I saw <strong>the</strong> movie you recommended.</div>
-          <div class="example-spanish">Vi la película que recomendaste.</div>
-        </div>
-
-        <div class="warning-box">
-          <strong>⚠️ Cuidado:</strong> No usamos artículo con nombres propios, idiomas, deportes en general.
-          <br>• I speak English (No: I speak the English)
-          <br>• She plays tennis (No: She plays the tennis)
-        </div>
-      `
-    },
-    {
-      title: 'To Be (Present)',
-      titleEs: 'Verbo Ser/Estar',
+      title: 'Partículas は y が',
+      titleEs: 'Marcadores de tema y sujeto',
       icon: '🔤',
       content: `
-        <h3>Conjugación de TO BE en Presente</h3>
-        <div class="table-container">
-          <table>
-            <tr><th>Sujeto</th><th>Afirmativo</th><th>Negativo</th><th>Contracción</th></tr>
-            <tr><td>I</td><td>am</td><td>am not</td><td>I'm / I'm not</td></tr>
-            <tr><td>You</td><td>are</td><td>are not</td><td>You're / You aren't</td></tr>
-            <tr><td>He/She/It</td><td>is</td><td>is not</td><td>He's / He isn't</td></tr>
-            <tr><td>We</td><td>are</td><td>are not</td><td>We're / We aren't</td></tr>
-            <tr><td>They</td><td>are</td><td>are not</td><td>They're / They aren't</td></tr>
-          </table>
-        </div>
-
+        <h3>は (wa) - Marcador de Tema</h3>
+        <p>Indica el tema de la oración, "en cuanto a..."</p>
         <div class="example-box">
-          <div class="example-label">📝 Ejemplos:</div>
-          <div class="example-english">I <strong>am</strong> happy. / I<strong>'m</strong> happy.</div>
-          <div class="example-spanish">Estoy feliz.</div>
-          <div class="example-english">She <strong>is not</strong> at home. / She <strong>isn't</strong> at home.</div>
-          <div class="example-spanish">Ella no está en casa.</div>
-          <div class="example-english"><strong>Are</strong> you ready?</div>
-          <div class="example-spanish">¿Estás listo?</div>
+          <div class="example-english">私<strong>は</strong>学生です。</div>
+          <div class="example-spanish">Yo soy estudiante. (En cuanto a mí, soy estudiante)</div>
+          <div class="example-english">東京<strong>は</strong>大きいです。</div>
+          <div class="example-spanish">Tokio es grande.</div>
         </div>
-      `
-    },
-    {
-      title: 'Subject Pronouns',
-      titleEs: 'Pronombres Sujeto',
-      icon: '👤',
-      content: `
-        <h3>Los Pronombres Personales</h3>
-        <div class="table-container">
-          <table>
-            <tr><th>Inglés</th><th>Español</th><th>Ejemplo</th></tr>
-            <tr><td>I</td><td>Yo</td><td>I am a student.</td></tr>
-            <tr><td>You</td><td>Tú/Usted</td><td>You are smart.</td></tr>
-            <tr><td>He</td><td>Él</td><td>He is my brother.</td></tr>
-            <tr><td>She</td><td>Ella</td><td>She is beautiful.</td></tr>
-            <tr><td>It</td><td>Ello (cosas/animales)</td><td>It is a cat.</td></tr>
-            <tr><td>We</td><td>Nosotros</td><td>We are friends.</td></tr>
-            <tr><td>They</td><td>Ellos/Ellas</td><td>They are teachers.</td></tr>
-          </table>
-        </div>
-
-        <div class="rule-box">
-          <strong>💡 Regla:</strong> En inglés, el pronombre siempre es necesario. 
-          <br>• Español: "Soy estudiante" (sin pronombre)
-          <br>• Inglés: "<strong>I</strong> am a student" (con pronombre obligatorio)
-        </div>
-      `
-    },
-    {
-      title: 'Possessive Adjectives',
-      titleEs: 'Adjetivos Posesivos',
-      icon: '🏠',
-      content: `
-        <h3>Los Adjetivos Posesivos</h3>
-        <div class="table-container">
-          <table>
-            <tr><th>Pronombre</th><th>Adjetivo Posesivo</th><th>Español</th></tr>
-            <tr><td>I</td><td>my</td><td>mi/mis</td></tr>
-            <tr><td>You</td><td>your</td><td>tu/tus/su/sus</td></tr>
-            <tr><td>He</td><td>his</td><td>su/sus (de él)</td></tr>
-            <tr><td>She</td><td>her</td><td>su/sus (de ella)</td></tr>
-            <tr><td>It</td><td>its</td><td>su/sus (de ello)</td></tr>
-            <tr><td>We</td><td>our</td><td>nuestro/a/os/as</td></tr>
-            <tr><td>They</td><td>their</td><td>su/sus (de ellos)</td></tr>
-          </table>
-        </div>
-
+        <h3>が (ga) - Marcador de Sujeto</h3>
+        <p>Marca el sujeto gramatical, enfatiza quién/qué hace la acción.</p>
         <div class="example-box">
-          <div class="example-english">This is <strong>my</strong> book.</div>
-          <div class="example-spanish">Este es mi libro.</div>
-          <div class="example-english"><strong>Her</strong> name is Maria.</div>
-          <div class="example-spanish">Su nombre es María. (de ella)</div>
+          <div class="example-english">猫<strong>が</strong>います。</div>
+          <div class="example-spanish">Hay un gato. (El gato es el que está)</div>
+          <div class="example-english">誰<strong>が</strong>来ましたか？</div>
+          <div class="example-spanish">¿Quién vino?</div>
         </div>
-      `
-    },
-    {
-      title: 'Plural Nouns',
-      titleEs: 'Sustantivos Plurales',
-      icon: '📚',
-      content: `
-        <h3>Formación del Plural</h3>
-        
-        <div class="rule-box">
-          <strong>Regla General:</strong> Añadir -S
-          <br>book → books, car → cars, dog → dogs
-        </div>
-
-        <div class="rule-box">
-          <strong>Terminan en -s, -ss, -sh, -ch, -x, -o:</strong> Añadir -ES
-          <br>bus → buses, glass → glasses, box → boxes, tomato → tomatoes
-        </div>
-
-        <div class="rule-box">
-          <strong>Terminan en consonante + Y:</strong> Cambiar Y por -IES
-          <br>baby → babies, city → cities, story → stories
-        </div>
-
-        <div class="rule-box">
-          <strong>Terminan en -f o -fe:</strong> Cambiar por -VES
-          <br>leaf → leaves, wife → wives, knife → knives
-        </div>
-
         <div class="warning-box">
-          <strong>⚠️ Plurales Irregulares:</strong>
-          <br>• man → men
-          <br>• woman → women
-          <br>• child → children
-          <br>• tooth → teeth
-          <br>• foot → feet
-          <br>• mouse → mice
-          <br>• person → people
+          <strong>⚠️ Diferencia clave:</strong>
+          <br>• 私<strong>は</strong>猫が好きです = A mí me gustan los gatos (tema: yo)
+          <br>• 猫<strong>が</strong>好きです = Los gatos me gustan (enfatiza: gatos)
         </div>
       `
     },
     {
-      title: "There is / There are",
-      titleEs: "Hay",
-      icon: "📍",
+      title: 'Partículas を, に, で, へ',
+      titleEs: 'Marcadores de objeto, lugar y dirección',
+      icon: '📍',
       content: `
-        <h3>There is / There are = HAY</h3>
-
-        <div class="table-container">
-          <table>
-            <tr><th>Forma</th><th>Uso</th><th>Ejemplo</th></tr>
-            <tr><td>There is</td><td>Singular</td><td>There is a cat.</td></tr>
-            <tr><td>There are</td><td>Plural</td><td>There are three cats.</td></tr>
-            <tr><td>Is there...?</td><td>Pregunta singular</td><td>Is there a bathroom?</td></tr>
-            <tr><td>Are there...?</td><td>Pregunta plural</td><td>Are there any eggs?</td></tr>
-          </table>
-        </div>
-
+        <h3>を (wo) - Objeto Directo</h3>
         <div class="example-box">
-          <div class="example-english"><strong>There is</strong> a book on the table.</div>
-          <div class="example-spanish">Hay un libro en la mesa.</div>
-          <div class="example-english"><strong>There are</strong> many students in the class.</div>
-          <div class="example-spanish">Hay muchos estudiantes en la clase.</div>
-          <div class="example-english"><strong>There isn't</strong> any milk.</div>
-          <div class="example-spanish">No hay leche.</div>
+          <div class="example-english">パン<strong>を</strong>食べます。</div>
+          <div class="example-spanish">Como pan.</div>
+        </div>
+        <h3>に (ni) - Destino / Tiempo / Ubicación</h3>
+        <div class="example-box">
+          <div class="example-english">学校<strong>に</strong>行きます。</div>
+          <div class="example-spanish">Voy a la escuela.</div>
+          <div class="example-english">七時<strong>に</strong>起きます。</div>
+          <div class="example-spanish">Me levanto a las 7.</div>
+        </div>
+        <h3>で (de) - Lugar de acción / Medio</h3>
+        <div class="example-box">
+          <div class="example-english">図書館<strong>で</strong>勉強します。</div>
+          <div class="example-spanish">Estudio en la biblioteca.</div>
+          <div class="example-english">バス<strong>で</strong>行きます。</div>
+          <div class="example-spanish">Voy en autobús.</div>
+        </div>
+        <h3>へ (e) - Dirección</h3>
+        <div class="example-box">
+          <div class="example-english">日本<strong>へ</strong>行きたいです。</div>
+          <div class="example-spanish">Quiero ir a/hacia Japón.</div>
+        </div>
+      `
+    },
+    {
+      title: 'です / ます (Forma Cortés)',
+      titleEs: 'Verbos en forma educada',
+      icon: '🎩',
+      content: `
+        <h3>です (desu) - Ser/Estar</h3>
+        <div class="table-container"><table>
+          <tr><th>Forma</th><th>Japonés</th><th>Español</th></tr>
+          <tr><td>Presente +</td><td>学生<strong>です</strong></td><td>Soy estudiante</td></tr>
+          <tr><td>Presente -</td><td>学生<strong>じゃないです</strong></td><td>No soy estudiante</td></tr>
+          <tr><td>Pasado +</td><td>学生<strong>でした</strong></td><td>Era estudiante</td></tr>
+          <tr><td>Pasado -</td><td>学生<strong>じゃなかったです</strong></td><td>No era estudiante</td></tr>
+        </table></div>
+        <h3>ます (masu) - Verbos Corteses</h3>
+        <div class="table-container"><table>
+          <tr><th>Forma</th><th>Japonés</th><th>Español</th></tr>
+          <tr><td>Presente +</td><td>食べ<strong>ます</strong></td><td>Como</td></tr>
+          <tr><td>Presente -</td><td>食べ<strong>ません</strong></td><td>No como</td></tr>
+          <tr><td>Pasado +</td><td>食べ<strong>ました</strong></td><td>Comí</td></tr>
+          <tr><td>Pasado -</td><td>食べ<strong>ませんでした</strong></td><td>No comí</td></tr>
+        </table></div>
+      `
+    },
+    {
+      title: 'Preguntas con か y の',
+      titleEs: 'Cómo hacer preguntas',
+      icon: '❓',
+      content: `
+        <h3>か (ka) - Partícula de Pregunta</h3>
+        <p>Se agrega al final de la oración para convertirla en pregunta.</p>
+        <div class="example-box">
+          <div class="example-english">日本人です<strong>か</strong>？</div>
+          <div class="example-spanish">¿Es japonés?</div>
+          <div class="example-english">何を食べます<strong>か</strong>？</div>
+          <div class="example-spanish">¿Qué comes?</div>
+        </div>
+        <h3>Palabras interrogativas</h3>
+        <div class="table-container"><table>
+          <tr><th>Japonés</th><th>Romaji</th><th>Español</th></tr>
+          <tr><td>何 (なに/なん)</td><td>nani/nan</td><td>Qué</td></tr>
+          <tr><td>誰 (だれ)</td><td>dare</td><td>Quién</td></tr>
+          <tr><td>どこ</td><td>doko</td><td>Dónde</td></tr>
+          <tr><td>いつ</td><td>itsu</td><td>Cuándo</td></tr>
+          <tr><td>どうして/なぜ</td><td>doushite/naze</td><td>Por qué</td></tr>
+          <tr><td>いくら</td><td>ikura</td><td>Cuánto (precio)</td></tr>
+          <tr><td>どう</td><td>dou</td><td>Cómo</td></tr>
+        </table></div>
+      `
+    },
+    {
+      title: 'Conectores と, も, や',
+      titleEs: 'Conjunciones básicas',
+      icon: '🔗',
+      content: `
+        <h3>と (to) - "Y" (lista completa)</h3>
+        <div class="example-box">
+          <div class="example-english">犬<strong>と</strong>猫が好きです。</div>
+          <div class="example-spanish">Me gustan los perros y los gatos (solo esos).</div>
+        </div>
+        <h3>も (mo) - "También"</h3>
+        <div class="example-box">
+          <div class="example-english">私<strong>も</strong>学生です。</div>
+          <div class="example-spanish">Yo también soy estudiante.</div>
+        </div>
+        <h3>や (ya) - "Y" (lista incompleta)</h3>
+        <div class="example-box">
+          <div class="example-english">りんご<strong>や</strong>バナナを買いました。</div>
+          <div class="example-spanish">Compré manzanas, bananas (y otras cosas).</div>
+        </div>
+        <h3>けど / でも - "Pero"</h3>
+        <div class="example-box">
+          <div class="example-english">高い<strong>けど</strong>、おいしいです。</div>
+          <div class="example-spanish">Es caro, pero es delicioso.</div>
+          <div class="example-english"><strong>でも</strong>、楽しかったです。</div>
+          <div class="example-spanish">Pero fue divertido.</div>
+        </div>
+      `
+    },
+    {
+      title: 'Adjetivos い y な',
+      titleEs: 'Tipos de adjetivos japoneses',
+      icon: '🌟',
+      content: `
+        <h3>Adjetivos い (i-keiyoushi)</h3>
+        <div class="table-container"><table>
+          <tr><th>Forma</th><th>Ejemplo (大きい)</th><th>Español</th></tr>
+          <tr><td>Presente +</td><td>大き<strong>い</strong>です</td><td>Es grande</td></tr>
+          <tr><td>Presente -</td><td>大き<strong>くない</strong>です</td><td>No es grande</td></tr>
+          <tr><td>Pasado +</td><td>大き<strong>かった</strong>です</td><td>Era grande</td></tr>
+          <tr><td>Pasado -</td><td>大き<strong>くなかった</strong>です</td><td>No era grande</td></tr>
+        </table></div>
+        <h3>Adjetivos な (na-keiyoushi)</h3>
+        <div class="table-container"><table>
+          <tr><th>Forma</th><th>Ejemplo (静か)</th><th>Español</th></tr>
+          <tr><td>Presente +</td><td>静か<strong>です</strong></td><td>Es tranquilo</td></tr>
+          <tr><td>Presente -</td><td>静か<strong>じゃないです</strong></td><td>No es tranquilo</td></tr>
+          <tr><td>Pasado +</td><td>静か<strong>でした</strong></td><td>Era tranquilo</td></tr>
+          <tr><td>Pasado -</td><td>静か<strong>じゃなかったです</strong></td><td>No era tranquilo</td></tr>
+        </table></div>
+        <div class="warning-box">
+          <strong>⚠️ Nota:</strong> Los adjetivos な necesitan な antes de un sustantivo:
+          <br>• 静か<strong>な</strong>部屋 = habitación tranquila
+          <br>• きれい<strong>な</strong>花 = flor bonita
         </div>
       `
     }
   ],
   intermediate: [
     {
-      title: 'Present Perfect',
-      titleEs: 'Presente Perfecto',
-      icon: '✅',
+      title: 'Forma て (Te-form)',
+      titleEs: 'La forma más importante del japonés',
+      icon: '⚡',
       content: `
-        <h3>Have/Has + Past Participle</h3>
-        
-        <div class="table-container">
-          <table>
-            <tr><th>Sujeto</th><th>Afirmativo</th><th>Negativo</th></tr>
-            <tr><td>I/You/We/They</td><td>have + PP</td><td>haven't + PP</td></tr>
-            <tr><td>He/She/It</td><td>has + PP</td><td>hasn't + PP</td></tr>
-          </table>
-        </div>
-
+        <h3>Cómo formar la forma て</h3>
+        <p>La forma て es esencial para conectar acciones, pedir, dar permiso y más.</p>
+        <div class="table-container"><table>
+          <tr><th>Terminación</th><th>Diccionario</th><th>Forma て</th></tr>
+          <tr><td>る (ichidan)</td><td>食べる</td><td>食べ<strong>て</strong></td></tr>
+          <tr><td>う/つ/る (godan)</td><td>買う/待つ/帰る</td><td>買っ<strong>て</strong>/待っ<strong>て</strong>/帰っ<strong>て</strong></td></tr>
+          <tr><td>む/ぶ/ぬ</td><td>読む/遊ぶ/死ぬ</td><td>読ん<strong>で</strong>/遊ん<strong>で</strong>/死ん<strong>で</strong></td></tr>
+          <tr><td>く</td><td>書く</td><td>書い<strong>て</strong></td></tr>
+          <tr><td>ぐ</td><td>泳ぐ</td><td>泳い<strong>で</strong></td></tr>
+          <tr><td>す</td><td>話す</td><td>話し<strong>て</strong></td></tr>
+          <tr><td>irregular</td><td>する/来る</td><td>し<strong>て</strong>/来(き)<strong>て</strong></td></tr>
+        </table></div>
+        <h3>Usos de la forma て</h3>
         <div class="example-box">
-          <div class="example-english">I <strong>have visited</strong> Paris three times.</div>
-          <div class="example-spanish">He visitado París tres veces.</div>
-          <div class="example-english">She <strong>has never eaten</strong> sushi.</div>
-          <div class="example-spanish">Ella nunca ha comido sushi.</div>
-          <div class="example-english"><strong>Have you finished</strong> your homework?</div>
-          <div class="example-spanish">¿Has terminado tu tarea?</div>
-        </div>
-
-        <div class="rule-box">
-          <strong>💡 Usos principales:</strong>
-          <br>• Experiencias de vida: I have been to Japan.
-          <br>• Acciones recientes: I have just eaten.
-          <br>• Acciones que empezaron en el pasado y continúan: I have lived here for 5 years.
+          <div class="example-english">食べ<strong>て</strong>ください。</div>
+          <div class="example-spanish">Por favor coma. (petición)</div>
+          <div class="example-english">食べ<strong>て</strong>もいいですか？</div>
+          <div class="example-spanish">¿Puedo comer? (permiso)</div>
+          <div class="example-english">食べ<strong>て</strong>います。</div>
+          <div class="example-spanish">Estoy comiendo. (progresivo)</div>
         </div>
       `
     },
     {
-      title: 'Comparatives & Superlatives',
-      titleEs: 'Comparativos y Superlativos',
-      icon: '📊',
+      title: 'Forma ない (Negación)',
+      titleEs: 'Cómo negar en japonés',
+      icon: '🚫',
       content: `
-        <h3>Formación de Comparativos y Superlativos</h3>
-
-        <div class="table-container">
-          <table>
-            <tr><th>Tipo</th><th>Comparativo</th><th>Superlativo</th></tr>
-            <tr><td>1 sílaba (tall)</td><td>taller than</td><td>the tallest</td></tr>
-            <tr><td>2+ sílabas (beautiful)</td><td>more beautiful than</td><td>the most beautiful</td></tr>
-            <tr><td>Terminan en -y (happy)</td><td>happier than</td><td>the happiest</td></tr>
-          </table>
+        <h3>Conjugación negativa informal</h3>
+        <div class="table-container"><table>
+          <tr><th>Tipo</th><th>Diccionario</th><th>Negativo</th></tr>
+          <tr><td>Ichidan (る)</td><td>食べる</td><td>食べ<strong>ない</strong></td></tr>
+          <tr><td>Godan (う)</td><td>買う</td><td>買わ<strong>ない</strong></td></tr>
+          <tr><td>Godan (く)</td><td>書く</td><td>書か<strong>ない</strong></td></tr>
+          <tr><td>Godan (す)</td><td>話す</td><td>話さ<strong>ない</strong></td></tr>
+          <tr><td>Godan (む)</td><td>読む</td><td>読ま<strong>ない</strong></td></tr>
+          <tr><td>Irregular</td><td>する</td><td>し<strong>ない</strong></td></tr>
+          <tr><td>Irregular</td><td>来る</td><td>来(こ)<strong>ない</strong></td></tr>
+        </table></div>
+        <div class="example-box">
+          <div class="example-english">今日は学校に行か<strong>ない</strong>。</div>
+          <div class="example-spanish">Hoy no voy a la escuela.</div>
         </div>
-
+      `
+    },
+    {
+      title: '〜たい (Querer hacer)',
+      titleEs: 'Expresar deseos',
+      icon: '💭',
+      content: `
+        <h3>Estructura: Raíz del verbo + たい</h3>
+        <div class="table-container"><table>
+          <tr><th>Verbo</th><th>〜たい</th><th>Español</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>たい</strong></td><td>Quiero comer</td></tr>
+          <tr><td>行く</td><td>行き<strong>たい</strong></td><td>Quiero ir</td></tr>
+          <tr><td>見る</td><td>見<strong>たい</strong></td><td>Quiero ver</td></tr>
+          <tr><td>買う</td><td>買い<strong>たい</strong></td><td>Quiero comprar</td></tr>
+        </table></div>
+        <div class="example-box">
+          <div class="example-english">日本に行き<strong>たい</strong>です。</div>
+          <div class="example-spanish">Quiero ir a Japón.</div>
+          <div class="example-english">寿司を食べ<strong>たくない</strong>です。</div>
+          <div class="example-spanish">No quiero comer sushi.</div>
+        </div>
         <div class="warning-box">
-          <strong>⚠️ Irregulares:</strong>
-          <br>• good → better → the best
-          <br>• bad → worse → the worst
-          <br>• far → farther/further → the farthest/furthest
-        </div>
-
-        <div class="example-box">
-          <div class="example-english">She is <strong>taller than</strong> her brother.</div>
-          <div class="example-spanish">Ella es más alta que su hermano.</div>
-          <div class="example-english">This is <strong>the most expensive</strong> car.</div>
-          <div class="example-spanish">Este es el carro más caro.</div>
+          <strong>⚠️ Nota:</strong> 〜たい se conjuga como adjetivo い:
+          <br>• 食べたかった = Quería comer (pasado)
+          <br>• 食べたくなかった = No quería comer
         </div>
       `
     },
     {
-      title: 'Modal Verbs',
-      titleEs: 'Verbos Modales',
-      icon: '🎛️',
+      title: 'Condicionales ば / たら / と / なら',
+      titleEs: 'Si... entonces...',
+      icon: '🔀',
       content: `
-        <h3>Los Verbos Modales Principales</h3>
-
-        <div class="table-container">
-          <table>
-            <tr><th>Modal</th><th>Uso</th><th>Ejemplo</th></tr>
-            <tr><td>can</td><td>Habilidad/Permiso</td><td>I can swim.</td></tr>
-            <tr><td>could</td><td>Habilidad pasada/Posibilidad</td><td>Could you help me?</td></tr>
-            <tr><td>may</td><td>Permiso formal/Posibilidad</td><td>May I come in?</td></tr>
-            <tr><td>might</td><td>Posibilidad baja</td><td>It might rain.</td></tr>
-            <tr><td>must</td><td>Obligación/Certeza</td><td>You must study.</td></tr>
-            <tr><td>should</td><td>Consejo</td><td>You should rest.</td></tr>
-            <tr><td>would</td><td>Condicional/Cortesía</td><td>Would you like tea?</td></tr>
-            <tr><td>will</td><td>Futuro/Voluntad</td><td>I will help you.</td></tr>
-          </table>
+        <h3>〜ば (ba) - Condicional general</h3>
+        <div class="example-box">
+          <div class="example-english">安けれ<strong>ば</strong>、買います。</div>
+          <div class="example-spanish">Si es barato, lo compro.</div>
         </div>
-
-        <div class="rule-box">
-          <strong>💡 Recuerda:</strong> Los modales NO cambian con he/she/it y van seguidos del infinitivo sin "to".
-          <br>• She <strong>can</strong> dance. (No: She cans dance)
-          <br>• He <strong>must</strong> go. (No: He must to go)
+        <h3>〜たら (tara) - Cuando/Si (completado)</h3>
+        <div class="example-box">
+          <div class="example-english">雨が降っ<strong>たら</strong>、家にいます。</div>
+          <div class="example-spanish">Si llueve, me quedo en casa.</div>
+        </div>
+        <h3>〜と (to) - Resultado natural/automático</h3>
+        <div class="example-box">
+          <div class="example-english">春になる<strong>と</strong>、桜が咲きます。</div>
+          <div class="example-spanish">Cuando llega primavera, florecen los cerezos.</div>
+        </div>
+        <h3>〜なら (nara) - Si (suposición)</h3>
+        <div class="example-box">
+          <div class="example-english">日本に行く<strong>なら</strong>、京都がいいですよ。</div>
+          <div class="example-spanish">Si vas a Japón, Kioto está bien.</div>
         </div>
       `
     },
     {
-      title: 'Conditionals (0, 1, 2)',
-      titleEs: 'Condicionales',
-      icon: '❓',
+      title: 'Contadores Japoneses',
+      titleEs: 'Cómo contar objetos',
+      icon: '🔢',
       content: `
-        <h3>Los Tres Condicionales Principales</h3>
-
-        <div class="rule-box">
-          <strong>Zero Conditional:</strong> Verdades universales
-          <br>If + present, present
-          <br><em>If you heat water, it boils.</em>
-        </div>
-
-        <div class="rule-box">
-          <strong>First Conditional:</strong> Situaciones reales/probables
-          <br>If + present, will + infinitive
-          <br><em>If it rains, I will stay home.</em>
-        </div>
-
-        <div class="rule-box">
-          <strong>Second Conditional:</strong> Situaciones hipotéticas
-          <br>If + past simple, would + infinitive
-          <br><em>If I won the lottery, I would travel the world.</em>
-        </div>
-
+        <h3>Sistema de contadores</h3>
+        <p>En japonés se usan diferentes contadores según el tipo de objeto.</p>
+        <div class="table-container"><table>
+          <tr><th>Contador</th><th>Se usa para</th><th>Ejemplo</th></tr>
+          <tr><td>つ (tsu)</td><td>Objetos generales</td><td>一つ、二つ、三つ</td></tr>
+          <tr><td>人 (nin)</td><td>Personas</td><td>一人、二人、三人</td></tr>
+          <tr><td>匹 (hiki)</td><td>Animales pequeños</td><td>一匹、二匹、三匹</td></tr>
+          <tr><td>本 (hon)</td><td>Objetos largos/cilíndricos</td><td>一本、二本、三本</td></tr>
+          <tr><td>枚 (mai)</td><td>Objetos planos</td><td>一枚、二枚、三枚</td></tr>
+          <tr><td>冊 (satsu)</td><td>Libros</td><td>一冊、二冊、三冊</td></tr>
+          <tr><td>台 (dai)</td><td>Máquinas/vehículos</td><td>一台、二台、三台</td></tr>
+          <tr><td>杯 (hai)</td><td>Vasos/tazas</td><td>一杯、二杯、三杯</td></tr>
+        </table></div>
         <div class="example-box">
-          <div class="example-english">If I <strong>had</strong> more time, I <strong>would learn</strong> French.</div>
-          <div class="example-spanish">Si tuviera más tiempo, aprendería francés.</div>
+          <div class="example-english">猫を三<strong>匹</strong>飼っています。</div>
+          <div class="example-spanish">Tengo tres gatos.</div>
+          <div class="example-english">水を一<strong>杯</strong>ください。</div>
+          <div class="example-spanish">Un vaso de agua, por favor.</div>
         </div>
       `
     }
   ],
   advanced: [
     {
-      title: 'Passive Voice',
-      titleEs: 'Voz Pasiva',
+      title: 'Keigo (敬語) - Lenguaje Honorífico',
+      titleEs: 'Japonés formal y de negocios',
+      icon: '👔',
+      content: `
+        <h3>Tres niveles de Keigo</h3>
+        <div class="table-container"><table>
+          <tr><th>Tipo</th><th>Función</th><th>Ejemplo</th></tr>
+          <tr><td><strong>尊敬語</strong> (Sonkeigo)</td><td>Elevar al otro</td><td>いらっしゃる (ir/estar)</td></tr>
+          <tr><td><strong>謙譲語</strong> (Kenjougo)</td><td>Humillarse uno</td><td>参る (ir - humilde)</td></tr>
+          <tr><td><strong>丁寧語</strong> (Teineigo)</td><td>Cortesía general</td><td>です/ます</td></tr>
+        </table></div>
+        <h3>Verbos comunes en Keigo</h3>
+        <div class="table-container"><table>
+          <tr><th>Normal</th><th>Sonkeigo (honorífico)</th><th>Kenjougo (humilde)</th></tr>
+          <tr><td>行く (ir)</td><td>いらっしゃる</td><td>参る</td></tr>
+          <tr><td>食べる (comer)</td><td>召し上がる</td><td>いただく</td></tr>
+          <tr><td>言う (decir)</td><td>おっしゃる</td><td>申す</td></tr>
+          <tr><td>見る (ver)</td><td>ご覧になる</td><td>拝見する</td></tr>
+          <tr><td>する (hacer)</td><td>なさる</td><td>いたす</td></tr>
+          <tr><td>知る (saber)</td><td>ご存知</td><td>存じる</td></tr>
+        </table></div>
+      `
+    },
+    {
+      title: 'Forma Pasiva y Causativa',
+      titleEs: 'Construcciones avanzadas',
       icon: '🔄',
       content: `
-        <h3>Estructura: BE + Past Participle</h3>
-
-        <div class="table-container">
-          <table>
-            <tr><th>Tiempo</th><th>Activa</th><th>Pasiva</th></tr>
-            <tr><td>Present Simple</td><td>They make cars.</td><td>Cars are made.</td></tr>
-            <tr><td>Past Simple</td><td>She wrote the book.</td><td>The book was written.</td></tr>
-            <tr><td>Present Perfect</td><td>They have built it.</td><td>It has been built.</td></tr>
-            <tr><td>Future</td><td>They will finish it.</td><td>It will be finished.</td></tr>
-          </table>
-        </div>
-
+        <h3>受身形 (Pasiva) - Raíz + れる/られる</h3>
+        <div class="table-container"><table>
+          <tr><th>Activa</th><th>Pasiva</th><th>Español</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>られる</strong></td><td>Ser comido</td></tr>
+          <tr><td>読む</td><td>読ま<strong>れる</strong></td><td>Ser leído</td></tr>
+          <tr><td>する</td><td>さ<strong>れる</strong></td><td>Ser hecho</td></tr>
+        </table></div>
         <div class="example-box">
-          <div class="example-english">The Mona Lisa <strong>was painted</strong> by Leonardo da Vinci.</div>
-          <div class="example-spanish">La Mona Lisa fue pintada por Leonardo da Vinci.</div>
-          <div class="example-english">English <strong>is spoken</strong> all over the world.</div>
-          <div class="example-spanish">El inglés se habla en todo el mundo.</div>
+          <div class="example-english">電車で足を踏ま<strong>れた</strong>。</div>
+          <div class="example-spanish">Me pisaron el pie en el tren.</div>
+        </div>
+        <h3>使役形 (Causativa) - Raíz + せる/させる</h3>
+        <div class="table-container"><table>
+          <tr><th>Base</th><th>Causativa</th><th>Español</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>させる</strong></td><td>Hacer comer</td></tr>
+          <tr><td>読む</td><td>読ま<strong>せる</strong></td><td>Hacer leer</td></tr>
+          <tr><td>する</td><td>さ<strong>せる</strong></td><td>Hacer hacer</td></tr>
+        </table></div>
+        <div class="example-box">
+          <div class="example-english">母は子供に野菜を食べ<strong>させた</strong>。</div>
+          <div class="example-spanish">La madre hizo al niño comer verduras.</div>
         </div>
       `
     },
     {
-      title: 'Reported Speech',
-      titleEs: 'Discurso Indirecto',
-      icon: '💬',
+      title: 'Expresiones Formales Avanzadas',
+      titleEs: 'Gramática JLPT N2-N1',
+      icon: '📜',
       content: `
-        <h3>Cambios en el Reported Speech</h3>
-
-        <div class="table-container">
-          <table>
-            <tr><th>Direct</th><th>Reported</th></tr>
-            <tr><td>Present Simple</td><td>Past Simple</td></tr>
-            <tr><td>Present Continuous</td><td>Past Continuous</td></tr>
-            <tr><td>Present Perfect</td><td>Past Perfect</td></tr>
-            <tr><td>Past Simple</td><td>Past Perfect</td></tr>
-            <tr><td>will</td><td>would</td></tr>
-            <tr><td>can</td><td>could</td></tr>
-            <tr><td>today</td><td>that day</td></tr>
-            <tr><td>tomorrow</td><td>the next day</td></tr>
-          </table>
-        </div>
-
+        <h3>Expresiones de certeza y probabilidad</h3>
+        <div class="table-container"><table>
+          <tr><th>Expresión</th><th>Significado</th><th>Ejemplo</th></tr>
+          <tr><td>〜に違いない</td><td>Sin duda es...</td><td>彼は日本人に違いない</td></tr>
+          <tr><td>〜わけがない</td><td>Es imposible que...</td><td>そんなわけがない</td></tr>
+          <tr><td>〜はずだ</td><td>Debería ser...</td><td>もう届いたはずだ</td></tr>
+          <tr><td>〜かもしれない</td><td>Puede que...</td><td>雨かもしれない</td></tr>
+          <tr><td>〜ようだ</td><td>Parece que...</td><td>風邪のようだ</td></tr>
+          <tr><td>〜らしい</td><td>Al parecer...</td><td>明日は雨らしい</td></tr>
+        </table></div>
+        <h3>Expresiones de obligación</h3>
         <div class="example-box">
-          <div class="example-english">Direct: "I <strong>am</strong> tired."</div>
-          <div class="example-english">Reported: She said she <strong>was</strong> tired.</div>
-          <div class="example-english">Direct: "I <strong>will call</strong> you."</div>
-          <div class="example-english">Reported: He said he <strong>would call</strong> me.</div>
+          <div class="example-english">行か<strong>なければならない</strong>。</div>
+          <div class="example-spanish">Tengo que ir. (formal)</div>
+          <div class="example-english">食べ<strong>ざるを得ない</strong>。</div>
+          <div class="example-spanish">No tengo más remedio que comer.</div>
+          <div class="example-english">勉強する<strong>べきだ</strong>。</div>
+          <div class="example-spanish">Debería estudiar.</div>
         </div>
       `
     },
     {
-      title: 'Third Conditional',
-      titleEs: 'Tercer Condicional',
-      icon: '🔮',
+      title: 'Conectores Formales',
+      titleEs: 'Para escritura y discurso formal',
+      icon: '📝',
       content: `
-        <h3>If + Past Perfect, Would Have + Past Participle</h3>
-        <p>Se usa para hablar de situaciones irreales en el pasado.</p>
-
+        <h3>Conectores de causa y razón</h3>
+        <div class="table-container"><table>
+          <tr><th>Conector</th><th>Significado</th><th>Nivel</th></tr>
+          <tr><td>だから / ですから</td><td>Por eso</td><td>Básico</td></tr>
+          <tr><td>そのため</td><td>Por esa razón</td><td>Formal</td></tr>
+          <tr><td>したがって</td><td>Por lo tanto</td><td>Muy formal</td></tr>
+          <tr><td>ゆえに</td><td>Debido a ello</td><td>Literario</td></tr>
+        </table></div>
+        <h3>Conectores de contraste</h3>
+        <div class="table-container"><table>
+          <tr><th>Conector</th><th>Significado</th><th>Nivel</th></tr>
+          <tr><td>でも / けど</td><td>Pero</td><td>Básico</td></tr>
+          <tr><td>しかし</td><td>Sin embargo</td><td>Formal</td></tr>
+          <tr><td>ところが</td><td>No obstante</td><td>Formal</td></tr>
+          <tr><td>〜にもかかわらず</td><td>A pesar de</td><td>Muy formal</td></tr>
+        </table></div>
+        <h3>Conectores de adición</h3>
         <div class="example-box">
-          <div class="example-english">If I <strong>had studied</strong> more, I <strong>would have passed</strong> the exam.</div>
-          <div class="example-spanish">Si hubiera estudiado más, habría aprobado el examen.</div>
-          <div class="example-english">If she <strong>had left</strong> earlier, she <strong>wouldn't have missed</strong> the train.</div>
-          <div class="example-spanish">Si ella hubiera salido antes, no habría perdido el tren.</div>
-        </div>
-
-        <div class="rule-box">
-          <strong>💡 Recuerda:</strong> El tercer condicional expresa arrepentimiento o especulación sobre el pasado.
-          No se puede cambiar lo que ya pasó.
+          <div class="example-english">さらに / その上 / しかも</div>
+          <div class="example-spanish">Además / Encima de eso / Es más</div>
         </div>
       `
     }
@@ -2397,21 +2423,211 @@ const phrasesDB = {
 // ============================================
 // CONVERSACIONES JAPONESAS
 // ============================================
+// CONVERSACIONES JAPONESAS COMPLETAS
+// ============================================
 const conversationsDB = {
-  a1: [{id:'c1',title:'👋 Presentación',emoji:'👋',dialogue:[{speaker:'A',text:'はじめまして。田中です。',translation:'Mucho gusto. Soy Tanaka.'},{speaker:'B',text:'はじめまして。マリアです。',translation:'Mucho gusto. Soy María.'},{speaker:'A',text:'どこから来ましたか？',translation:'¿De dónde viene?'},{speaker:'B',text:'スペインから来ました。',translation:'Vengo de España.'},{speaker:'A',text:'よろしくお願いします。',translation:'Encantado.'}]}],
-  a2: [{id:'c2',title:'🍜 Restaurante',emoji:'🍜',dialogue:[{speaker:'店員',text:'いらっしゃいませ。何名様ですか？',translation:'Bienvenido. ¿Para cuántos?'},{speaker:'客',text:'二人です。',translation:'Dos personas.'},{speaker:'店員',text:'こちらへどうぞ。',translation:'Por aquí.'},{speaker:'客',text:'ラーメンをください。',translation:'Ramen, por favor.'},{speaker:'店員',text:'かしこまりました。',translation:'Entendido.'}]}],
-  b1: [{id:'c3',title:'🏢 Oficina',emoji:'🏢',dialogue:[{speaker:'田中',text:'鈴木さん、この資料を確認していただけますか？',translation:'Suzuki-san, ¿podría revisar estos documentos?'},{speaker:'鈴木',text:'はい、いつまでに必要ですか？',translation:'Sí, ¿para cuándo?'},{speaker:'田中',text:'明日の会議までにお願いします。',translation:'Para la reunión de mañana.'},{speaker:'鈴木',text:'分かりました。',translation:'Entendido.'}]}],
-  b2: [],c1: [],c2: []
+  a1: [
+    {id:'c1',title:'👋 Presentación',emoji:'👋',dialogue:[
+      {speaker:'田中',text:'はじめまして。田中ゆきです。',translation:'Mucho gusto. Soy Yuki Tanaka.'},
+      {speaker:'マリア',text:'はじめまして。マリアです。スペインから来ました。',translation:'Mucho gusto. Soy María. Vengo de España.'},
+      {speaker:'田中',text:'そうですか！スペインのどこですか？',translation:'¡Ah sí! ¿De dónde en España?'},
+      {speaker:'マリア',text:'マドリードです。田中さんはどこに住んでいますか？',translation:'De Madrid. Tanaka-san, ¿dónde vive?'},
+      {speaker:'田中',text:'東京に住んでいます。よろしくお願いします。',translation:'Vivo en Tokio. Encantada.'},
+      {speaker:'マリア',text:'こちらこそ、よろしくお願いします！',translation:'¡El gusto es mío!'}
+    ]},
+    {id:'c2',title:'🛒 En la tienda',emoji:'🛒',dialogue:[
+      {speaker:'客',text:'すみません、これはいくらですか？',translation:'Disculpe, ¿cuánto cuesta esto?'},
+      {speaker:'店員',text:'それは500円です。',translation:'Eso cuesta 500 yenes.'},
+      {speaker:'客',text:'じゃあ、これを二つください。',translation:'Entonces, déme dos de estos.'},
+      {speaker:'店員',text:'はい、1000円になります。袋はいりますか？',translation:'Sí, son 1000 yenes. ¿Necesita bolsa?'},
+      {speaker:'客',text:'いいえ、大丈夫です。ありがとうございます。',translation:'No, está bien. Gracias.'},
+      {speaker:'店員',text:'ありがとうございました！',translation:'¡Gracias por su compra!'}
+    ]},
+    {id:'c3',title:'🏠 Mi rutina',emoji:'🏠',dialogue:[
+      {speaker:'A',text:'毎日何時に起きますか？',translation:'¿A qué hora te levantas cada día?'},
+      {speaker:'B',text:'七時に起きます。あなたは？',translation:'Me levanto a las 7. ¿Y tú?'},
+      {speaker:'A',text:'私は六時半です。朝ごはんは何を食べますか？',translation:'Yo a las 6:30. ¿Qué desayunas?'},
+      {speaker:'B',text:'いつもパンとコーヒーです。',translation:'Siempre pan y café.'},
+      {speaker:'A',text:'日本語の勉強は何時にしますか？',translation:'¿A qué hora estudias japonés?'},
+      {speaker:'B',text:'夜、九時から十時まで勉強します。',translation:'Por la noche, estudio de 9 a 10.'}
+    ]}
+  ],
+  a2: [
+    {id:'c4',title:'🍜 Restaurante',emoji:'🍜',dialogue:[
+      {speaker:'店員',text:'いらっしゃいませ。何名様ですか？',translation:'Bienvenido. ¿Para cuántas personas?'},
+      {speaker:'客',text:'二人です。窓の席はありますか？',translation:'Dos. ¿Hay mesa junto a la ventana?'},
+      {speaker:'店員',text:'はい、こちらへどうぞ。メニューです。',translation:'Sí, por aquí. Aquí está el menú.'},
+      {speaker:'客',text:'おすすめは何ですか？',translation:'¿Qué recomienda?'},
+      {speaker:'店員',text:'今日のおすすめはラーメンと天ぷらです。',translation:'Hoy recomendamos ramen y tempura.'},
+      {speaker:'客',text:'じゃあ、ラーメンをお願いします。あと、ビールも。',translation:'Entonces, ramen por favor. Y también una cerveza.'},
+      {speaker:'店員',text:'かしこまりました。少々お待ちください。',translation:'Entendido. Espere un momento.'}
+    ]},
+    {id:'c5',title:'🚉 En la estación',emoji:'🚉',dialogue:[
+      {speaker:'客',text:'すみません、東京駅までどう行けばいいですか？',translation:'Disculpe, ¿cómo llego a la estación de Tokio?'},
+      {speaker:'駅員',text:'この電車に乗って、三つ目の駅で降りてください。',translation:'Suba a este tren y baje en la tercera estación.'},
+      {speaker:'客',text:'乗り換えはありますか？',translation:'¿Hay que hacer transbordo?'},
+      {speaker:'駅員',text:'いいえ、乗り換えなしで行けますよ。',translation:'No, puede ir sin transbordo.'},
+      {speaker:'客',text:'切符はいくらですか？',translation:'¿Cuánto cuesta el boleto?'},
+      {speaker:'駅員',text:'210円です。あそこの券売機で買えます。',translation:'210 yenes. Puede comprarlo en la máquina de allá.'}
+    ]},
+    {id:'c6',title:'🏥 En el hospital',emoji:'🏥',dialogue:[
+      {speaker:'医者',text:'今日はどうしましたか？',translation:'¿Qué le pasa hoy?'},
+      {speaker:'患者',text:'昨日から頭が痛いです。熱もあります。',translation:'Desde ayer me duele la cabeza. También tengo fiebre.'},
+      {speaker:'医者',text:'いつから熱がありますか？',translation:'¿Desde cuándo tiene fiebre?'},
+      {speaker:'患者',text:'昨日の夜からです。38度ぐらいです。',translation:'Desde anoche. Unos 38 grados.'},
+      {speaker:'医者',text:'風邪ですね。薬を出しますから、ゆっくり休んでください。',translation:'Es un resfriado. Le recetaré medicina, descanse bien.'},
+      {speaker:'患者',text:'ありがとうございます。お大事に。',translation:'Gracias. Cuídese.'}
+    ]}
+  ],
+  b1: [
+    {id:'c7',title:'🏢 Oficina',emoji:'🏢',dialogue:[
+      {speaker:'田中',text:'鈴木さん、来週のプレゼンの資料はもう準備できましたか？',translation:'Suzuki-san, ¿ya preparó los materiales para la presentación de la semana que viene?'},
+      {speaker:'鈴木',text:'はい、ほとんどできています。でも、グラフをもう少し直したいです。',translation:'Sí, casi están listos. Pero quiero corregir un poco los gráficos.'},
+      {speaker:'田中',text:'いつまでに完成できますか？',translation:'¿Para cuándo puede terminarlo?'},
+      {speaker:'鈴木',text:'金曜日までには必ず完成させます。',translation:'Sin falta para el viernes.'},
+      {speaker:'田中',text:'分かりました。完成したらメールで送ってください。',translation:'Entendido. Cuando esté listo, envíemelo por correo.'},
+      {speaker:'鈴木',text:'承知しました。何か変更があればすぐにお知らせします。',translation:'Entendido. Si hay cambios, le aviso de inmediato.'}
+    ]},
+    {id:'c8',title:'🏠 Buscando apartamento',emoji:'🏠',dialogue:[
+      {speaker:'客',text:'一人暮らし用のアパートを探しています。',translation:'Estoy buscando un apartamento para vivir solo.'},
+      {speaker:'不動産',text:'ご予算はどのくらいですか？',translation:'¿Cuál es su presupuesto?'},
+      {speaker:'客',text:'月7万円ぐらいまでがいいです。駅から近い方がいいです。',translation:'Hasta unos 70,000 yenes al mes. Prefiero cerca de la estación.'},
+      {speaker:'不動産',text:'この物件はいかがですか？駅から徒歩5分で、6万5千円です。',translation:'¿Qué tal esta propiedad? A 5 min a pie de la estación, 65,000 yenes.'},
+      {speaker:'客',text:'いいですね。見学できますか？',translation:'Suena bien. ¿Puedo visitarlo?'},
+      {speaker:'不動産',text:'はい、明日の午後はいかがですか？',translation:'Sí, ¿qué tal mañana por la tarde?'}
+    ]},
+    {id:'c9',title:'📞 Llamada telefónica',emoji:'📞',dialogue:[
+      {speaker:'受付',text:'はい、ABCクリニックでございます。',translation:'Sí, Clínica ABC al habla.'},
+      {speaker:'患者',text:'予約をお願いしたいのですが。',translation:'Me gustaría hacer una cita.'},
+      {speaker:'受付',text:'いつがよろしいですか？',translation:'¿Cuándo le conviene?'},
+      {speaker:'患者',text:'来週の月曜日の午前中は空いていますか？',translation:'¿Hay disponibilidad el lunes por la mañana?'},
+      {speaker:'受付',text:'10時でしたら空いております。お名前をお願いします。',translation:'A las 10 hay disponible. Su nombre, por favor.'},
+      {speaker:'患者',text:'山田太郎です。よろしくお願いします。',translation:'Soy Taro Yamada. Gracias.'}
+    ]}
+  ],
+  b2: [
+    {id:'c10',title:'💼 Entrevista de trabajo',emoji:'💼',dialogue:[
+      {speaker:'面接官',text:'自己紹介をお願いいたします。',translation:'Preséntese, por favor.'},
+      {speaker:'応募者',text:'山本花子と申します。大学でコンピューターサイエンスを専攻しておりました。',translation:'Me llamo Hanako Yamamoto. Estudié ciencias de la computación en la universidad.'},
+      {speaker:'面接官',text:'なぜ弊社を志望されましたか？',translation:'¿Por qué eligió nuestra empresa?'},
+      {speaker:'応募者',text:'御社の革新的な技術開発に大変感銘を受けました。',translation:'Me impresionó mucho el desarrollo tecnológico innovador de su empresa.'},
+      {speaker:'面接官',text:'あなたの強みは何だと思いますか？',translation:'¿Cuál cree que es su fortaleza?'},
+      {speaker:'応募者',text:'チームワークを大切にし、困難な状況でも諦めずに取り組むことです。',translation:'Valoro el trabajo en equipo y no me rindo ante situaciones difíciles.'}
+    ]},
+    {id:'c11',title:'🗾 Cultura japonesa',emoji:'🗾',dialogue:[
+      {speaker:'外国人',text:'日本の「空気を読む」という文化について教えてください。',translation:'Hábleme sobre la cultura de "leer el ambiente" en Japón.'},
+      {speaker:'日本人',text:'日本では、直接的に言わなくても相手の気持ちを察することが大切です。',translation:'En Japón es importante percibir los sentimientos del otro sin que los diga directamente.'},
+      {speaker:'外国人',text:'それは外国人にとって難しいですね。',translation:'Eso es difícil para los extranjeros.'},
+      {speaker:'日本人',text:'確かに。でも、少しずつ慣れていきますよ。大事なのは相手を思いやることです。',translation:'Es cierto. Pero uno se acostumbra poco a poco. Lo importante es ser considerado con los demás.'}
+    ]}
+  ],
+  c1: [
+    {id:'c12',title:'📰 Debate social',emoji:'📰',dialogue:[
+      {speaker:'A',text:'少子高齢化は日本の最大の課題だと思います。',translation:'Creo que la baja natalidad y envejecimiento es el mayor reto de Japón.'},
+      {speaker:'B',text:'確かに。労働力不足も深刻な問題ですね。',translation:'Es cierto. La falta de mano de obra también es un problema serio.'},
+      {speaker:'A',text:'移民政策を見直すべきだという意見もありますが。',translation:'Hay opiniones de que deberían revisar la política migratoria.'},
+      {speaker:'B',text:'一方で、日本の伝統文化を守りたいという声もあります。バランスが重要ですね。',translation:'Por otro lado, también hay voces que quieren preservar la cultura tradicional. El equilibrio es importante.'}
+    ]}
+  ],
+  c2: [
+    {id:'c13',title:'🎌 Filosofía japonesa',emoji:'🎌',dialogue:[
+      {speaker:'教授',text:'「もののあわれ」という概念をご存知ですか？',translation:'¿Conoce el concepto de "mono no aware"?'},
+      {speaker:'学生',text:'物事の移り変わりに対する哀愁や感動のことでしょうか。',translation:'¿Se refiere a la melancolía y emoción ante la transitoriedad de las cosas?'},
+      {speaker:'教授',text:'その通りです。桜が散る美しさに心を動かされる、あの感覚です。',translation:'Exacto. Es esa sensación de conmoverse por la belleza de los pétalos de cerezo cayendo.'},
+      {speaker:'学生',text:'西洋にはない、日本独自の美意識ですね。',translation:'Es una estética única de Japón que no existe en Occidente.'},
+      {speaker:'教授',text:'侘寂や幽玄と共に、日本文化の根幹を成す概念です。',translation:'Junto con wabi-sabi y yugen, es un concepto fundamental de la cultura japonesa.'}
+    ]}
+  ]
 };
 
 // ============================================
 // LECTURAS JAPONESAS
 // ============================================
+// LECTURAS JAPONESAS COMPLETAS
+// ============================================
 const readingsDB = {
-  a1: [{id:'r1',title:'🏠 Mi familia',emoji:'🏠',text:'私の家族は四人です。父と母と兄と私です。父は会社員です。母は先生です。毎日、家族で一緒にご飯を食べます。',translation:'Mi familia tiene 4 personas. Mi padre, madre, hermano mayor y yo. Mi padre es empleado. Mi madre es profesora. Cada día comemos juntos.',questions:[{q:'家族は何人ですか？',options:['三人','四人','五人','六人'],correct:1}]}],
-  a2: [{id:'r2',title:'🌸 Primavera',emoji:'🌸',text:'日本の春は桜で有名です。三月から四月にかけて、桜の花が咲きます。日本人は公園で花見をします。',translation:'La primavera en Japón es famosa por los cerezos. De marzo a abril, las flores florecen. Los japoneses hacen hanami en parques.',questions:[{q:'桜はいつ咲きますか？',options:['一月','三月から四月','七月','十二月'],correct:1}]}],
-  b1: [{id:'r3',title:'🚅 Shinkansen',emoji:'🚅',text:'新幹線は日本の高速鉄道です。1964年に開通しました。東京から大阪まで約2時間半で行けます。',translation:'El Shinkansen es el tren de alta velocidad de Japón. Se inauguró en 1964. Se llega de Tokio a Osaka en ~2.5 horas.',questions:[{q:'新幹線はいつ開通しましたか？',options:['1954年','1964年','1974年','1984年'],correct:1}]}],
-  b2: [],c1: [],c2: []
+  a1: [
+    {id:'r1',title:'🏠 Mi familia',emoji:'🏠',
+     text:'私の家族は四人です。父と母と兄と私です。父は会社員です。毎朝七時に起きて、電車で会社に行きます。母は先生です。学校で英語を教えています。兄は大学生です。東京の大学で経済学を勉強しています。私は高校生です。毎日、家族で一緒に晩ご飯を食べます。週末は家族でよく公園に行きます。',
+     translation:'Mi familia tiene 4 personas. Mi padre, madre, hermano mayor y yo. Mi padre es empleado. Se levanta a las 7 cada mañana y va a la oficina en tren. Mi madre es profesora. Enseña inglés en la escuela. Mi hermano es universitario. Estudia economía en una universidad de Tokio. Yo soy estudiante de preparatoria. Cada día cenamos juntos en familia. Los fines de semana vamos al parque.',
+     questions:[
+       {q:'家族は何人ですか？',options:['三人','四人','五人','六人'],correct:1},
+       {q:'お父さんの仕事は？',options:['先生','大学生','会社員','医者'],correct:2},
+       {q:'お兄さんは何を勉強していますか？',options:['日本語','英語','経済学','数学'],correct:2}
+    ]},
+    {id:'r2',title:'🐱 Mi mascota',emoji:'🐱',
+     text:'私は猫を一匹飼っています。名前はミケです。三歳のオス猫です。毎朝六時に起きて、「ニャー」と鳴きます。ミケは魚が大好きです。でも野菜は食べません。昼はいつもソファの上で寝ています。夜はよく遊びます。ミケは私の一番の友達です。',
+     translation:'Tengo un gato. Se llama Mike. Es un gato macho de 3 años. Se levanta a las 6 cada mañana y maúlla. A Mike le encanta el pescado. Pero no come verduras. Por la tarde siempre duerme en el sofá. Por la noche juega mucho. Mike es mi mejor amigo.',
+     questions:[
+       {q:'猫の名前は？',options:['タマ','ミケ','クロ','シロ'],correct:1},
+       {q:'ミケは何が好きですか？',options:['野菜','肉','魚','パン'],correct:2}
+    ]}
+  ],
+  a2: [
+    {id:'r3',title:'🌸 La primavera en Japón',emoji:'🌸',
+     text:'日本の春は桜で有名です。三月の終わりから四月にかけて、桜の花が咲きます。この時期、日本人は公園で「花見」をします。花見とは、桜の下でお弁当を食べたり、お酒を飲んだりすることです。友達や家族と一緒に楽しみます。東京では上野公園や新宿御苑が花見の人気スポットです。桜の季節は短くて、約二週間で散ってしまいます。だからこそ、日本人は桜をとても大切にしています。',
+     translation:'La primavera en Japón es famosa por los cerezos. De finales de marzo a abril, las flores de cerezo florecen. En esta época, los japoneses hacen "hanami" en los parques. Hanami es comer bentō y beber sake bajo los cerezos. Lo disfrutan con amigos y familia. En Tokio, el parque Ueno y Shinjuku Gyoen son lugares populares para hanami. La temporada de cerezos es corta, los pétalos caen en unas dos semanas. Por eso los japoneses valoran tanto los cerezos.',
+     questions:[
+       {q:'花見とは何ですか？',options:['桜を植えること','桜の下で食べること','桜を切ること','桜の絵を描くこと'],correct:1},
+       {q:'桜の季節はどのくらいですか？',options:['一週間','約二週間','一ヶ月','三ヶ月'],correct:1}
+    ]},
+    {id:'r4',title:'🍱 La comida japonesa',emoji:'🍱',
+     text:'日本料理は世界で人気があります。一番有名なのは寿司です。寿司はご飯と魚で作ります。ラーメンも人気です。ラーメンは中国から来ましたが、日本で独自に発展しました。味噌ラーメン、醤油ラーメン、豚骨ラーメンなど、いろいろな種類があります。日本人は食事の前に「いただきます」と言い、食事の後に「ごちそうさまでした」と言います。これは食べ物への感謝の気持ちを表しています。',
+     translation:'La cocina japonesa es popular en el mundo. Lo más famoso es el sushi. El sushi se hace con arroz y pescado. El ramen también es popular. El ramen vino de China pero se desarrolló de forma única en Japón. Hay varios tipos: miso ramen, shoyu ramen, tonkotsu ramen, etc. Los japoneses dicen "itadakimasu" antes de comer y "gochisousama deshita" después. Esto expresa gratitud hacia la comida.',
+     questions:[
+       {q:'ラーメンはどこから来ましたか？',options:['韓国','アメリカ','中国','インド'],correct:2},
+       {q:'食事の前に何と言いますか？',options:['ごちそうさま','いただきます','おはよう','すみません'],correct:1}
+    ]}
+  ],
+  b1: [
+    {id:'r5',title:'🚅 El Shinkansen',emoji:'🚅',
+     text:'新幹線は日本が世界に誇る高速鉄道です。1964年、東京オリンピックの年に開業しました。東京から大阪まで約2時間半で行けます。最高速度は時速320キロメートルです。新幹線の最も驚くべき点は、その正確さです。平均遅延時間はわずか1分以下です。日本の新幹線は開業以来、乗客の死亡事故がゼロという安全記録を持っています。現在、リニア中央新幹線の建設が進んでおり、完成すれば東京から大阪まで約1時間で行けるようになります。',
+     translation:'El Shinkansen es el tren de alta velocidad del que Japón se enorgullece. Se inauguró en 1964, el año de los Juegos Olímpicos de Tokio. Se puede ir de Tokio a Osaka en unas 2.5 horas. La velocidad máxima es 320 km/h. Lo más sorprendente es su puntualidad: el retraso promedio es de menos de 1 minuto. Desde su apertura no ha habido muertes de pasajeros. Actualmente se construye el maglev, que reducirá el viaje Tokio-Osaka a 1 hora.',
+     questions:[
+       {q:'新幹線はいつ開業しましたか？',options:['1954年','1964年','1974年','1984年'],correct:1},
+       {q:'東京から大阪までどのくらいかかりますか？',options:['1時間','約2時間半','4時間','6時間'],correct:1},
+       {q:'平均遅延時間は？',options:['10分','5分','1分以下','30分'],correct:2}
+    ]},
+    {id:'r6',title:'🏯 Los samuráis',emoji:'🏯',
+     text:'侍は日本の歴史の中で最も有名な存在です。侍は武士階級に属し、主君に仕えました。彼らは「武士道」という道徳観に従いました。武士道では、名誉、忠義、礼儀、勇気が重要視されました。侍は刀を二本持っていました。長い刀を「刀」、短い刀を「脇差」と呼びます。明治維新（1868年）の後、侍の時代は終わりましたが、武士道の精神は現代の日本社会にも影響を与えています。',
+     translation:'Los samuráis son la existencia más famosa en la historia de Japón. Pertenecían a la clase guerrera y servían a sus señores. Seguían una moral llamada "bushido". En bushido se valoraban el honor, la lealtad, la cortesía y el valor. Los samuráis portaban dos espadas: la larga "katana" y la corta "wakizashi". Tras la Restauración Meiji (1868), la era de los samuráis terminó, pero el espíritu del bushido sigue influyendo en la sociedad japonesa moderna.',
+     questions:[
+       {q:'武士道で大切なことは？',options:['お金','名誉と忠義','速さ','食べ物'],correct:1},
+       {q:'侍の時代はいつ終わりましたか？',options:['1600年','1700年','1868年','1945年'],correct:2}
+    ]}
+  ],
+  b2: [
+    {id:'r7',title:'🗾 Sociedad japonesa',emoji:'🗾',
+     text:'日本は「和」を大切にする社会です。「和」とは調和や平和を意味します。日本人は集団の中での調和を重視し、個人よりもグループの利益を優先する傾向があります。「空気を読む」という表現は、言葉にしなくても相手の気持ちや場の雰囲気を察することを意味します。また、「本音と建前」という概念があり、本当の気持ち（本音）と公の場での態度（建前）を使い分けます。外国人にとってこれは理解しにくい文化ですが、日本社会を理解する上で非常に重要な概念です。',
+     translation:'Japón es una sociedad que valora "wa" (armonía). Los japoneses priorizan la armonía grupal sobre el beneficio individual. "Leer el aire" significa percibir los sentimientos y la atmósfera sin palabras. Además existe el concepto de "honne y tatemae": el verdadero sentimiento (honne) y la actitud pública (tatemae). Aunque es difícil de entender para extranjeros, es un concepto fundamental para comprender la sociedad japonesa.',
+     questions:[
+       {q:'「和」とは何ですか？',options:['戦争','調和と平和','お金','食べ物'],correct:1},
+       {q:'「本音」とは？',options:['公の態度','本当の気持ち','挨拶','仕事'],correct:1}
+    ]},
+    {id:'r8',title:'🎭 Teatro japonés',emoji:'🎭',
+     text:'日本には独自の伝統芸能があります。能は600年以上の歴史を持つ演劇で、面をつけて舞います。歌舞伎は江戸時代に発展した華やかな演劇です。すべての役を男性が演じるのが特徴です。文楽は人形浄瑠璃とも呼ばれ、三人の人形遣いが一体の人形を操ります。落語は一人の噺家が座ったまま何役もこなす話芸です。これらの伝統芸能はユネスコの無形文化遺産に登録されています。',
+     translation:'Japón tiene artes escénicas tradicionales únicas. El Noh tiene más de 600 años de historia, se interpreta con máscaras. El Kabuki se desarrolló en la era Edo, es un teatro vistoso donde todos los papeles los hacen hombres. El Bunraku usa marionetas manipuladas por tres titiriteros. El Rakugo es un arte narrativo donde un solo narrador interpreta varios personajes sentado. Estas artes están registradas como Patrimonio Cultural Inmaterial de la UNESCO.',
+     questions:[
+       {q:'歌舞伎の特徴は？',options:['女性だけ','男性がすべての役を演じる','子供だけ','外国人が演じる'],correct:1}
+    ]}
+  ],
+  c1: [
+    {id:'r9',title:'💻 Tecnología japonesa',emoji:'💻',
+     text:'日本は技術革新の最前線に立ってきました。戦後の経済成長期には、トヨタの「カイゼン」（改善）方式が世界の製造業に革命をもたらしました。1970年代にはソニーのウォークマンが音楽の聴き方を変え、任天堂のゲーム機は世界中のエンターテインメントを変革しました。近年では、ロボット工学やAI技術で世界をリードし、高齢化社会への技術的解決策を模索しています。しかし、デジタル化の遅れやスタートアップ文化の弱さなど、課題も残されています。',
+     translation:'Japón ha estado a la vanguardia de la innovación tecnológica. En la posguerra, el "kaizen" de Toyota revolucionó la manufactura mundial. En los 70s, el Walkman de Sony cambió cómo escuchamos música, y las consolas de Nintendo transformaron el entretenimiento global. Recientemente lidera en robótica e IA, buscando soluciones tecnológicas para la sociedad envejecida. Sin embargo, quedan retos como el atraso en digitalización y la débil cultura startup.',
+     questions:[
+       {q:'「カイゼン」はどの会社の方式ですか？',options:['ソニー','任天堂','トヨタ','ホンダ'],correct:2}
+    ]}
+  ],
+  c2: [
+    {id:'r10',title:'🎌 Wabi-sabi y estética japonesa',emoji:'🎌',
+     text:'侘寂（わびさび）は日本の美意識の根幹を成す概念です。「侘」は質素さの中に見出す豊かさを、「寂」は時の経過による味わいを表します。完璧を求めるのではなく、不完全さや儚さの中に美を見出すのが日本の美学です。茶道における「一期一会」の精神、庭園の枯山水、陶芸における釉薬のひび割れ（貫入）を愛でる文化。これらはすべて侘寂の思想に基づいています。西洋の対称美や完璧主義とは対照的に、日本の美は非対称、簡素、そして自然の移ろいの中に存在します。',
+     translation:'Wabi-sabi es el concepto fundamental de la estética japonesa. "Wabi" es la riqueza encontrada en la simplicidad; "sabi" es el gusto que viene con el paso del tiempo. En vez de buscar la perfección, la estética japonesa encuentra belleza en la imperfección y lo efímero. El espíritu de "ichigo ichie" en la ceremonia del té, los jardines zen de piedra seca, la cultura de apreciar las grietas del esmalte en cerámica. Todo se basa en el pensamiento wabi-sabi. En contraste con la simetría y perfeccionismo occidental, la belleza japonesa existe en la asimetría, la simplicidad y la transitoriedad de la naturaleza.',
+     questions:[
+       {q:'「侘」とは何ですか？',options:['豪華さ','質素さの中の豊かさ','スピード','力'],correct:1},
+       {q:'日本の美学は何を大切にしますか？',options:['完璧さ','対称','不完全さと儚さ','大きさ'],correct:2}
+    ]}
+  ]
 };
 // ============================================
 const gamesData = [
@@ -2422,7 +2638,7 @@ const gamesData = [
   {id:'spelling',icon:'✍️',title:'Spelling Bee',titleEs:'Concurso de Ortografía',desc:'Escribe la palabra correcta'},
   {id:'translate',icon:'🌍',title:'Translation Challenge',titleEs:'Reto de Traducción',desc:'Traduce lo más rápido posible'},
   {id:'listening',icon:'👂',title:'Listening Game',titleEs:'Juego de Escucha',desc:'Escucha y escribe la palabra'},
-  {id:'matching',icon:'🔗',title:'Match Words',titleEs:'Conectar Palabras',desc:'Une inglés con español'},
+  {id:'matching',icon:'🔗',title:'Match Words',titleEs:'Conectar Palabras',desc:'Une japonés con español'},
   {id:'fillgap',icon:'📝',title:'Fill the Gap',titleEs:'Completa el Espacio',desc:'Completa la oración'},
   {id:'speed',icon:'⚡',title:'Speed Round',titleEs:'Ronda Rápida',desc:'Responde antes que termine el tiempo'},
   {id:'categories',icon:'📁',title:'Categories',titleEs:'Categorías',desc:'Clasifica las palabras'},
@@ -3566,10 +3782,10 @@ function checkScramble() {
 // MATCHING GAME
 function initMatchingGame() {
   const words = shuffle(getAllWords()).slice(0, 5);
-  const englishWords = shuffle([...words]);
+  const japaneseWords = shuffle([...words]);
   const spanishWords = shuffle([...words]);
   
-  let leftHtml = englishWords.map((w, i) => 
+  let leftHtml = japaneseWords.map((w, i) => 
     `<div class="phrase-card" id="left${i}" onclick="selectMatch('left', ${i}, '${w.en}')">${w.en}</div>`
   ).join('');
   
@@ -3709,10 +3925,10 @@ function getBestVoice() {
   const voices = window.speechSynthesis.getVoices();
   if(voices.length === 0) return null;
   
-  // ONLY consider English voices - never fall back to Spanish/other
+  // ONLY consider Japanese voices - never fall back to Spanish/other
   const enVoices = voices.filter(v => v.lang.startsWith('ja'));
   if(enVoices.length === 0) {
-    // If no English voices found, return first voice but we'll force lang
+    // If no Japanese voices found, return first voice but we'll force lang
     return null;
   }
   
@@ -3733,7 +3949,7 @@ function getBestVoice() {
     }
   }
   
-  // Return first English voice
+  // Return first Japanese voice
   preferredVoice = enVoices[0];
   return enVoices[0];
 }
@@ -3755,7 +3971,7 @@ function getNaturalVariation() {
   };
 }
 
-// Alphabet pronunciation map - ensures correct English pronunciation
+// Alphabet pronunciation map - ensures correct Japanese pronunciation
 const alphabetPronunciation = {};
 
 function speakWord(text) {
@@ -3780,12 +3996,12 @@ function speakWord(text) {
     utterance.pitch = variation.pitch;
     utterance.volume = 1;
     
-    // ALWAYS set English voice - critical for Spanish-language devices
+    // ALWAYS set Japanese voice - critical for Spanish-language devices
     const voice = getBestVoice();
     if(voice) {
       utterance.voice = voice;
     }
-    // Double-ensure English even if no voice found
+    // Double-ensure Japanese even if no voice found
     utterance.lang = 'ja-JP';
     
     utterance.onstart = () => { isSpeaking = true; };
@@ -5464,7 +5680,7 @@ function initSpellingBee() {
           🔊 Escuchar pronunciación
         </button>
         <div style="margin-top:1rem;">
-          <input type="text" id="spellingInput" placeholder="Escribe la palabra en inglés..." 
+          <input type="text" id="spellingInput" placeholder="Escribe la palabra en japonés..." 
             style="padding:15px;font-size:1.2rem;border:2px solid rgba(220,38,38,0.3);border-radius:12px;width:100%;max-width:300px;background:rgba(0,0,0,0.2);color:white;text-align:center;"
             onkeypress="if(event.key==='Enter')checkSpelling('${word.en}')"
             autocomplete="off" autocapitalize="off">
@@ -5578,7 +5794,7 @@ function initTranslationChallenge() {
     }
     
     const word = words[currentIndex];
-    const showEnglish = Math.random() > 0.5;
+    const showJapanese = Math.random() > 0.5;
     const options = shuffle([word, ...shuffle(getAllWords().filter(w => w.en !== word.en)).slice(0, 3)]);
     
     document.getElementById('game-area').innerHTML = `
@@ -5588,13 +5804,13 @@ function initTranslationChallenge() {
       <div style="text-align:center;padding:2rem;">
         <div style="font-size:3rem;margin-bottom:1rem;">${word.emoji}</div>
         <p style="font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;">
-          ${showEnglish ? word.en : word.es}
+          ${showJapanese ? word.en : word.es}
         </p>
-        <p style="color:#a5b4fc;margin-bottom:1rem;">Selecciona la traducción ${showEnglish ? 'al español' : 'al inglés'}:</p>
+        <p style="color:#a5b4fc;margin-bottom:1rem;">Selecciona la traducción ${showJapanese ? 'al español' : 'al japonés'}:</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:400px;margin:0 auto;">
           ${options.map(opt => `
             <button onclick="checkTranslation('${word.en}','${opt.en}')" class="vocab-card" style="padding:1.5rem;cursor:pointer;text-align:center;">
-              <div style="font-weight:600;">${showEnglish ? opt.es : opt.en}</div>
+              <div style="font-weight:600;">${showJapanese ? opt.es : opt.en}</div>
             </button>
           `).join('')}
         </div>
@@ -6073,10 +6289,10 @@ function speakFullText() {
     var s = sentences[idx].trim();
     if (!s) { idx++; speakNext(); return; }
     var utter = new SpeechSynthesisUtterance(s);
-    utter.lang = 'en-US';
+    utter.lang = 'ja-JP';
     utter.rate = 0.85;
     var bv = getBestVoice(); if (bv) utter.voice = bv;
-    utter.lang = 'en-US';
+    utter.lang = 'ja-JP';
     utter.pitch = 1;
     utter.onend = function() { idx++; speakNext(); };
     utter.onerror = function() { idx++; speakNext(); };
@@ -6117,10 +6333,10 @@ function speakConversation() {
     lines[idx].style.borderRadius = '8px';
     
     var utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'en-US';
+    utter.lang = 'ja-JP';
     utter.rate = 0.8;
     var bv2 = getBestVoice(); if (bv2) utter.voice = bv2;
-    utter.lang = 'en-US';
+    utter.lang = 'ja-JP';
     utter.onend = function() { idx++; setTimeout(speakNext, 400); };
     utter.onerror = function() { idx++; speakNext(); };
     window.speechSynthesis.speak(utter);
