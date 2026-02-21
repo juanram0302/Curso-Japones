@@ -1023,6 +1023,12 @@
     .flashcard-back { background: linear-gradient(135deg, #064e3b, #065f46); border: 2px solid rgba(16,185,129,0.3); transform: rotateY(180deg); }
 
 
+  
+    .romaji { color: #a5b4fc; font-size: 0.85rem; font-style: italic; margin-top: 2px; letter-spacing: 0.5px; }
+    .speak-btn { background:none;border:none;cursor:pointer;font-size:1.1rem;vertical-align:middle;padding:2px 4px; }
+    .speak-btn:hover { transform: scale(1.3); }
+    .example-romaji { color: #a5b4fc; font-size: 0.85rem; font-style: italic; margin-top: -2px; margin-bottom: 8px; }
+
   </style>
 <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1154,7 +1160,7 @@
         </div>
         <div class="premium-feature">
           <span class="premium-feature-icon">✅</span>
-          <span>5000+ palabras de vocabulario</span>
+          <span>500+ palabras de vocabulario japonés</span>
         </div>
         <div class="premium-feature">
           <span class="premium-feature-icon">✅</span>
@@ -1284,7 +1290,7 @@
       <div class="stat-item">📚 <span id="totalWords">3000+</span> Palabras</div>
       <div class="stat-item">📝 <span id="totalLessons">200+</span> Lecciones</div>
       <div class="stat-item">🎮 <span id="totalGames">12</span> Juegos</div>
-      <div class="stat-item">⭐ Nivel: <span id="currentLevel">A1</span></div>
+      <div class="stat-item">⭐ Nivel: <span id="currentLevel">N5</span></div>
       <div class="stat-item">🔥 Racha: <span id="streak">0</span> días</div>
     </div>
 
@@ -1300,10 +1306,11 @@
       <button class="nav-tab active" onclick="showPanel('vocabulary')">🔤 Vocabulario</button>
       <button class="nav-tab" onclick="showPanel('grammar')">📖 Gramática</button>
       <button class="nav-tab" onclick="showPanel('verbs')">🔄 Verbos</button>
-      <button class="nav-tab" onclick="showPanel('tenses')">⏰ Escritura</button>
+      <button class="nav-tab" onclick="showPanel('tenses')">📝 Kana & Kanji</button>
       <button class="nav-tab" onclick="showPanel('phrases')">💬 Frases</button>
       <button class="nav-tab" onclick="showPanel('conversations')">💬 Conversaciones</button>
       <button class="nav-tab" onclick="showPanel('readings')">📖 Lecturas</button>
+      <button class="nav-tab" onclick="showPanel('writing')">✍️ Practica Escritura</button>
       <button class="nav-tab" onclick="showPanel('practice')">✏️ Práctica</button>
       <button class="nav-tab" onclick="showPanel('games')">🎮 Juegos</button>
     </nav>
@@ -1383,12 +1390,12 @@
       </div>
       <p style="text-align:center;opacity:0.7;margin-bottom:1rem;">Practica con diálogos reales de situaciones cotidianas y profesionales</p>
       <div class="subtab-container">
-        <button class="subtab" onclick="showConversationLevel('a1')">🟢 N5</button>
+        <button class="subtab active" onclick="showConversationLevel('a1')">🟢 N5</button>
         <button class="subtab" onclick="showConversationLevel('a2')">🟢 N4</button>
-        <button class="subtab active" onclick="showConversationLevel('b1')">🟡 N3</button>
+        <button class="subtab" onclick="showConversationLevel('b1')">🟡 N3</button>
         <button class="subtab" onclick="showConversationLevel('b2')">🟠 N2</button>
         <button class="subtab" onclick="showConversationLevel('c1')">🔴 N1</button>
-        <button class="subtab" onclick="showConversationLevel('c2')">🟣 N1+</button>
+        
       </div>
       <div id="conversations-list"></div>
       <div id="conversation-detail" style="display:none;"></div>
@@ -1401,18 +1408,32 @@
       </div>
       <p style="text-align:center;opacity:0.7;margin-bottom:1rem;">Mejora tu comprensión lectora con textos de diferentes niveles</p>
       <div class="subtab-container">
-        <button class="subtab" onclick="showReadingLevel('a1')">🟢 N5</button>
+        <button class="subtab active" onclick="showReadingLevel('a1')">🟢 N5</button>
         <button class="subtab" onclick="showReadingLevel('a2')">🟢 N4</button>
-        <button class="subtab active" onclick="showReadingLevel('b1')">🟡 N3</button>
+        <button class="subtab" onclick="showReadingLevel('b1')">🟡 N3</button>
         <button class="subtab" onclick="showReadingLevel('b2')">🟠 N2</button>
         <button class="subtab" onclick="showReadingLevel('c1')">🔴 N1</button>
-        <button class="subtab" onclick="showReadingLevel('c2')">🟣 N1+</button>
+        
       </div>
       <div id="readings-list"></div>
       <div id="reading-detail" style="display:none;"></div>
     </div>
 
-    <div id="practice-panel" class="panel">
+    
+    <div id="writing-panel" class="panel">
+      <div class="section-header">
+        <h2 class="section-title">✍️ Práctica de Escritura</h2>
+      </div>
+      <p style="text-align:center;color:#94a3b8;margin-bottom:1rem;">Dibuja el carácter japonés y comprueba si lo escribiste bien</p>
+      <div class="subtab-container">
+        <button class="subtab active" onclick="startWritingPractice('hiragana')">🔤 Hiragana</button>
+        <button class="subtab" onclick="startWritingPractice('katakana')">🏷️ Katakana</button>
+        <button class="subtab" onclick="startWritingPractice('kanji')">🈁 Kanji</button>
+      </div>
+      <div id="writing-content"></div>
+    </div>
+
+<div id="practice-panel" class="panel">
       <div class="section-header">
         <h2 class="section-title">✏️ Práctica</h2>
       </div>
@@ -1874,6 +1895,226 @@ const vocabularyDB = {
       {en:'懐かしい (なつかしい)',es:'nostalgia cálida',phonetic:'natsukashii',emoji:'🥺'},
       {en:'生きがい (いきがい)',es:'razón de vivir',phonetic:'ikigai',emoji:'🌟'}
     ]
+  },
+  // === NUEVAS CATEGORÍAS EXPANDIDAS ===
+  verbs_basic: {
+    icon:'🏃',title:'Verbos Básicos',level:'N5',
+    words:[
+      {en:'食べる (たべる)',es:'Comer',phonetic:'taberu',emoji:'🍽️'},
+      {en:'飲む (のむ)',es:'Beber',phonetic:'nomu',emoji:'🍵'},
+      {en:'見る (みる)',es:'Ver',phonetic:'miru',emoji:'👁️'},
+      {en:'聞く (きく)',es:'Escuchar',phonetic:'kiku',emoji:'👂'},
+      {en:'読む (よむ)',es:'Leer',phonetic:'yomu',emoji:'📖'},
+      {en:'書く (かく)',es:'Escribir',phonetic:'kaku',emoji:'✍️'},
+      {en:'話す (はなす)',es:'Hablar',phonetic:'hanasu',emoji:'🗣️'},
+      {en:'行く (いく)',es:'Ir',phonetic:'iku',emoji:'🚶'},
+      {en:'来る (くる)',es:'Venir',phonetic:'kuru',emoji:'🔄'},
+      {en:'帰る (かえる)',es:'Volver',phonetic:'kaeru',emoji:'🏠'},
+      {en:'買う (かう)',es:'Comprar',phonetic:'kau',emoji:'🛒'},
+      {en:'する',es:'Hacer',phonetic:'suru',emoji:'✅'},
+      {en:'起きる (おきる)',es:'Levantarse',phonetic:'okiru',emoji:'🌅'},
+      {en:'寝る (ねる)',es:'Dormir',phonetic:'neru',emoji:'😴'},
+      {en:'歩く (あるく)',es:'Caminar',phonetic:'aruku',emoji:'🚶‍♂️'},
+      {en:'走る (はしる)',es:'Correr',phonetic:'hashiru',emoji:'🏃'},
+      {en:'泳ぐ (およぐ)',es:'Nadar',phonetic:'oyogu',emoji:'🏊'},
+      {en:'待つ (まつ)',es:'Esperar',phonetic:'matsu',emoji:'⏳'},
+      {en:'作る (つくる)',es:'Hacer/Crear',phonetic:'tsukuru',emoji:'🔨'},
+      {en:'使う (つかう)',es:'Usar',phonetic:'tsukau',emoji:'🛠️'}
+    ]
+  },
+  verbs_daily: {
+    icon:'🌞',title:'Verbos del Día a Día',level:'N5',
+    words:[
+      {en:'起きる (おきる)',es:'Levantarse',phonetic:'okiru',emoji:'⏰'},
+      {en:'洗う (あらう)',es:'Lavar',phonetic:'arau',emoji:'🧼'},
+      {en:'着る (きる)',es:'Vestirse',phonetic:'kiru',emoji:'👔'},
+      {en:'出かける (でかける)',es:'Salir',phonetic:'dekakeru',emoji:'🚪'},
+      {en:'働く (はたらく)',es:'Trabajar',phonetic:'hataraku',emoji:'💼'},
+      {en:'勉強する (べんきょう)',es:'Estudiar',phonetic:'benkyou suru',emoji:'📚'},
+      {en:'料理する (りょうり)',es:'Cocinar',phonetic:'ryouri suru',emoji:'👨‍🍳'},
+      {en:'掃除する (そうじ)',es:'Limpiar',phonetic:'souji suru',emoji:'🧹'},
+      {en:'洗濯する (せんたく)',es:'Lavar ropa',phonetic:'sentaku suru',emoji:'🧺'},
+      {en:'シャワーを浴びる',es:'Ducharse',phonetic:'shawaa wo abiru',emoji:'🚿'},
+      {en:'歯を磨く (はをみがく)',es:'Cepillarse dientes',phonetic:'ha wo migaku',emoji:'🪥'},
+      {en:'電話する (でんわ)',es:'Llamar por teléfono',phonetic:'denwa suru',emoji:'📞'},
+      {en:'散歩する (さんぽ)',es:'Pasear',phonetic:'sanpo suru',emoji:'🌳'},
+      {en:'運動する (うんどう)',es:'Hacer ejercicio',phonetic:'undou suru',emoji:'🏋️'},
+      {en:'寝る (ねる)',es:'Acostarse',phonetic:'neru',emoji:'🛏️'}
+    ]
+  },
+  house: {
+    icon:'🏠',title:'La Casa',level:'N5',
+    words:[
+      {en:'家 (いえ/うち)',es:'Casa',phonetic:'ie/uchi',emoji:'🏠'},
+      {en:'部屋 (へや)',es:'Habitación',phonetic:'heya',emoji:'🚪'},
+      {en:'台所 (だいどころ)',es:'Cocina',phonetic:'daidokoro',emoji:'🍳'},
+      {en:'トイレ',es:'Baño',phonetic:'toire',emoji:'🚽'},
+      {en:'お風呂 (おふろ)',es:'Bañera',phonetic:'ofuro',emoji:'🛁'},
+      {en:'玄関 (げんかん)',es:'Entrada',phonetic:'genkan',emoji:'🚪'},
+      {en:'庭 (にわ)',es:'Jardín',phonetic:'niwa',emoji:'🌿'},
+      {en:'窓 (まど)',es:'Ventana',phonetic:'mado',emoji:'🪟'},
+      {en:'ドア',es:'Puerta',phonetic:'doa',emoji:'🚪'},
+      {en:'テーブル',es:'Mesa',phonetic:'teeburu',emoji:'🪑'},
+      {en:'椅子 (いす)',es:'Silla',phonetic:'isu',emoji:'💺'},
+      {en:'ベッド',es:'Cama',phonetic:'beddo',emoji:'🛏️'},
+      {en:'冷蔵庫 (れいぞうこ)',es:'Refrigerador',phonetic:'reizouko',emoji:'🧊'},
+      {en:'テレビ',es:'Televisión',phonetic:'terebi',emoji:'📺'},
+      {en:'エアコン',es:'Aire acondicionado',phonetic:'eakon',emoji:'❄️'}
+    ]
+  },
+  clothes: {
+    icon:'👕',title:'Ropa y Accesorios',level:'N4',
+    words:[
+      {en:'服 (ふく)',es:'Ropa',phonetic:'fuku',emoji:'👕'},
+      {en:'シャツ',es:'Camisa',phonetic:'shatsu',emoji:'👔'},
+      {en:'ズボン',es:'Pantalón',phonetic:'zubon',emoji:'👖'},
+      {en:'スカート',es:'Falda',phonetic:'sukaato',emoji:'👗'},
+      {en:'靴 (くつ)',es:'Zapatos',phonetic:'kutsu',emoji:'👟'},
+      {en:'靴下 (くつした)',es:'Calcetines',phonetic:'kutsushita',emoji:'🧦'},
+      {en:'帽子 (ぼうし)',es:'Sombrero/Gorra',phonetic:'boushi',emoji:'🧢'},
+      {en:'コート',es:'Abrigo',phonetic:'kooto',emoji:'🧥'},
+      {en:'かばん',es:'Bolso',phonetic:'kaban',emoji:'👜'},
+      {en:'時計 (とけい)',es:'Reloj',phonetic:'tokei',emoji:'⌚'},
+      {en:'めがね',es:'Lentes',phonetic:'megane',emoji:'👓'},
+      {en:'傘 (かさ)',es:'Paraguas',phonetic:'kasa',emoji:'☂️'}
+    ]
+  },
+  weather: {
+    icon:'🌤️',title:'Clima y Estaciones',level:'N4',
+    words:[
+      {en:'天気 (てんき)',es:'Clima',phonetic:'tenki',emoji:'🌤️'},
+      {en:'晴れ (はれ)',es:'Soleado',phonetic:'hare',emoji:'☀️'},
+      {en:'曇り (くもり)',es:'Nublado',phonetic:'kumori',emoji:'☁️'},
+      {en:'雨 (あめ)',es:'Lluvia',phonetic:'ame',emoji:'🌧️'},
+      {en:'雪 (ゆき)',es:'Nieve',phonetic:'yuki',emoji:'❄️'},
+      {en:'風 (かぜ)',es:'Viento',phonetic:'kaze',emoji:'💨'},
+      {en:'台風 (たいふう)',es:'Tifón',phonetic:'taifuu',emoji:'🌀'},
+      {en:'春 (はる)',es:'Primavera',phonetic:'haru',emoji:'🌸'},
+      {en:'夏 (なつ)',es:'Verano',phonetic:'natsu',emoji:'☀️'},
+      {en:'秋 (あき)',es:'Otoño',phonetic:'aki',emoji:'🍁'},
+      {en:'冬 (ふゆ)',es:'Invierno',phonetic:'fuyu',emoji:'⛄'},
+      {en:'暑い (あつい)',es:'Caliente (clima)',phonetic:'atsui',emoji:'🥵'},
+      {en:'寒い (さむい)',es:'Frío (clima)',phonetic:'samui',emoji:'🥶'},
+      {en:'涼しい (すずしい)',es:'Fresco',phonetic:'suzushii',emoji:'🍃'},
+      {en:'暖かい (あたたかい)',es:'Cálido',phonetic:'atatakai',emoji:'🌞'}
+    ]
+  },
+  professions: {
+    icon:'👨‍⚕️',title:'Profesiones',level:'N4',
+    words:[
+      {en:'先生 (せんせい)',es:'Profesor/Doctor',phonetic:'sensei',emoji:'👨‍🏫'},
+      {en:'医者 (いしゃ)',es:'Médico',phonetic:'isha',emoji:'👨‍⚕️'},
+      {en:'会社員 (かいしゃいん)',es:'Empleado',phonetic:'kaishain',emoji:'👨‍💼'},
+      {en:'学生 (がくせい)',es:'Estudiante',phonetic:'gakusei',emoji:'👨‍🎓'},
+      {en:'エンジニア',es:'Ingeniero',phonetic:'enjinia',emoji:'👷'},
+      {en:'看護師 (かんごし)',es:'Enfermero/a',phonetic:'kangoshi',emoji:'👩‍⚕️'},
+      {en:'警察官 (けいさつかん)',es:'Policía',phonetic:'keisatsukan',emoji:'👮'},
+      {en:'料理人 (りょうりにん)',es:'Chef',phonetic:'ryourinin',emoji:'👨‍🍳'},
+      {en:'運転手 (うんてんしゅ)',es:'Conductor',phonetic:'untenshu',emoji:'🚗'},
+      {en:'弁護士 (べんごし)',es:'Abogado',phonetic:'bengoshi',emoji:'⚖️'},
+      {en:'歌手 (かしゅ)',es:'Cantante',phonetic:'kashu',emoji:'🎤'},
+      {en:'俳優 (はいゆう)',es:'Actor',phonetic:'haiyuu',emoji:'🎭'}
+    ]
+  },
+  shopping: {
+    icon:'🛍️',title:'De Compras',level:'N4',
+    words:[
+      {en:'店 (みせ)',es:'Tienda',phonetic:'mise',emoji:'🏪'},
+      {en:'スーパー',es:'Supermercado',phonetic:'suupaa',emoji:'🛒'},
+      {en:'コンビニ',es:'Tienda 24h',phonetic:'konbini',emoji:'🏪'},
+      {en:'デパート',es:'Centro comercial',phonetic:'depaato',emoji:'🏬'},
+      {en:'値段 (ねだん)',es:'Precio',phonetic:'nedan',emoji:'💰'},
+      {en:'安い (やすい)',es:'Barato',phonetic:'yasui',emoji:'💲'},
+      {en:'高い (たかい)',es:'Caro',phonetic:'takai',emoji:'💸'},
+      {en:'レジ',es:'Caja registradora',phonetic:'reji',emoji:'🧾'},
+      {en:'袋 (ふくろ)',es:'Bolsa',phonetic:'fukuro',emoji:'🛍️'},
+      {en:'お釣り (おつり)',es:'Cambio (dinero)',phonetic:'otsuri',emoji:'💴'},
+      {en:'クレジットカード',es:'Tarjeta de crédito',phonetic:'kurejitto kaado',emoji:'💳'},
+      {en:'現金 (げんきん)',es:'Efectivo',phonetic:'genkin',emoji:'💵'}
+    ]
+  },
+  health: {
+    icon:'🏥',title:'Salud y Cuerpo',level:'N4',
+    words:[
+      {en:'病院 (びょういん)',es:'Hospital',phonetic:'byouin',emoji:'🏥'},
+      {en:'薬 (くすり)',es:'Medicina',phonetic:'kusuri',emoji:'💊'},
+      {en:'熱 (ねつ)',es:'Fiebre',phonetic:'netsu',emoji:'🤒'},
+      {en:'風邪 (かぜ)',es:'Resfriado',phonetic:'kaze',emoji:'🤧'},
+      {en:'痛い (いたい)',es:'Doloroso',phonetic:'itai',emoji:'😣'},
+      {en:'頭痛 (ずつう)',es:'Dolor de cabeza',phonetic:'zutsuu',emoji:'🤕'},
+      {en:'お腹 (おなか)',es:'Estómago',phonetic:'onaka',emoji:'🤰'},
+      {en:'元気 (げんき)',es:'Saludable/Energético',phonetic:'genki',emoji:'💪'},
+      {en:'疲れた (つかれた)',es:'Cansado',phonetic:'tsukareta',emoji:'😫'},
+      {en:'アレルギー',es:'Alergia',phonetic:'arerugii',emoji:'🤧'},
+      {en:'歯 (は)',es:'Diente',phonetic:'ha',emoji:'🦷'},
+      {en:'目 (め)',es:'Ojo',phonetic:'me',emoji:'👁️'}
+    ]
+  },
+  technology: {
+    icon:'💻',title:'Tecnología',level:'N3',
+    words:[
+      {en:'パソコン',es:'Computadora',phonetic:'pasokon',emoji:'💻'},
+      {en:'スマホ/携帯 (けいたい)',es:'Celular',phonetic:'sumaho/keitai',emoji:'📱'},
+      {en:'インターネット',es:'Internet',phonetic:'intaanetto',emoji:'🌐'},
+      {en:'メール',es:'Correo electrónico',phonetic:'meeru',emoji:'📧'},
+      {en:'写真 (しゃしん)',es:'Foto',phonetic:'shashin',emoji:'📷'},
+      {en:'動画 (どうが)',es:'Video',phonetic:'douga',emoji:'🎬'},
+      {en:'アプリ',es:'Aplicación',phonetic:'apuri',emoji:'📲'},
+      {en:'パスワード',es:'Contraseña',phonetic:'pasuwaado',emoji:'🔑'},
+      {en:'データ',es:'Datos',phonetic:'deeta',emoji:'💾'},
+      {en:'充電 (じゅうでん)',es:'Cargar batería',phonetic:'juuden',emoji:'🔋'},
+      {en:'Wi-Fi (ワイファイ)',es:'Wi-Fi',phonetic:'waifai',emoji:'📶'},
+      {en:'ダウンロード',es:'Descargar',phonetic:'daunroodo',emoji:'⬇️'}
+    ]
+  },
+  honorifics: {
+    icon:'🙇',title:'Expresiones de Cortesía',level:'N3',
+    words:[
+      {en:'お願いします (おねがい)',es:'Por favor',phonetic:'onegai shimasu',emoji:'🙏'},
+      {en:'失礼します (しつれい)',es:'Con permiso',phonetic:'shitsurei shimasu',emoji:'🙇'},
+      {en:'申し訳ありません (もうしわけ)',es:'Lo siento mucho',phonetic:'moushiwake arimasen',emoji:'😔'},
+      {en:'お疲れ様 (おつかれさま)',es:'Buen trabajo',phonetic:'otsukaresama',emoji:'💪'},
+      {en:'ご苦労様 (ごくろうさま)',es:'Gracias por su esfuerzo',phonetic:'gokurousama',emoji:'🤝'},
+      {en:'いらっしゃいませ',es:'Bienvenido (tienda)',phonetic:'irasshaimase',emoji:'🏪'},
+      {en:'かしこまりました',es:'Entendido (formal)',phonetic:'kashikomarimashita',emoji:'✅'},
+      {en:'承知しました (しょうち)',es:'Comprendido',phonetic:'shouchi shimashita',emoji:'📋'},
+      {en:'恐れ入ります (おそれいります)',es:'Lamento molestar',phonetic:'osore irimasu',emoji:'🙇‍♀️'},
+      {en:'お世話になります (おせわ)',es:'Gracias por su ayuda',phonetic:'osewa ni narimasu',emoji:'🤝'}
+    ]
+  },
+  counters_words: {
+    icon:'🔢',title:'Contadores Japoneses',level:'N4',
+    words:[
+      {en:'一つ (ひとつ)',es:'Uno (general)',phonetic:'hitotsu',emoji:'1️⃣'},
+      {en:'二つ (ふたつ)',es:'Dos (general)',phonetic:'futatsu',emoji:'2️⃣'},
+      {en:'三つ (みっつ)',es:'Tres (general)',phonetic:'mittsu',emoji:'3️⃣'},
+      {en:'一人 (ひとり)',es:'Una persona',phonetic:'hitori',emoji:'👤'},
+      {en:'二人 (ふたり)',es:'Dos personas',phonetic:'futari',emoji:'👥'},
+      {en:'一本 (いっぽん)',es:'Uno (cilíndrico)',phonetic:'ippon',emoji:'🥢'},
+      {en:'一枚 (いちまい)',es:'Uno (plano)',phonetic:'ichimai',emoji:'📄'},
+      {en:'一冊 (いっさつ)',es:'Un libro',phonetic:'issatsu',emoji:'📕'},
+      {en:'一匹 (いっぴき)',es:'Un animal pequeño',phonetic:'ippiki',emoji:'🐱'},
+      {en:'一台 (いちだい)',es:'Una máquina',phonetic:'ichidai',emoji:'🚗'},
+      {en:'一杯 (いっぱい)',es:'Un vaso/taza',phonetic:'ippai',emoji:'☕'},
+      {en:'一回 (いっかい)',es:'Una vez',phonetic:'ikkai',emoji:'🔄'}
+    ]
+  },
+  onomatopoeia: {
+    icon:'💥',title:'Onomatopeyas Japonesas',level:'N3',
+    words:[
+      {en:'ワクワク',es:'Emocionado/Ansioso',phonetic:'wakuwaku',emoji:'😆'},
+      {en:'ドキドキ',es:'Latido nervioso',phonetic:'dokidoki',emoji:'💓'},
+      {en:'ペラペラ',es:'Hablar con fluidez',phonetic:'perapera',emoji:'🗣️'},
+      {en:'ゴロゴロ',es:'Holgazanear/Trueno',phonetic:'gorogoro',emoji:'😴'},
+      {en:'ピカピカ',es:'Brillante/Reluciente',phonetic:'pikapika',emoji:'✨'},
+      {en:'フワフワ',es:'Esponjoso/Suave',phonetic:'fuwafuwa',emoji:'☁️'},
+      {en:'バラバラ',es:'Disperso/Separado',phonetic:'barabara',emoji:'🧩'},
+      {en:'ニコニコ',es:'Sonriente',phonetic:'nikoniko',emoji:'😊'},
+      {en:'イライラ',es:'Irritado/Frustrado',phonetic:'iraira',emoji:'😤'},
+      {en:'ボロボロ',es:'Destrozado/Agotado',phonetic:'boroboro',emoji:'😵'},
+      {en:'キラキラ',es:'Centelleante',phonetic:'kirakira',emoji:'⭐'},
+      {en:'メチャメチャ',es:'Desordenado/Mucho',phonetic:'mechamecha',emoji:'🌀'}
+    ]
   }
 };
 
@@ -1881,47 +2122,36 @@ const vocabularyDB = {
 // BASE DE DATOS DE VERBOS JAPONESES
 // ============================================
 const irregularVerbs = [
-  {base:'する',past:'した',pp:'している',es:'hacer',emoji:'✅'},
-  {base:'来る (くる)',past:'来た (きた)',pp:'来ている',es:'venir',emoji:'🚶'},
-  {base:'食べる (たべる)',past:'食べた',pp:'食べている',es:'comer',emoji:'🍽️'},
-  {base:'飲む (のむ)',past:'飲んだ',pp:'飲んでいる',es:'beber',emoji:'🥤'},
-  {base:'見る (みる)',past:'見た',pp:'見ている',es:'ver',emoji:'👀'},
-  {base:'聞く (きく)',past:'聞いた',pp:'聞いている',es:'escuchar',emoji:'👂'},
-  {base:'読む (よむ)',past:'読んだ',pp:'読んでいる',es:'leer',emoji:'📖'},
-  {base:'書く (かく)',past:'書いた',pp:'書いている',es:'escribir',emoji:'✍️'},
-  {base:'話す (はなす)',past:'話した',pp:'話している',es:'hablar',emoji:'🗣️'},
-  {base:'行く (いく)',past:'行った',pp:'行っている',es:'ir',emoji:'🚶'},
-  {base:'帰る (かえる)',past:'帰った',pp:'帰っている',es:'regresar',emoji:'🏠'},
-  {base:'起きる (おきる)',past:'起きた',pp:'起きている',es:'levantarse',emoji:'🌅'},
-  {base:'寝る (ねる)',past:'寝た',pp:'寝ている',es:'dormir',emoji:'😴'},
-  {base:'買う (かう)',past:'買った',pp:'買っている',es:'comprar',emoji:'🛒'},
-  {base:'待つ (まつ)',past:'待った',pp:'待っている',es:'esperar',emoji:'⏳'},
-  {base:'思う (おもう)',past:'思った',pp:'思っている',es:'pensar',emoji:'🤔'},
-  {base:'知る (しる)',past:'知った',pp:'知っている',es:'saber',emoji:'🧠'},
-  {base:'持つ (もつ)',past:'持った',pp:'持っている',es:'tener/llevar',emoji:'✋'},
-  {base:'使う (つかう)',past:'使った',pp:'使っている',es:'usar',emoji:'🔧'},
-  {base:'作る (つくる)',past:'作った',pp:'作っている',es:'crear/hacer',emoji:'🔨'},
-  {base:'歩く (あるく)',past:'歩いた',pp:'歩いている',es:'caminar',emoji:'🚶'},
-  {base:'走る (はしる)',past:'走った',pp:'走っている',es:'correr',emoji:'🏃'},
-  {base:'泳ぐ (およぐ)',past:'泳いだ',pp:'泳いでいる',es:'nadar',emoji:'🏊'},
-  {base:'遊ぶ (あそぶ)',past:'遊んだ',pp:'遊んでいる',es:'jugar',emoji:'🎮'},
-  {base:'働く (はたらく)',past:'働いた',pp:'働いている',es:'trabajar',emoji:'💼'},
-  {base:'住む (すむ)',past:'住んだ',pp:'住んでいる',es:'vivir/residir',emoji:'🏠'},
-  {base:'教える (おしえる)',past:'教えた',pp:'教えている',es:'enseñar',emoji:'👨‍🏫'},
-  {base:'学ぶ (まなぶ)',past:'学んだ',pp:'学んでいる',es:'aprender',emoji:'📚'},
-  {base:'立つ (たつ)',past:'立った',pp:'立っている',es:'ponerse de pie',emoji:'🧍'},
-  {base:'座る (すわる)',past:'座った',pp:'座っている',es:'sentarse',emoji:'🪑'},
-  {base:'開ける (あける)',past:'開けた',pp:'開けている',es:'abrir',emoji:'📖'},
-  {base:'閉める (しめる)',past:'閉めた',pp:'閉めている',es:'cerrar',emoji:'🚪'},
-  {base:'始める (はじめる)',past:'始めた',pp:'始めている',es:'empezar',emoji:'▶️'},
-  {base:'終わる (おわる)',past:'終わった',pp:'終わっている',es:'terminar',emoji:'🏁'},
-  {base:'分かる (わかる)',past:'分かった',pp:'分かっている',es:'entender',emoji:'💡'},
-  {base:'忘れる (わすれる)',past:'忘れた',pp:'忘れている',es:'olvidar',emoji:'😶‍🌫️'},
-  {base:'覚える (おぼえる)',past:'覚えた',pp:'覚えている',es:'memorizar',emoji:'🧠'},
-  {base:'出る (でる)',past:'出た',pp:'出ている',es:'salir',emoji:'🚪'},
-  {base:'入る (はいる)',past:'入った',pp:'入っている',es:'entrar',emoji:'🚶‍♂️'},
-  {base:'会う (あう)',past:'会った',pp:'会っている',es:'encontrarse',emoji:'🤝'},
-  {base:'言う (いう)',past:'言った',pp:'言っている',es:'decir',emoji:'💬'}
+  {base:'する',past:'します',pp:'して',nai:'しない',ta:'した',romaji:'suru',es:'Hacer',emoji:'✅'},
+  {base:'来る (くる)',past:'来ます',pp:'来て',nai:'来ない',ta:'来た',romaji:'kuru',es:'Venir',emoji:'🚶'},
+  {base:'食べる',past:'食べます',pp:'食べて',nai:'食べない',ta:'食べた',romaji:'taberu',es:'Comer',emoji:'🍽️'},
+  {base:'飲む',past:'飲みます',pp:'飲んで',nai:'飲まない',ta:'飲んだ',romaji:'nomu',es:'Beber',emoji:'🍵'},
+  {base:'見る',past:'見ます',pp:'見て',nai:'見ない',ta:'見た',romaji:'miru',es:'Ver',emoji:'👁️'},
+  {base:'行く',past:'行きます',pp:'行って',nai:'行かない',ta:'行った',romaji:'iku',es:'Ir',emoji:'🚶‍♂️'},
+  {base:'帰る',past:'帰ります',pp:'帰って',nai:'帰らない',ta:'帰った',romaji:'kaeru',es:'Volver',emoji:'🏠'},
+  {base:'書く',past:'書きます',pp:'書いて',nai:'書かない',ta:'書いた',romaji:'kaku',es:'Escribir',emoji:'✍️'},
+  {base:'読む',past:'読みます',pp:'読んで',nai:'読まない',ta:'読んだ',romaji:'yomu',es:'Leer',emoji:'📖'},
+  {base:'話す',past:'話します',pp:'話して',nai:'話さない',ta:'話した',romaji:'hanasu',es:'Hablar',emoji:'🗣️'},
+  {base:'聞く',past:'聞きます',pp:'聞いて',nai:'聞かない',ta:'聞いた',romaji:'kiku',es:'Escuchar/Preguntar',emoji:'👂'},
+  {base:'買う',past:'買います',pp:'買って',nai:'買わない',ta:'買った',romaji:'kau',es:'Comprar',emoji:'🛒'},
+  {base:'待つ',past:'待ちます',pp:'待って',nai:'待たない',ta:'待った',romaji:'matsu',es:'Esperar',emoji:'⏳'},
+  {base:'起きる',past:'起きます',pp:'起きて',nai:'起きない',ta:'起きた',romaji:'okiru',es:'Levantarse',emoji:'🌅'},
+  {base:'寝る',past:'寝ます',pp:'寝て',nai:'寝ない',ta:'寝た',romaji:'neru',es:'Dormir/Acostarse',emoji:'😴'},
+  {base:'走る',past:'走ります',pp:'走って',nai:'走らない',ta:'走った',romaji:'hashiru',es:'Correr',emoji:'🏃'},
+  {base:'泳ぐ',past:'泳ぎます',pp:'泳いで',nai:'泳がない',ta:'泳いだ',romaji:'oyogu',es:'Nadar',emoji:'🏊'},
+  {base:'遊ぶ',past:'遊びます',pp:'遊んで',nai:'遊ばない',ta:'遊んだ',romaji:'asobu',es:'Jugar',emoji:'🎮'},
+  {base:'歌う',past:'歌います',pp:'歌って',nai:'歌わない',ta:'歌った',romaji:'utau',es:'Cantar',emoji:'🎤'},
+  {base:'踊る',past:'踊ります',pp:'踊って',nai:'踊らない',ta:'踊った',romaji:'odoru',es:'Bailar',emoji:'💃'},
+  {base:'勉強する',past:'勉強します',pp:'勉強して',nai:'勉強しない',ta:'勉強した',romaji:'benkyou suru',es:'Estudiar',emoji:'📚'},
+  {base:'料理する',past:'料理します',pp:'料理して',nai:'料理しない',ta:'料理した',romaji:'ryouri suru',es:'Cocinar',emoji:'👨‍🍳'},
+  {base:'運動する',past:'運動します',pp:'運動して',nai:'運動しない',ta:'運動した',romaji:'undou suru',es:'Hacer ejercicio',emoji:'🏋️'},
+  {base:'散歩する',past:'散歩します',pp:'散歩して',nai:'散歩しない',ta:'散歩した',romaji:'sanpo suru',es:'Pasear',emoji:'🚶‍♀️'},
+  {base:'洗濯する',past:'洗濯します',pp:'洗濯して',nai:'洗濯しない',ta:'洗濯した',romaji:'sentaku suru',es:'Lavar ropa',emoji:'🧺'},
+  {base:'掃除する',past:'掃除します',pp:'掃除して',nai:'掃除しない',ta:'掃除した',romaji:'souji suru',es:'Limpiar',emoji:'🧹'},
+  {base:'結婚する',past:'結婚します',pp:'結婚して',nai:'結婚しない',ta:'結婚した',romaji:'kekkon suru',es:'Casarse',emoji:'💒'},
+  {base:'旅行する',past:'旅行します',pp:'旅行して',nai:'旅行しない',ta:'旅行した',romaji:'ryokou suru',es:'Viajar',emoji:'✈️'},
+  {base:'電話する',past:'電話します',pp:'電話して',nai:'電話しない',ta:'電話した',romaji:'denwa suru',es:'Llamar por tel.',emoji:'📞'},
+  {base:'仕事する',past:'仕事します',pp:'仕事して',nai:'仕事しない',ta:'仕事した',romaji:'shigoto suru',es:'Trabajar',emoji:'💼'}
 ];
 
 const regularVerbs = [];
@@ -1932,7 +2162,9 @@ const modalVerbs = [];
 // GRAMMAR DATABASE
 
 // ============================================
-// GRAMÁTICA JAPONESA COMPLETA
+
+// ============================================
+// GRAMÁTICA JAPONESA - CON ROMAJI Y AUDIO
 // ============================================
 const grammarDB = {
   basics: [
@@ -1944,54 +2176,67 @@ const grammarDB = {
         <h3>は (wa) - Marcador de Tema</h3>
         <p>Indica el tema de la oración, "en cuanto a..."</p>
         <div class="example-box">
-          <div class="example-english">私<strong>は</strong>学生です。</div>
-          <div class="example-spanish">Yo soy estudiante. (En cuanto a mí, soy estudiante)</div>
-          <div class="example-english">東京<strong>は</strong>大きいです。</div>
+          <div class="example-english">私<strong>は</strong>学生です。 <button class="speak-btn" onclick="speakWord('私は学生です')">🔊</button></div>
+          <div class="example-romaji">watashi <strong>wa</strong> gakusei desu.</div>
+          <div class="example-spanish">Yo soy estudiante.</div>
+          <div class="example-english">東京<strong>は</strong>大きいです。 <button class="speak-btn" onclick="speakWord('東京は大きいです')">🔊</button></div>
+          <div class="example-romaji">toukyou <strong>wa</strong> ookii desu.</div>
           <div class="example-spanish">Tokio es grande.</div>
         </div>
         <h3>が (ga) - Marcador de Sujeto</h3>
         <p>Marca el sujeto gramatical, enfatiza quién/qué hace la acción.</p>
         <div class="example-box">
-          <div class="example-english">猫<strong>が</strong>います。</div>
-          <div class="example-spanish">Hay un gato. (El gato es el que está)</div>
-          <div class="example-english">誰<strong>が</strong>来ましたか？</div>
+          <div class="example-english">猫<strong>が</strong>います。 <button class="speak-btn" onclick="speakWord('猫がいます')">🔊</button></div>
+          <div class="example-romaji">neko <strong>ga</strong> imasu.</div>
+          <div class="example-spanish">Hay un gato.</div>
+          <div class="example-english">誰<strong>が</strong>来ましたか？ <button class="speak-btn" onclick="speakWord('誰が来ましたか')">🔊</button></div>
+          <div class="example-romaji">dare <strong>ga</strong> kimashita ka?</div>
           <div class="example-spanish">¿Quién vino?</div>
         </div>
         <div class="warning-box">
           <strong>⚠️ Diferencia clave:</strong>
-          <br>• 私<strong>は</strong>猫が好きです = A mí me gustan los gatos (tema: yo)
-          <br>• 猫<strong>が</strong>好きです = Los gatos me gustan (enfatiza: gatos)
+          <br>• 私<strong>は</strong>猫が好きです <span class="romaji">(watashi wa neko ga suki desu)</span> = A mí me gustan los gatos
+          <br>• 猫<strong>が</strong>好きです <span class="romaji">(neko ga suki desu)</span> = Los gatos me gustan (enfatiza: gatos)
         </div>
       `
     },
     {
       title: 'Partículas を, に, で, へ',
-      titleEs: 'Marcadores de objeto, lugar y dirección',
+      titleEs: 'Objeto, lugar y dirección',
       icon: '📍',
       content: `
         <h3>を (wo) - Objeto Directo</h3>
         <div class="example-box">
-          <div class="example-english">パン<strong>を</strong>食べます。</div>
+          <div class="example-english">パン<strong>を</strong>食べます。 <button class="speak-btn" onclick="speakWord('パンを食べます')">🔊</button></div>
+          <div class="example-romaji">pan <strong>wo</strong> tabemasu.</div>
           <div class="example-spanish">Como pan.</div>
+          <div class="example-english">水<strong>を</strong>飲みます。 <button class="speak-btn" onclick="speakWord('水を飲みます')">🔊</button></div>
+          <div class="example-romaji">mizu <strong>wo</strong> nomimasu.</div>
+          <div class="example-spanish">Bebo agua.</div>
         </div>
         <h3>に (ni) - Destino / Tiempo / Ubicación</h3>
         <div class="example-box">
-          <div class="example-english">学校<strong>に</strong>行きます。</div>
+          <div class="example-english">学校<strong>に</strong>行きます。 <button class="speak-btn" onclick="speakWord('学校に行きます')">🔊</button></div>
+          <div class="example-romaji">gakkou <strong>ni</strong> ikimasu.</div>
           <div class="example-spanish">Voy a la escuela.</div>
-          <div class="example-english">七時<strong>に</strong>起きます。</div>
+          <div class="example-english">七時<strong>に</strong>起きます。 <button class="speak-btn" onclick="speakWord('七時に起きます')">🔊</button></div>
+          <div class="example-romaji">shichiji <strong>ni</strong> okimasu.</div>
           <div class="example-spanish">Me levanto a las 7.</div>
         </div>
         <h3>で (de) - Lugar de acción / Medio</h3>
         <div class="example-box">
-          <div class="example-english">図書館<strong>で</strong>勉強します。</div>
+          <div class="example-english">図書館<strong>で</strong>勉強します。 <button class="speak-btn" onclick="speakWord('図書館で勉強します')">🔊</button></div>
+          <div class="example-romaji">toshokan <strong>de</strong> benkyou shimasu.</div>
           <div class="example-spanish">Estudio en la biblioteca.</div>
-          <div class="example-english">バス<strong>で</strong>行きます。</div>
+          <div class="example-english">バス<strong>で</strong>行きます。 <button class="speak-btn" onclick="speakWord('バスで行きます')">🔊</button></div>
+          <div class="example-romaji">basu <strong>de</strong> ikimasu.</div>
           <div class="example-spanish">Voy en autobús.</div>
         </div>
         <h3>へ (e) - Dirección</h3>
         <div class="example-box">
-          <div class="example-english">日本<strong>へ</strong>行きたいです。</div>
-          <div class="example-spanish">Quiero ir a/hacia Japón.</div>
+          <div class="example-english">日本<strong>へ</strong>行きたいです。 <button class="speak-btn" onclick="speakWord('日本へ行きたいです')">🔊</button></div>
+          <div class="example-romaji">nihon <strong>e</strong> ikitai desu.</div>
+          <div class="example-spanish">Quiero ir hacia Japón.</div>
         </div>
       `
     },
@@ -2002,102 +2247,117 @@ const grammarDB = {
       content: `
         <h3>です (desu) - Ser/Estar</h3>
         <div class="table-container"><table>
-          <tr><th>Forma</th><th>Japonés</th><th>Español</th></tr>
-          <tr><td>Presente +</td><td>学生<strong>です</strong></td><td>Soy estudiante</td></tr>
-          <tr><td>Presente -</td><td>学生<strong>じゃないです</strong></td><td>No soy estudiante</td></tr>
-          <tr><td>Pasado +</td><td>学生<strong>でした</strong></td><td>Era estudiante</td></tr>
-          <tr><td>Pasado -</td><td>学生<strong>じゃなかったです</strong></td><td>No era estudiante</td></tr>
+          <tr><th>Forma</th><th>Japonés</th><th>Romaji</th><th>Español</th><th>🔊</th></tr>
+          <tr><td>Presente +</td><td>学生<strong>です</strong></td><td class="romaji">gakusei <strong>desu</strong></td><td>Soy estudiante</td><td><button class="speak-btn" onclick="speakWord('学生です')">🔊</button></td></tr>
+          <tr><td>Presente -</td><td>学生<strong>じゃないです</strong></td><td class="romaji">gakusei <strong>ja nai desu</strong></td><td>No soy estudiante</td><td><button class="speak-btn" onclick="speakWord('学生じゃないです')">🔊</button></td></tr>
+          <tr><td>Pasado +</td><td>学生<strong>でした</strong></td><td class="romaji">gakusei <strong>deshita</strong></td><td>Era estudiante</td><td><button class="speak-btn" onclick="speakWord('学生でした')">🔊</button></td></tr>
+          <tr><td>Pasado -</td><td>学生<strong>じゃなかったです</strong></td><td class="romaji">gakusei <strong>ja nakatta desu</strong></td><td>No era estudiante</td><td><button class="speak-btn" onclick="speakWord('学生じゃなかったです')">🔊</button></td></tr>
         </table></div>
         <h3>ます (masu) - Verbos Corteses</h3>
         <div class="table-container"><table>
-          <tr><th>Forma</th><th>Japonés</th><th>Español</th></tr>
-          <tr><td>Presente +</td><td>食べ<strong>ます</strong></td><td>Como</td></tr>
-          <tr><td>Presente -</td><td>食べ<strong>ません</strong></td><td>No como</td></tr>
-          <tr><td>Pasado +</td><td>食べ<strong>ました</strong></td><td>Comí</td></tr>
-          <tr><td>Pasado -</td><td>食べ<strong>ませんでした</strong></td><td>No comí</td></tr>
+          <tr><th>Forma</th><th>Japonés</th><th>Romaji</th><th>Español</th><th>🔊</th></tr>
+          <tr><td>Presente +</td><td>食べ<strong>ます</strong></td><td class="romaji">tabe<strong>masu</strong></td><td>Como</td><td><button class="speak-btn" onclick="speakWord('食べます')">🔊</button></td></tr>
+          <tr><td>Presente -</td><td>食べ<strong>ません</strong></td><td class="romaji">tabe<strong>masen</strong></td><td>No como</td><td><button class="speak-btn" onclick="speakWord('食べません')">🔊</button></td></tr>
+          <tr><td>Pasado +</td><td>食べ<strong>ました</strong></td><td class="romaji">tabe<strong>mashita</strong></td><td>Comí</td><td><button class="speak-btn" onclick="speakWord('食べました')">🔊</button></td></tr>
+          <tr><td>Pasado -</td><td>食べ<strong>ませんでした</strong></td><td class="romaji">tabe<strong>masen deshita</strong></td><td>No comí</td><td><button class="speak-btn" onclick="speakWord('食べませんでした')">🔊</button></td></tr>
         </table></div>
       `
     },
     {
-      title: 'Preguntas con か y の',
+      title: 'Preguntas con か',
       titleEs: 'Cómo hacer preguntas',
       icon: '❓',
       content: `
         <h3>か (ka) - Partícula de Pregunta</h3>
         <p>Se agrega al final de la oración para convertirla en pregunta.</p>
         <div class="example-box">
-          <div class="example-english">日本人です<strong>か</strong>？</div>
+          <div class="example-english">日本人です<strong>か</strong>？ <button class="speak-btn" onclick="speakWord('日本人ですか')">🔊</button></div>
+          <div class="example-romaji">nihonjin desu <strong>ka</strong>?</div>
           <div class="example-spanish">¿Es japonés?</div>
-          <div class="example-english">何を食べます<strong>か</strong>？</div>
+          <div class="example-english">何を食べます<strong>か</strong>？ <button class="speak-btn" onclick="speakWord('何を食べますか')">🔊</button></div>
+          <div class="example-romaji">nani wo tabemasu <strong>ka</strong>?</div>
           <div class="example-spanish">¿Qué comes?</div>
+          <div class="example-english">どこに行きます<strong>か</strong>？ <button class="speak-btn" onclick="speakWord('どこに行きますか')">🔊</button></div>
+          <div class="example-romaji">doko ni ikimasu <strong>ka</strong>?</div>
+          <div class="example-spanish">¿A dónde vas?</div>
         </div>
         <h3>Palabras interrogativas</h3>
         <div class="table-container"><table>
-          <tr><th>Japonés</th><th>Romaji</th><th>Español</th></tr>
-          <tr><td>何 (なに/なん)</td><td>nani/nan</td><td>Qué</td></tr>
-          <tr><td>誰 (だれ)</td><td>dare</td><td>Quién</td></tr>
-          <tr><td>どこ</td><td>doko</td><td>Dónde</td></tr>
-          <tr><td>いつ</td><td>itsu</td><td>Cuándo</td></tr>
-          <tr><td>どうして/なぜ</td><td>doushite/naze</td><td>Por qué</td></tr>
-          <tr><td>いくら</td><td>ikura</td><td>Cuánto (precio)</td></tr>
-          <tr><td>どう</td><td>dou</td><td>Cómo</td></tr>
+          <tr><th>Japonés</th><th>Romaji</th><th>Español</th><th>🔊</th></tr>
+          <tr><td>何 (なに/なん)</td><td class="romaji">nani/nan</td><td>Qué</td><td><button class="speak-btn" onclick="speakWord('何')">🔊</button></td></tr>
+          <tr><td>誰 (だれ)</td><td class="romaji">dare</td><td>Quién</td><td><button class="speak-btn" onclick="speakWord('誰')">🔊</button></td></tr>
+          <tr><td>どこ</td><td class="romaji">doko</td><td>Dónde</td><td><button class="speak-btn" onclick="speakWord('どこ')">🔊</button></td></tr>
+          <tr><td>いつ</td><td class="romaji">itsu</td><td>Cuándo</td><td><button class="speak-btn" onclick="speakWord('いつ')">🔊</button></td></tr>
+          <tr><td>どうして/なぜ</td><td class="romaji">doushite/naze</td><td>Por qué</td><td><button class="speak-btn" onclick="speakWord('どうして')">🔊</button></td></tr>
+          <tr><td>いくら</td><td class="romaji">ikura</td><td>Cuánto (precio)</td><td><button class="speak-btn" onclick="speakWord('いくら')">🔊</button></td></tr>
+          <tr><td>どう</td><td class="romaji">dou</td><td>Cómo</td><td><button class="speak-btn" onclick="speakWord('どう')">🔊</button></td></tr>
+          <tr><td>どれ</td><td class="romaji">dore</td><td>Cuál</td><td><button class="speak-btn" onclick="speakWord('どれ')">🔊</button></td></tr>
+          <tr><td>どんな</td><td class="romaji">donna</td><td>Qué tipo de</td><td><button class="speak-btn" onclick="speakWord('どんな')">🔊</button></td></tr>
         </table></div>
-      `
-    },
-    {
-      title: 'Conectores と, も, や',
-      titleEs: 'Conjunciones básicas',
-      icon: '🔗',
-      content: `
-        <h3>と (to) - "Y" (lista completa)</h3>
-        <div class="example-box">
-          <div class="example-english">犬<strong>と</strong>猫が好きです。</div>
-          <div class="example-spanish">Me gustan los perros y los gatos (solo esos).</div>
-        </div>
-        <h3>も (mo) - "También"</h3>
-        <div class="example-box">
-          <div class="example-english">私<strong>も</strong>学生です。</div>
-          <div class="example-spanish">Yo también soy estudiante.</div>
-        </div>
-        <h3>や (ya) - "Y" (lista incompleta)</h3>
-        <div class="example-box">
-          <div class="example-english">りんご<strong>や</strong>バナナを買いました。</div>
-          <div class="example-spanish">Compré manzanas, bananas (y otras cosas).</div>
-        </div>
-        <h3>けど / でも - "Pero"</h3>
-        <div class="example-box">
-          <div class="example-english">高い<strong>けど</strong>、おいしいです。</div>
-          <div class="example-spanish">Es caro, pero es delicioso.</div>
-          <div class="example-english"><strong>でも</strong>、楽しかったです。</div>
-          <div class="example-spanish">Pero fue divertido.</div>
-        </div>
       `
     },
     {
       title: 'Adjetivos い y な',
-      titleEs: 'Tipos de adjetivos japoneses',
+      titleEs: 'Tipos de adjetivos',
       icon: '🌟',
       content: `
         <h3>Adjetivos い (i-keiyoushi)</h3>
         <div class="table-container"><table>
-          <tr><th>Forma</th><th>Ejemplo (大きい)</th><th>Español</th></tr>
-          <tr><td>Presente +</td><td>大き<strong>い</strong>です</td><td>Es grande</td></tr>
-          <tr><td>Presente -</td><td>大き<strong>くない</strong>です</td><td>No es grande</td></tr>
-          <tr><td>Pasado +</td><td>大き<strong>かった</strong>です</td><td>Era grande</td></tr>
-          <tr><td>Pasado -</td><td>大き<strong>くなかった</strong>です</td><td>No era grande</td></tr>
+          <tr><th>Forma</th><th>大きい (grande)</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>Presente +</td><td>大き<strong>い</strong>です</td><td class="romaji">ooki<strong>i</strong> desu</td><td><button class="speak-btn" onclick="speakWord('大きいです')">🔊</button></td></tr>
+          <tr><td>Presente -</td><td>大き<strong>くない</strong>です</td><td class="romaji">ooki<strong>kunai</strong> desu</td><td><button class="speak-btn" onclick="speakWord('大きくないです')">🔊</button></td></tr>
+          <tr><td>Pasado +</td><td>大き<strong>かった</strong>です</td><td class="romaji">ooki<strong>katta</strong> desu</td><td><button class="speak-btn" onclick="speakWord('大きかったです')">🔊</button></td></tr>
+          <tr><td>Pasado -</td><td>大き<strong>くなかった</strong>です</td><td class="romaji">ooki<strong>kunakatta</strong> desu</td><td><button class="speak-btn" onclick="speakWord('大きくなかったです')">🔊</button></td></tr>
         </table></div>
         <h3>Adjetivos な (na-keiyoushi)</h3>
         <div class="table-container"><table>
-          <tr><th>Forma</th><th>Ejemplo (静か)</th><th>Español</th></tr>
-          <tr><td>Presente +</td><td>静か<strong>です</strong></td><td>Es tranquilo</td></tr>
-          <tr><td>Presente -</td><td>静か<strong>じゃないです</strong></td><td>No es tranquilo</td></tr>
-          <tr><td>Pasado +</td><td>静か<strong>でした</strong></td><td>Era tranquilo</td></tr>
-          <tr><td>Pasado -</td><td>静か<strong>じゃなかったです</strong></td><td>No era tranquilo</td></tr>
+          <tr><th>Forma</th><th>静か (tranquilo)</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>Presente +</td><td>静か<strong>です</strong></td><td class="romaji">shizuka <strong>desu</strong></td><td><button class="speak-btn" onclick="speakWord('静かです')">🔊</button></td></tr>
+          <tr><td>Presente -</td><td>静か<strong>じゃないです</strong></td><td class="romaji">shizuka <strong>ja nai desu</strong></td><td><button class="speak-btn" onclick="speakWord('静かじゃないです')">🔊</button></td></tr>
+          <tr><td>Pasado +</td><td>静か<strong>でした</strong></td><td class="romaji">shizuka <strong>deshita</strong></td><td><button class="speak-btn" onclick="speakWord('静かでした')">🔊</button></td></tr>
+          <tr><td>Pasado -</td><td>静か<strong>じゃなかったです</strong></td><td class="romaji">shizuka <strong>ja nakatta desu</strong></td><td><button class="speak-btn" onclick="speakWord('静かじゃなかったです')">🔊</button></td></tr>
         </table></div>
-        <div class="warning-box">
-          <strong>⚠️ Nota:</strong> Los adjetivos な necesitan な antes de un sustantivo:
-          <br>• 静か<strong>な</strong>部屋 = habitación tranquila
-          <br>• きれい<strong>な</strong>花 = flor bonita
+        <div class="example-box">
+          <div class="example-english">この映画はおもしろいです。 <button class="speak-btn" onclick="speakWord('この映画はおもしろいです')">🔊</button></div>
+          <div class="example-romaji">kono eiga wa omoshiroi desu.</div>
+          <div class="example-spanish">Esta película es interesante.</div>
+          <div class="example-english">きれいな花ですね。 <button class="speak-btn" onclick="speakWord('きれいな花ですね')">🔊</button></div>
+          <div class="example-romaji">kirei na hana desu ne.</div>
+          <div class="example-spanish">Es una flor bonita, ¿verdad?</div>
+        </div>
+      `
+    },
+    {
+      title: 'Conectores básicos',
+      titleEs: 'Y, también, pero',
+      icon: '🔗',
+      content: `
+        <h3>と (to) - "Y" (lista completa)</h3>
+        <div class="example-box">
+          <div class="example-english">犬<strong>と</strong>猫が好きです。 <button class="speak-btn" onclick="speakWord('犬と猫が好きです')">🔊</button></div>
+          <div class="example-romaji">inu <strong>to</strong> neko ga suki desu.</div>
+          <div class="example-spanish">Me gustan los perros y los gatos.</div>
+        </div>
+        <h3>も (mo) - "También"</h3>
+        <div class="example-box">
+          <div class="example-english">私<strong>も</strong>学生です。 <button class="speak-btn" onclick="speakWord('私も学生です')">🔊</button></div>
+          <div class="example-romaji">watashi <strong>mo</strong> gakusei desu.</div>
+          <div class="example-spanish">Yo también soy estudiante.</div>
+        </div>
+        <h3>けど / でも - "Pero"</h3>
+        <div class="example-box">
+          <div class="example-english">高い<strong>けど</strong>、おいしいです。 <button class="speak-btn" onclick="speakWord('高いけど、おいしいです')">🔊</button></div>
+          <div class="example-romaji">takai <strong>kedo</strong>, oishii desu.</div>
+          <div class="example-spanish">Es caro, pero es delicioso.</div>
+          <div class="example-english"><strong>でも</strong>、楽しかったです。 <button class="speak-btn" onclick="speakWord('でも、楽しかったです')">🔊</button></div>
+          <div class="example-romaji"><strong>demo</strong>, tanoshikatta desu.</div>
+          <div class="example-spanish">Pero fue divertido.</div>
+        </div>
+        <h3>から / ので - "Porque"</h3>
+        <div class="example-box">
+          <div class="example-english">暑い<strong>から</strong>、窓を開けます。 <button class="speak-btn" onclick="speakWord('暑いから、窓を開けます')">🔊</button></div>
+          <div class="example-romaji">atsui <strong>kara</strong>, mado wo akemasu.</div>
+          <div class="example-spanish">Porque hace calor, abro la ventana.</div>
         </div>
       `
     }
@@ -2105,51 +2365,35 @@ const grammarDB = {
   intermediate: [
     {
       title: 'Forma て (Te-form)',
-      titleEs: 'La forma más importante del japonés',
+      titleEs: 'La forma más importante',
       icon: '⚡',
       content: `
         <h3>Cómo formar la forma て</h3>
-        <p>La forma て es esencial para conectar acciones, pedir, dar permiso y más.</p>
         <div class="table-container"><table>
-          <tr><th>Terminación</th><th>Diccionario</th><th>Forma て</th></tr>
-          <tr><td>る (ichidan)</td><td>食べる</td><td>食べ<strong>て</strong></td></tr>
-          <tr><td>う/つ/る (godan)</td><td>買う/待つ/帰る</td><td>買っ<strong>て</strong>/待っ<strong>て</strong>/帰っ<strong>て</strong></td></tr>
-          <tr><td>む/ぶ/ぬ</td><td>読む/遊ぶ/死ぬ</td><td>読ん<strong>で</strong>/遊ん<strong>で</strong>/死ん<strong>で</strong></td></tr>
-          <tr><td>く</td><td>書く</td><td>書い<strong>て</strong></td></tr>
-          <tr><td>ぐ</td><td>泳ぐ</td><td>泳い<strong>で</strong></td></tr>
-          <tr><td>す</td><td>話す</td><td>話し<strong>て</strong></td></tr>
-          <tr><td>irregular</td><td>する/来る</td><td>し<strong>て</strong>/来(き)<strong>て</strong></td></tr>
+          <tr><th>Terminación</th><th>Diccionario</th><th>Forma て</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>る (ichidan)</td><td>食べる</td><td>食べ<strong>て</strong></td><td class="romaji">tabe<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('食べて')">🔊</button></td></tr>
+          <tr><td>う/つ/る</td><td>買う/待つ/帰る</td><td>買っ<strong>て</strong></td><td class="romaji">kat<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('買って')">🔊</button></td></tr>
+          <tr><td>む/ぶ/ぬ</td><td>読む/遊ぶ</td><td>読ん<strong>で</strong></td><td class="romaji">yon<strong>de</strong></td><td><button class="speak-btn" onclick="speakWord('読んで')">🔊</button></td></tr>
+          <tr><td>く</td><td>書く</td><td>書い<strong>て</strong></td><td class="romaji">kai<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('書いて')">🔊</button></td></tr>
+          <tr><td>ぐ</td><td>泳ぐ</td><td>泳い<strong>で</strong></td><td class="romaji">oyoi<strong>de</strong></td><td><button class="speak-btn" onclick="speakWord('泳いで')">🔊</button></td></tr>
+          <tr><td>す</td><td>話す</td><td>話し<strong>て</strong></td><td class="romaji">hanashi<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('話して')">🔊</button></td></tr>
+          <tr><td>する</td><td>する</td><td>し<strong>て</strong></td><td class="romaji">shi<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('して')">🔊</button></td></tr>
+          <tr><td>来る</td><td>来る</td><td>来(き)<strong>て</strong></td><td class="romaji">ki<strong>te</strong></td><td><button class="speak-btn" onclick="speakWord('来て')">🔊</button></td></tr>
         </table></div>
         <h3>Usos de la forma て</h3>
         <div class="example-box">
-          <div class="example-english">食べ<strong>て</strong>ください。</div>
+          <div class="example-english">食べ<strong>て</strong>ください。 <button class="speak-btn" onclick="speakWord('食べてください')">🔊</button></div>
+          <div class="example-romaji">tabe<strong>te</strong> kudasai.</div>
           <div class="example-spanish">Por favor coma. (petición)</div>
-          <div class="example-english">食べ<strong>て</strong>もいいですか？</div>
+          <div class="example-english">食べ<strong>て</strong>もいいですか？ <button class="speak-btn" onclick="speakWord('食べてもいいですか')">🔊</button></div>
+          <div class="example-romaji">tabe<strong>te</strong> mo ii desu ka?</div>
           <div class="example-spanish">¿Puedo comer? (permiso)</div>
-          <div class="example-english">食べ<strong>て</strong>います。</div>
+          <div class="example-english">食べ<strong>て</strong>います。 <button class="speak-btn" onclick="speakWord('食べています')">🔊</button></div>
+          <div class="example-romaji">tabe<strong>te</strong> imasu.</div>
           <div class="example-spanish">Estoy comiendo. (progresivo)</div>
-        </div>
-      `
-    },
-    {
-      title: 'Forma ない (Negación)',
-      titleEs: 'Cómo negar en japonés',
-      icon: '🚫',
-      content: `
-        <h3>Conjugación negativa informal</h3>
-        <div class="table-container"><table>
-          <tr><th>Tipo</th><th>Diccionario</th><th>Negativo</th></tr>
-          <tr><td>Ichidan (る)</td><td>食べる</td><td>食べ<strong>ない</strong></td></tr>
-          <tr><td>Godan (う)</td><td>買う</td><td>買わ<strong>ない</strong></td></tr>
-          <tr><td>Godan (く)</td><td>書く</td><td>書か<strong>ない</strong></td></tr>
-          <tr><td>Godan (す)</td><td>話す</td><td>話さ<strong>ない</strong></td></tr>
-          <tr><td>Godan (む)</td><td>読む</td><td>読ま<strong>ない</strong></td></tr>
-          <tr><td>Irregular</td><td>する</td><td>し<strong>ない</strong></td></tr>
-          <tr><td>Irregular</td><td>来る</td><td>来(こ)<strong>ない</strong></td></tr>
-        </table></div>
-        <div class="example-box">
-          <div class="example-english">今日は学校に行か<strong>ない</strong>。</div>
-          <div class="example-spanish">Hoy no voy a la escuela.</div>
+          <div class="example-english">食べ<strong>て</strong>はいけません。 <button class="speak-btn" onclick="speakWord('食べてはいけません')">🔊</button></div>
+          <div class="example-romaji">tabe<strong>te</strong> wa ikemasen.</div>
+          <div class="example-spanish">No se puede comer. (prohibición)</div>
         </div>
       `
     },
@@ -2158,51 +2402,71 @@ const grammarDB = {
       titleEs: 'Expresar deseos',
       icon: '💭',
       content: `
-        <h3>Estructura: Raíz del verbo + たい</h3>
+        <h3>Raíz del verbo + たい</h3>
         <div class="table-container"><table>
-          <tr><th>Verbo</th><th>〜たい</th><th>Español</th></tr>
-          <tr><td>食べる</td><td>食べ<strong>たい</strong></td><td>Quiero comer</td></tr>
-          <tr><td>行く</td><td>行き<strong>たい</strong></td><td>Quiero ir</td></tr>
-          <tr><td>見る</td><td>見<strong>たい</strong></td><td>Quiero ver</td></tr>
-          <tr><td>買う</td><td>買い<strong>たい</strong></td><td>Quiero comprar</td></tr>
+          <tr><th>Verbo</th><th>〜たい</th><th>Romaji</th><th>Español</th><th>🔊</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>たい</strong></td><td class="romaji">tabe<strong>tai</strong></td><td>Quiero comer</td><td><button class="speak-btn" onclick="speakWord('食べたい')">🔊</button></td></tr>
+          <tr><td>行く</td><td>行き<strong>たい</strong></td><td class="romaji">iki<strong>tai</strong></td><td>Quiero ir</td><td><button class="speak-btn" onclick="speakWord('行きたい')">🔊</button></td></tr>
+          <tr><td>見る</td><td>見<strong>たい</strong></td><td class="romaji">mi<strong>tai</strong></td><td>Quiero ver</td><td><button class="speak-btn" onclick="speakWord('見たい')">🔊</button></td></tr>
+          <tr><td>買う</td><td>買い<strong>たい</strong></td><td class="romaji">kai<strong>tai</strong></td><td>Quiero comprar</td><td><button class="speak-btn" onclick="speakWord('買いたい')">🔊</button></td></tr>
         </table></div>
         <div class="example-box">
-          <div class="example-english">日本に行き<strong>たい</strong>です。</div>
+          <div class="example-english">日本に行き<strong>たい</strong>です。 <button class="speak-btn" onclick="speakWord('日本に行きたいです')">🔊</button></div>
+          <div class="example-romaji">nihon ni iki<strong>tai</strong> desu.</div>
           <div class="example-spanish">Quiero ir a Japón.</div>
-          <div class="example-english">寿司を食べ<strong>たくない</strong>です。</div>
+          <div class="example-english">寿司を食べ<strong>たくない</strong>です。 <button class="speak-btn" onclick="speakWord('寿司を食べたくないです')">🔊</button></div>
+          <div class="example-romaji">sushi wo tabe<strong>takunai</strong> desu.</div>
           <div class="example-spanish">No quiero comer sushi.</div>
-        </div>
-        <div class="warning-box">
-          <strong>⚠️ Nota:</strong> 〜たい se conjuga como adjetivo い:
-          <br>• 食べたかった = Quería comer (pasado)
-          <br>• 食べたくなかった = No quería comer
+          <div class="example-english">何がし<strong>たい</strong>ですか？ <button class="speak-btn" onclick="speakWord('何がしたいですか')">🔊</button></div>
+          <div class="example-romaji">nani ga shi<strong>tai</strong> desu ka?</div>
+          <div class="example-spanish">¿Qué quieres hacer?</div>
         </div>
       `
     },
     {
-      title: 'Condicionales ば / たら / と / なら',
+      title: 'Forma ない (Negación)',
+      titleEs: 'Cómo negar en japonés',
+      icon: '🚫',
+      content: `
+        <h3>Conjugación negativa</h3>
+        <div class="table-container"><table>
+          <tr><th>Tipo</th><th>Diccionario</th><th>Negativo</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>Ichidan</td><td>食べる</td><td>食べ<strong>ない</strong></td><td class="romaji">tabe<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('食べない')">🔊</button></td></tr>
+          <tr><td>Godan (う)</td><td>買う</td><td>買わ<strong>ない</strong></td><td class="romaji">kawa<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('買わない')">🔊</button></td></tr>
+          <tr><td>Godan (く)</td><td>書く</td><td>書か<strong>ない</strong></td><td class="romaji">kaka<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('書かない')">🔊</button></td></tr>
+          <tr><td>Godan (す)</td><td>話す</td><td>話さ<strong>ない</strong></td><td class="romaji">hanasa<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('話さない')">🔊</button></td></tr>
+          <tr><td>する</td><td>する</td><td>し<strong>ない</strong></td><td class="romaji">shi<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('しない')">🔊</button></td></tr>
+          <tr><td>来る</td><td>来る</td><td>来(こ)<strong>ない</strong></td><td class="romaji">ko<strong>nai</strong></td><td><button class="speak-btn" onclick="speakWord('来ない')">🔊</button></td></tr>
+        </table></div>
+        <div class="example-box">
+          <div class="example-english">今日は学校に行か<strong>ない</strong>。 <button class="speak-btn" onclick="speakWord('今日は学校に行かない')">🔊</button></div>
+          <div class="example-romaji">kyou wa gakkou ni ika<strong>nai</strong>.</div>
+          <div class="example-spanish">Hoy no voy a la escuela.</div>
+          <div class="example-english">お酒を飲ま<strong>ない</strong>。 <button class="speak-btn" onclick="speakWord('お酒を飲まない')">🔊</button></div>
+          <div class="example-romaji">osake wo noma<strong>nai</strong>.</div>
+          <div class="example-spanish">No bebo alcohol.</div>
+        </div>
+      `
+    },
+    {
+      title: 'Condicionales ば / たら',
       titleEs: 'Si... entonces...',
       icon: '🔀',
       content: `
-        <h3>〜ば (ba) - Condicional general</h3>
+        <h3>〜ば (ba) - Condicional</h3>
         <div class="example-box">
-          <div class="example-english">安けれ<strong>ば</strong>、買います。</div>
+          <div class="example-english">安けれ<strong>ば</strong>、買います。 <button class="speak-btn" onclick="speakWord('安ければ、買います')">🔊</button></div>
+          <div class="example-romaji">yasukere<strong>ba</strong>, kaimasu.</div>
           <div class="example-spanish">Si es barato, lo compro.</div>
         </div>
-        <h3>〜たら (tara) - Cuando/Si (completado)</h3>
+        <h3>〜たら (tara) - Cuando/Si</h3>
         <div class="example-box">
-          <div class="example-english">雨が降っ<strong>たら</strong>、家にいます。</div>
+          <div class="example-english">雨が降っ<strong>たら</strong>、家にいます。 <button class="speak-btn" onclick="speakWord('雨が降ったら、家にいます')">🔊</button></div>
+          <div class="example-romaji">ame ga fut<strong>tara</strong>, ie ni imasu.</div>
           <div class="example-spanish">Si llueve, me quedo en casa.</div>
-        </div>
-        <h3>〜と (to) - Resultado natural/automático</h3>
-        <div class="example-box">
-          <div class="example-english">春になる<strong>と</strong>、桜が咲きます。</div>
-          <div class="example-spanish">Cuando llega primavera, florecen los cerezos.</div>
-        </div>
-        <h3>〜なら (nara) - Si (suposición)</h3>
-        <div class="example-box">
-          <div class="example-english">日本に行く<strong>なら</strong>、京都がいいですよ。</div>
-          <div class="example-spanish">Si vas a Japón, Kioto está bien.</div>
+          <div class="example-english">日本に行っ<strong>たら</strong>、寿司を食べます。 <button class="speak-btn" onclick="speakWord('日本に行ったら、寿司を食べます')">🔊</button></div>
+          <div class="example-romaji">nihon ni it<strong>tara</strong>, sushi wo tabemasu.</div>
+          <div class="example-spanish">Si/Cuando vaya a Japón, como sushi.</div>
         </div>
       `
     },
@@ -2211,133 +2475,108 @@ const grammarDB = {
       titleEs: 'Cómo contar objetos',
       icon: '🔢',
       content: `
-        <h3>Sistema de contadores</h3>
-        <p>En japonés se usan diferentes contadores según el tipo de objeto.</p>
         <div class="table-container"><table>
-          <tr><th>Contador</th><th>Se usa para</th><th>Ejemplo</th></tr>
-          <tr><td>つ (tsu)</td><td>Objetos generales</td><td>一つ、二つ、三つ</td></tr>
-          <tr><td>人 (nin)</td><td>Personas</td><td>一人、二人、三人</td></tr>
-          <tr><td>匹 (hiki)</td><td>Animales pequeños</td><td>一匹、二匹、三匹</td></tr>
-          <tr><td>本 (hon)</td><td>Objetos largos/cilíndricos</td><td>一本、二本、三本</td></tr>
-          <tr><td>枚 (mai)</td><td>Objetos planos</td><td>一枚、二枚、三枚</td></tr>
-          <tr><td>冊 (satsu)</td><td>Libros</td><td>一冊、二冊、三冊</td></tr>
-          <tr><td>台 (dai)</td><td>Máquinas/vehículos</td><td>一台、二台、三台</td></tr>
-          <tr><td>杯 (hai)</td><td>Vasos/tazas</td><td>一杯、二杯、三杯</td></tr>
+          <tr><th>Contador</th><th>Se usa para</th><th>Romaji</th><th>Ejemplo</th><th>🔊</th></tr>
+          <tr><td>つ</td><td>General</td><td class="romaji">-tsu</td><td>一つ、二つ、三つ <span class="romaji">(hitotsu, futatsu, mittsu)</span></td><td><button class="speak-btn" onclick="speakWord('一つ、二つ、三つ')">🔊</button></td></tr>
+          <tr><td>人</td><td>Personas</td><td class="romaji">-nin</td><td>一人、二人、三人 <span class="romaji">(hitori, futari, sannin)</span></td><td><button class="speak-btn" onclick="speakWord('一人、二人、三人')">🔊</button></td></tr>
+          <tr><td>匹</td><td>Animales peq.</td><td class="romaji">-hiki</td><td>一匹、二匹 <span class="romaji">(ippiki, nihiki)</span></td><td><button class="speak-btn" onclick="speakWord('一匹、二匹')">🔊</button></td></tr>
+          <tr><td>本</td><td>Largos/Cilíndricos</td><td class="romaji">-hon</td><td>一本、二本 <span class="romaji">(ippon, nihon)</span></td><td><button class="speak-btn" onclick="speakWord('一本、二本')">🔊</button></td></tr>
+          <tr><td>枚</td><td>Planos</td><td class="romaji">-mai</td><td>一枚、二枚 <span class="romaji">(ichimai, nimai)</span></td><td><button class="speak-btn" onclick="speakWord('一枚、二枚')">🔊</button></td></tr>
+          <tr><td>冊</td><td>Libros</td><td class="romaji">-satsu</td><td>一冊、二冊 <span class="romaji">(issatsu, nisatsu)</span></td><td><button class="speak-btn" onclick="speakWord('一冊、二冊')">🔊</button></td></tr>
+          <tr><td>杯</td><td>Vasos/Tazas</td><td class="romaji">-hai</td><td>一杯、二杯 <span class="romaji">(ippai, nihai)</span></td><td><button class="speak-btn" onclick="speakWord('一杯、二杯')">🔊</button></td></tr>
         </table></div>
         <div class="example-box">
-          <div class="example-english">猫を三<strong>匹</strong>飼っています。</div>
+          <div class="example-english">猫を三匹飼っています。 <button class="speak-btn" onclick="speakWord('猫を三匹飼っています')">🔊</button></div>
+          <div class="example-romaji">neko wo sanbiki katte imasu.</div>
           <div class="example-spanish">Tengo tres gatos.</div>
-          <div class="example-english">水を一<strong>杯</strong>ください。</div>
-          <div class="example-spanish">Un vaso de agua, por favor.</div>
+          <div class="example-english">コーヒーを一杯ください。 <button class="speak-btn" onclick="speakWord('コーヒーを一杯ください')">🔊</button></div>
+          <div class="example-romaji">koohii wo ippai kudasai.</div>
+          <div class="example-spanish">Un café, por favor.</div>
         </div>
       `
     }
   ],
   advanced: [
     {
-      title: 'Keigo (敬語) - Lenguaje Honorífico',
-      titleEs: 'Japonés formal y de negocios',
+      title: 'Keigo (敬語)',
+      titleEs: 'Lenguaje Honorífico',
       icon: '👔',
       content: `
         <h3>Tres niveles de Keigo</h3>
         <div class="table-container"><table>
-          <tr><th>Tipo</th><th>Función</th><th>Ejemplo</th></tr>
-          <tr><td><strong>尊敬語</strong> (Sonkeigo)</td><td>Elevar al otro</td><td>いらっしゃる (ir/estar)</td></tr>
-          <tr><td><strong>謙譲語</strong> (Kenjougo)</td><td>Humillarse uno</td><td>参る (ir - humilde)</td></tr>
-          <tr><td><strong>丁寧語</strong> (Teineigo)</td><td>Cortesía general</td><td>です/ます</td></tr>
+          <tr><th>Tipo</th><th>Función</th><th>Romaji</th></tr>
+          <tr><td><strong>尊敬語</strong></td><td>Elevar al otro</td><td class="romaji">sonkeigo</td></tr>
+          <tr><td><strong>謙譲語</strong></td><td>Humillarse uno</td><td class="romaji">kenjougo</td></tr>
+          <tr><td><strong>丁寧語</strong></td><td>Cortesía general</td><td class="romaji">teineigo</td></tr>
         </table></div>
-        <h3>Verbos comunes en Keigo</h3>
+        <h3>Verbos en Keigo</h3>
         <div class="table-container"><table>
-          <tr><th>Normal</th><th>Sonkeigo (honorífico)</th><th>Kenjougo (humilde)</th></tr>
-          <tr><td>行く (ir)</td><td>いらっしゃる</td><td>参る</td></tr>
-          <tr><td>食べる (comer)</td><td>召し上がる</td><td>いただく</td></tr>
-          <tr><td>言う (decir)</td><td>おっしゃる</td><td>申す</td></tr>
-          <tr><td>見る (ver)</td><td>ご覧になる</td><td>拝見する</td></tr>
-          <tr><td>する (hacer)</td><td>なさる</td><td>いたす</td></tr>
-          <tr><td>知る (saber)</td><td>ご存知</td><td>存じる</td></tr>
+          <tr><th>Normal</th><th>Honorífico</th><th>Romaji</th><th>Humilde</th><th>Romaji</th></tr>
+          <tr><td>行く <span class="romaji">(iku)</span></td><td>いらっしゃる</td><td class="romaji">irassharu</td><td>参る</td><td class="romaji">mairu</td></tr>
+          <tr><td>食べる <span class="romaji">(taberu)</span></td><td>召し上がる</td><td class="romaji">meshiagaru</td><td>いただく</td><td class="romaji">itadaku</td></tr>
+          <tr><td>言う <span class="romaji">(iu)</span></td><td>おっしゃる</td><td class="romaji">ossharu</td><td>申す</td><td class="romaji">mousu</td></tr>
+          <tr><td>見る <span class="romaji">(miru)</span></td><td>ご覧になる</td><td class="romaji">goran ni naru</td><td>拝見する</td><td class="romaji">haiken suru</td></tr>
+          <tr><td>する <span class="romaji">(suru)</span></td><td>なさる</td><td class="romaji">nasaru</td><td>いたす</td><td class="romaji">itasu</td></tr>
         </table></div>
+        <div class="example-box">
+          <div class="example-english">社長がいらっしゃいます。 <button class="speak-btn" onclick="speakWord('社長がいらっしゃいます')">🔊</button></div>
+          <div class="example-romaji">shachou ga irasshaimasu.</div>
+          <div class="example-spanish">El presidente (de la empresa) viene/está.</div>
+          <div class="example-english">明日、参ります。 <button class="speak-btn" onclick="speakWord('明日、参ります')">🔊</button></div>
+          <div class="example-romaji">ashita, mairimasu.</div>
+          <div class="example-spanish">Iré mañana. (humilde)</div>
+        </div>
       `
     },
     {
-      title: 'Forma Pasiva y Causativa',
+      title: 'Pasiva y Causativa',
       titleEs: 'Construcciones avanzadas',
       icon: '🔄',
       content: `
-        <h3>受身形 (Pasiva) - Raíz + れる/られる</h3>
+        <h3>受身形 (Pasiva)</h3>
         <div class="table-container"><table>
-          <tr><th>Activa</th><th>Pasiva</th><th>Español</th></tr>
-          <tr><td>食べる</td><td>食べ<strong>られる</strong></td><td>Ser comido</td></tr>
-          <tr><td>読む</td><td>読ま<strong>れる</strong></td><td>Ser leído</td></tr>
-          <tr><td>する</td><td>さ<strong>れる</strong></td><td>Ser hecho</td></tr>
+          <tr><th>Activa</th><th>Pasiva</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>られる</strong></td><td class="romaji">tabe<strong>rareru</strong></td><td><button class="speak-btn" onclick="speakWord('食べられる')">🔊</button></td></tr>
+          <tr><td>読む</td><td>読ま<strong>れる</strong></td><td class="romaji">yoma<strong>reru</strong></td><td><button class="speak-btn" onclick="speakWord('読まれる')">🔊</button></td></tr>
+          <tr><td>する</td><td>さ<strong>れる</strong></td><td class="romaji">sa<strong>reru</strong></td><td><button class="speak-btn" onclick="speakWord('される')">🔊</button></td></tr>
         </table></div>
         <div class="example-box">
-          <div class="example-english">電車で足を踏ま<strong>れた</strong>。</div>
+          <div class="example-english">電車で足を踏ま<strong>れた</strong>。 <button class="speak-btn" onclick="speakWord('電車で足を踏まれた')">🔊</button></div>
+          <div class="example-romaji">densha de ashi wo fuma<strong>reta</strong>.</div>
           <div class="example-spanish">Me pisaron el pie en el tren.</div>
         </div>
-        <h3>使役形 (Causativa) - Raíz + せる/させる</h3>
+        <h3>使役形 (Causativa)</h3>
         <div class="table-container"><table>
-          <tr><th>Base</th><th>Causativa</th><th>Español</th></tr>
-          <tr><td>食べる</td><td>食べ<strong>させる</strong></td><td>Hacer comer</td></tr>
-          <tr><td>読む</td><td>読ま<strong>せる</strong></td><td>Hacer leer</td></tr>
-          <tr><td>する</td><td>さ<strong>せる</strong></td><td>Hacer hacer</td></tr>
+          <tr><th>Base</th><th>Causativa</th><th>Romaji</th><th>🔊</th></tr>
+          <tr><td>食べる</td><td>食べ<strong>させる</strong></td><td class="romaji">tabe<strong>saseru</strong></td><td><button class="speak-btn" onclick="speakWord('食べさせる')">🔊</button></td></tr>
+          <tr><td>読む</td><td>読ま<strong>せる</strong></td><td class="romaji">yoma<strong>seru</strong></td><td><button class="speak-btn" onclick="speakWord('読ませる')">🔊</button></td></tr>
         </table></div>
         <div class="example-box">
-          <div class="example-english">母は子供に野菜を食べ<strong>させた</strong>。</div>
+          <div class="example-english">母は子供に野菜を食べ<strong>させた</strong>。 <button class="speak-btn" onclick="speakWord('母は子供に野菜を食べさせた')">🔊</button></div>
+          <div class="example-romaji">haha wa kodomo ni yasai wo tabe<strong>saseta</strong>.</div>
           <div class="example-spanish">La madre hizo al niño comer verduras.</div>
         </div>
       `
     },
     {
-      title: 'Expresiones Formales Avanzadas',
-      titleEs: 'Gramática JLPT N2-N1',
+      title: 'Expresiones N2-N1',
+      titleEs: 'Gramática avanzada',
       icon: '📜',
       content: `
-        <h3>Expresiones de certeza y probabilidad</h3>
         <div class="table-container"><table>
-          <tr><th>Expresión</th><th>Significado</th><th>Ejemplo</th></tr>
-          <tr><td>〜に違いない</td><td>Sin duda es...</td><td>彼は日本人に違いない</td></tr>
-          <tr><td>〜わけがない</td><td>Es imposible que...</td><td>そんなわけがない</td></tr>
-          <tr><td>〜はずだ</td><td>Debería ser...</td><td>もう届いたはずだ</td></tr>
-          <tr><td>〜かもしれない</td><td>Puede que...</td><td>雨かもしれない</td></tr>
-          <tr><td>〜ようだ</td><td>Parece que...</td><td>風邪のようだ</td></tr>
-          <tr><td>〜らしい</td><td>Al parecer...</td><td>明日は雨らしい</td></tr>
+          <tr><th>Expresión</th><th>Romaji</th><th>Significado</th><th>Ejemplo</th><th>🔊</th></tr>
+          <tr><td>〜に違いない</td><td class="romaji">~ni chigainai</td><td>Sin duda es...</td><td>彼は日本人に違いない <span class="romaji">(kare wa nihonjin ni chigainai)</span></td><td><button class="speak-btn" onclick="speakWord('彼は日本人に違いない')">🔊</button></td></tr>
+          <tr><td>〜わけがない</td><td class="romaji">~wake ga nai</td><td>Es imposible...</td><td>そんなわけがない <span class="romaji">(sonna wake ga nai)</span></td><td><button class="speak-btn" onclick="speakWord('そんなわけがない')">🔊</button></td></tr>
+          <tr><td>〜はずだ</td><td class="romaji">~hazu da</td><td>Debería ser...</td><td>届いたはずだ <span class="romaji">(todoita hazu da)</span></td><td><button class="speak-btn" onclick="speakWord('届いたはずだ')">🔊</button></td></tr>
+          <tr><td>〜かもしれない</td><td class="romaji">~kamo shirenai</td><td>Puede que...</td><td>雨かもしれない <span class="romaji">(ame kamo shirenai)</span></td><td><button class="speak-btn" onclick="speakWord('雨かもしれない')">🔊</button></td></tr>
         </table></div>
-        <h3>Expresiones de obligación</h3>
         <div class="example-box">
-          <div class="example-english">行か<strong>なければならない</strong>。</div>
-          <div class="example-spanish">Tengo que ir. (formal)</div>
-          <div class="example-english">食べ<strong>ざるを得ない</strong>。</div>
-          <div class="example-spanish">No tengo más remedio que comer.</div>
-          <div class="example-english">勉強する<strong>べきだ</strong>。</div>
+          <div class="example-english">行か<strong>なければならない</strong>。 <button class="speak-btn" onclick="speakWord('行かなければならない')">🔊</button></div>
+          <div class="example-romaji">ika<strong>nakereba naranai</strong>.</div>
+          <div class="example-spanish">Tengo que ir.</div>
+          <div class="example-english">勉強する<strong>べきだ</strong>。 <button class="speak-btn" onclick="speakWord('勉強するべきだ')">🔊</button></div>
+          <div class="example-romaji">benkyou suru <strong>beki da</strong>.</div>
           <div class="example-spanish">Debería estudiar.</div>
-        </div>
-      `
-    },
-    {
-      title: 'Conectores Formales',
-      titleEs: 'Para escritura y discurso formal',
-      icon: '📝',
-      content: `
-        <h3>Conectores de causa y razón</h3>
-        <div class="table-container"><table>
-          <tr><th>Conector</th><th>Significado</th><th>Nivel</th></tr>
-          <tr><td>だから / ですから</td><td>Por eso</td><td>Básico</td></tr>
-          <tr><td>そのため</td><td>Por esa razón</td><td>Formal</td></tr>
-          <tr><td>したがって</td><td>Por lo tanto</td><td>Muy formal</td></tr>
-          <tr><td>ゆえに</td><td>Debido a ello</td><td>Literario</td></tr>
-        </table></div>
-        <h3>Conectores de contraste</h3>
-        <div class="table-container"><table>
-          <tr><th>Conector</th><th>Significado</th><th>Nivel</th></tr>
-          <tr><td>でも / けど</td><td>Pero</td><td>Básico</td></tr>
-          <tr><td>しかし</td><td>Sin embargo</td><td>Formal</td></tr>
-          <tr><td>ところが</td><td>No obstante</td><td>Formal</td></tr>
-          <tr><td>〜にもかかわらず</td><td>A pesar de</td><td>Muy formal</td></tr>
-        </table></div>
-        <h3>Conectores de adición</h3>
-        <div class="example-box">
-          <div class="example-english">さらに / その上 / しかも</div>
-          <div class="example-spanish">Además / Encima de eso / Es más</div>
         </div>
       `
     }
@@ -2423,119 +2662,120 @@ const phrasesDB = {
 // ============================================
 // CONVERSACIONES JAPONESAS
 // ============================================
-// CONVERSACIONES JAPONESAS COMPLETAS
+// ============================================
+// CONVERSACIONES JAPONESAS - CON ROMAJI
 // ============================================
 const conversationsDB = {
   a1: [
     {id:'c1',title:'👋 Presentación',emoji:'👋',dialogue:[
-      {speaker:'田中',text:'はじめまして。田中ゆきです。',translation:'Mucho gusto. Soy Yuki Tanaka.'},
-      {speaker:'マリア',text:'はじめまして。マリアです。スペインから来ました。',translation:'Mucho gusto. Soy María. Vengo de España.'},
-      {speaker:'田中',text:'そうですか！スペインのどこですか？',translation:'¡Ah sí! ¿De dónde en España?'},
-      {speaker:'マリア',text:'マドリードです。田中さんはどこに住んでいますか？',translation:'De Madrid. Tanaka-san, ¿dónde vive?'},
-      {speaker:'田中',text:'東京に住んでいます。よろしくお願いします。',translation:'Vivo en Tokio. Encantada.'},
-      {speaker:'マリア',text:'こちらこそ、よろしくお願いします！',translation:'¡El gusto es mío!'}
+      {speaker:'田中',text:'はじめまして。田中ゆきです。',romaji:'hajimemashite. tanaka yuki desu.',translation:'Mucho gusto. Soy Yuki Tanaka.'},
+      {speaker:'マリア',text:'はじめまして。マリアです。スペインから来ました。',romaji:'hajimemashite. maria desu. supein kara kimashita.',translation:'Mucho gusto. Soy María. Vengo de España.'},
+      {speaker:'田中',text:'そうですか！スペインのどこですか？',romaji:'sou desu ka! supein no doko desu ka?',translation:'¡Ah sí! ¿De dónde en España?'},
+      {speaker:'マリア',text:'マドリードです。田中さんはどこに住んでいますか？',romaji:'madoriido desu. tanaka-san wa doko ni sunde imasu ka?',translation:'De Madrid. Tanaka-san, ¿dónde vive?'},
+      {speaker:'田中',text:'東京に住んでいます。よろしくお願いします。',romaji:'toukyou ni sunde imasu. yoroshiku onegai shimasu.',translation:'Vivo en Tokio. Encantada.'},
+      {speaker:'マリア',text:'こちらこそ、よろしくお願いします！',romaji:'kochira koso, yoroshiku onegai shimasu!',translation:'¡El gusto es mío!'}
     ]},
     {id:'c2',title:'🛒 En la tienda',emoji:'🛒',dialogue:[
-      {speaker:'客',text:'すみません、これはいくらですか？',translation:'Disculpe, ¿cuánto cuesta esto?'},
-      {speaker:'店員',text:'それは500円です。',translation:'Eso cuesta 500 yenes.'},
-      {speaker:'客',text:'じゃあ、これを二つください。',translation:'Entonces, déme dos de estos.'},
-      {speaker:'店員',text:'はい、1000円になります。袋はいりますか？',translation:'Sí, son 1000 yenes. ¿Necesita bolsa?'},
-      {speaker:'客',text:'いいえ、大丈夫です。ありがとうございます。',translation:'No, está bien. Gracias.'},
-      {speaker:'店員',text:'ありがとうございました！',translation:'¡Gracias por su compra!'}
+      {speaker:'客',text:'すみません、これはいくらですか？',romaji:'sumimasen, kore wa ikura desu ka?',translation:'Disculpe, ¿cuánto cuesta esto?'},
+      {speaker:'店員',text:'それは500円です。',romaji:'sore wa gohyaku en desu.',translation:'Eso cuesta 500 yenes.'},
+      {speaker:'客',text:'じゃあ、これを二つください。',romaji:'jaa, kore wo futatsu kudasai.',translation:'Entonces, déme dos de estos.'},
+      {speaker:'店員',text:'はい、1000円になります。袋はいりますか？',romaji:'hai, sen en ni narimasu. fukuro wa irimasu ka?',translation:'Sí, son 1000 yenes. ¿Necesita bolsa?'},
+      {speaker:'客',text:'いいえ、大丈夫です。ありがとうございます。',romaji:'iie, daijoubu desu. arigatou gozaimasu.',translation:'No, está bien. Gracias.'},
+      {speaker:'店員',text:'ありがとうございました！',romaji:'arigatou gozaimashita!',translation:'¡Gracias por su compra!'}
     ]},
     {id:'c3',title:'🏠 Mi rutina',emoji:'🏠',dialogue:[
-      {speaker:'A',text:'毎日何時に起きますか？',translation:'¿A qué hora te levantas cada día?'},
-      {speaker:'B',text:'七時に起きます。あなたは？',translation:'Me levanto a las 7. ¿Y tú?'},
-      {speaker:'A',text:'私は六時半です。朝ごはんは何を食べますか？',translation:'Yo a las 6:30. ¿Qué desayunas?'},
-      {speaker:'B',text:'いつもパンとコーヒーです。',translation:'Siempre pan y café.'},
-      {speaker:'A',text:'日本語の勉強は何時にしますか？',translation:'¿A qué hora estudias japonés?'},
-      {speaker:'B',text:'夜、九時から十時まで勉強します。',translation:'Por la noche, estudio de 9 a 10.'}
+      {speaker:'A',text:'毎日何時に起きますか？',romaji:'mainichi nanji ni okimasu ka?',translation:'¿A qué hora te levantas cada día?'},
+      {speaker:'B',text:'七時に起きます。あなたは？',romaji:'shichiji ni okimasu. anata wa?',translation:'Me levanto a las 7. ¿Y tú?'},
+      {speaker:'A',text:'私は六時半です。朝ごはんは何を食べますか？',romaji:'watashi wa rokuji han desu. asagohan wa nani wo tabemasu ka?',translation:'Yo a las 6:30. ¿Qué desayunas?'},
+      {speaker:'B',text:'いつもパンとコーヒーです。',romaji:'itsumo pan to koohii desu.',translation:'Siempre pan y café.'},
+      {speaker:'A',text:'日本語の勉強は何時にしますか？',romaji:'nihongo no benkyou wa nanji ni shimasu ka?',translation:'¿A qué hora estudias japonés?'},
+      {speaker:'B',text:'夜、九時から十時まで勉強します。',romaji:'yoru, kuji kara juuji made benkyou shimasu.',translation:'Por la noche, estudio de 9 a 10.'}
     ]}
   ],
   a2: [
     {id:'c4',title:'🍜 Restaurante',emoji:'🍜',dialogue:[
-      {speaker:'店員',text:'いらっしゃいませ。何名様ですか？',translation:'Bienvenido. ¿Para cuántas personas?'},
-      {speaker:'客',text:'二人です。窓の席はありますか？',translation:'Dos. ¿Hay mesa junto a la ventana?'},
-      {speaker:'店員',text:'はい、こちらへどうぞ。メニューです。',translation:'Sí, por aquí. Aquí está el menú.'},
-      {speaker:'客',text:'おすすめは何ですか？',translation:'¿Qué recomienda?'},
-      {speaker:'店員',text:'今日のおすすめはラーメンと天ぷらです。',translation:'Hoy recomendamos ramen y tempura.'},
-      {speaker:'客',text:'じゃあ、ラーメンをお願いします。あと、ビールも。',translation:'Entonces, ramen por favor. Y también una cerveza.'},
-      {speaker:'店員',text:'かしこまりました。少々お待ちください。',translation:'Entendido. Espere un momento.'}
+      {speaker:'店員',text:'いらっしゃいませ。何名様ですか？',romaji:'irasshaimase. nanmei-sama desu ka?',translation:'Bienvenido. ¿Para cuántas personas?'},
+      {speaker:'客',text:'二人です。窓の席はありますか？',romaji:'futari desu. mado no seki wa arimasu ka?',translation:'Dos. ¿Hay mesa junto a la ventana?'},
+      {speaker:'店員',text:'はい、こちらへどうぞ。メニューです。',romaji:'hai, kochira e douzo. menyuu desu.',translation:'Sí, por aquí. Aquí está el menú.'},
+      {speaker:'客',text:'おすすめは何ですか？',romaji:'osusume wa nan desu ka?',translation:'¿Qué recomienda?'},
+      {speaker:'店員',text:'今日のおすすめはラーメンと天ぷらです。',romaji:'kyou no osusume wa raamen to tenpura desu.',translation:'Hoy recomendamos ramen y tempura.'},
+      {speaker:'客',text:'じゃあ、ラーメンをお願いします。あと、ビールも。',romaji:'jaa, raamen wo onegai shimasu. ato, biiru mo.',translation:'Entonces, ramen por favor. Y también una cerveza.'},
+      {speaker:'店員',text:'かしこまりました。少々お待ちください。',romaji:'kashikomarimashita. shoushou omachi kudasai.',translation:'Entendido. Espere un momento.'}
     ]},
     {id:'c5',title:'🚉 En la estación',emoji:'🚉',dialogue:[
-      {speaker:'客',text:'すみません、東京駅までどう行けばいいですか？',translation:'Disculpe, ¿cómo llego a la estación de Tokio?'},
-      {speaker:'駅員',text:'この電車に乗って、三つ目の駅で降りてください。',translation:'Suba a este tren y baje en la tercera estación.'},
-      {speaker:'客',text:'乗り換えはありますか？',translation:'¿Hay que hacer transbordo?'},
-      {speaker:'駅員',text:'いいえ、乗り換えなしで行けますよ。',translation:'No, puede ir sin transbordo.'},
-      {speaker:'客',text:'切符はいくらですか？',translation:'¿Cuánto cuesta el boleto?'},
-      {speaker:'駅員',text:'210円です。あそこの券売機で買えます。',translation:'210 yenes. Puede comprarlo en la máquina de allá.'}
+      {speaker:'客',text:'すみません、東京駅までどう行けばいいですか？',romaji:'sumimasen, toukyou-eki made dou ikeba ii desu ka?',translation:'Disculpe, ¿cómo llego a la estación de Tokio?'},
+      {speaker:'駅員',text:'この電車に乗って、三つ目の駅で降りてください。',romaji:'kono densha ni notte, mittsu-me no eki de orite kudasai.',translation:'Suba a este tren y baje en la tercera estación.'},
+      {speaker:'客',text:'乗り換えはありますか？',romaji:'norikae wa arimasu ka?',translation:'¿Hay que hacer transbordo?'},
+      {speaker:'駅員',text:'いいえ、乗り換えなしで行けますよ。',romaji:'iie, norikae nashi de ikemasu yo.',translation:'No, puede ir sin transbordo.'},
+      {speaker:'客',text:'切符はいくらですか？',romaji:'kippu wa ikura desu ka?',translation:'¿Cuánto cuesta el boleto?'},
+      {speaker:'駅員',text:'210円です。あそこの券売機で買えます。',romaji:'nihyaku juu en desu. asoko no kenbaiki de kaemasu.',translation:'210 yenes. Puede comprarlo en la máquina de allá.'}
     ]},
     {id:'c6',title:'🏥 En el hospital',emoji:'🏥',dialogue:[
-      {speaker:'医者',text:'今日はどうしましたか？',translation:'¿Qué le pasa hoy?'},
-      {speaker:'患者',text:'昨日から頭が痛いです。熱もあります。',translation:'Desde ayer me duele la cabeza. También tengo fiebre.'},
-      {speaker:'医者',text:'いつから熱がありますか？',translation:'¿Desde cuándo tiene fiebre?'},
-      {speaker:'患者',text:'昨日の夜からです。38度ぐらいです。',translation:'Desde anoche. Unos 38 grados.'},
-      {speaker:'医者',text:'風邪ですね。薬を出しますから、ゆっくり休んでください。',translation:'Es un resfriado. Le recetaré medicina, descanse bien.'},
-      {speaker:'患者',text:'ありがとうございます。お大事に。',translation:'Gracias. Cuídese.'}
+      {speaker:'医者',text:'今日はどうしましたか？',romaji:'kyou wa doushimashita ka?',translation:'¿Qué le pasa hoy?'},
+      {speaker:'患者',text:'昨日から頭が痛いです。熱もあります。',romaji:'kinou kara atama ga itai desu. netsu mo arimasu.',translation:'Desde ayer me duele la cabeza. También tengo fiebre.'},
+      {speaker:'医者',text:'いつから熱がありますか？',romaji:'itsu kara netsu ga arimasu ka?',translation:'¿Desde cuándo tiene fiebre?'},
+      {speaker:'患者',text:'昨日の夜からです。38度ぐらいです。',romaji:'kinou no yoru kara desu. sanjuuhachi do gurai desu.',translation:'Desde anoche. Unos 38 grados.'},
+      {speaker:'医者',text:'風邪ですね。薬を出しますから、ゆっくり休んでください。',romaji:'kaze desu ne. kusuri wo dashimasu kara, yukkuri yasunde kudasai.',translation:'Es un resfriado. Le recetaré medicina, descanse bien.'},
+      {speaker:'患者',text:'ありがとうございます。',romaji:'arigatou gozaimasu.',translation:'Gracias.'}
     ]}
   ],
   b1: [
     {id:'c7',title:'🏢 Oficina',emoji:'🏢',dialogue:[
-      {speaker:'田中',text:'鈴木さん、来週のプレゼンの資料はもう準備できましたか？',translation:'Suzuki-san, ¿ya preparó los materiales para la presentación de la semana que viene?'},
-      {speaker:'鈴木',text:'はい、ほとんどできています。でも、グラフをもう少し直したいです。',translation:'Sí, casi están listos. Pero quiero corregir un poco los gráficos.'},
-      {speaker:'田中',text:'いつまでに完成できますか？',translation:'¿Para cuándo puede terminarlo?'},
-      {speaker:'鈴木',text:'金曜日までには必ず完成させます。',translation:'Sin falta para el viernes.'},
-      {speaker:'田中',text:'分かりました。完成したらメールで送ってください。',translation:'Entendido. Cuando esté listo, envíemelo por correo.'},
-      {speaker:'鈴木',text:'承知しました。何か変更があればすぐにお知らせします。',translation:'Entendido. Si hay cambios, le aviso de inmediato.'}
+      {speaker:'田中',text:'鈴木さん、来週のプレゼンの資料はもう準備できましたか？',romaji:'suzuki-san, raishuu no purezen no shiryou wa mou junbi dekimashita ka?',translation:'Suzuki-san, ¿ya preparó los materiales para la presentación?'},
+      {speaker:'鈴木',text:'はい、ほとんどできています。でも、グラフをもう少し直したいです。',romaji:'hai, hotondo dekite imasu. demo, gurafu wo mou sukoshi naoshitai desu.',translation:'Sí, casi están listos. Pero quiero corregir un poco los gráficos.'},
+      {speaker:'田中',text:'いつまでに完成できますか？',romaji:'itsu made ni kansei dekimasu ka?',translation:'¿Para cuándo puede terminarlo?'},
+      {speaker:'鈴木',text:'金曜日までには必ず完成させます。',romaji:'kinyoubi made ni wa kanarazu kansei sasemasu.',translation:'Sin falta para el viernes.'},
+      {speaker:'田中',text:'分かりました。完成したらメールで送ってください。',romaji:'wakarimashita. kansei shitara meeru de okutte kudasai.',translation:'Entendido. Cuando esté listo, envíemelo por correo.'},
+      {speaker:'鈴木',text:'承知しました。',romaji:'shouchi shimashita.',translation:'Entendido.'}
     ]},
     {id:'c8',title:'🏠 Buscando apartamento',emoji:'🏠',dialogue:[
-      {speaker:'客',text:'一人暮らし用のアパートを探しています。',translation:'Estoy buscando un apartamento para vivir solo.'},
-      {speaker:'不動産',text:'ご予算はどのくらいですか？',translation:'¿Cuál es su presupuesto?'},
-      {speaker:'客',text:'月7万円ぐらいまでがいいです。駅から近い方がいいです。',translation:'Hasta unos 70,000 yenes al mes. Prefiero cerca de la estación.'},
-      {speaker:'不動産',text:'この物件はいかがですか？駅から徒歩5分で、6万5千円です。',translation:'¿Qué tal esta propiedad? A 5 min a pie de la estación, 65,000 yenes.'},
-      {speaker:'客',text:'いいですね。見学できますか？',translation:'Suena bien. ¿Puedo visitarlo?'},
-      {speaker:'不動産',text:'はい、明日の午後はいかがですか？',translation:'Sí, ¿qué tal mañana por la tarde?'}
+      {speaker:'客',text:'一人暮らし用のアパートを探しています。',romaji:'hitorigurashi you no apaato wo sagashite imasu.',translation:'Estoy buscando un apartamento para vivir solo.'},
+      {speaker:'不動産',text:'ご予算はどのくらいですか？',romaji:'go-yosan wa dono kurai desu ka?',translation:'¿Cuál es su presupuesto?'},
+      {speaker:'客',text:'月7万円ぐらいまでがいいです。',romaji:'tsuki nana man en gurai made ga ii desu.',translation:'Hasta unos 70,000 yenes al mes.'},
+      {speaker:'不動産',text:'この物件はいかがですか？駅から徒歩5分です。',romaji:'kono bukken wa ikaga desu ka? eki kara toho go fun desu.',translation:'¿Qué tal esta propiedad? A 5 min a pie de la estación.'},
+      {speaker:'客',text:'いいですね。見学できますか？',romaji:'ii desu ne. kengaku dekimasu ka?',translation:'Suena bien. ¿Puedo visitarlo?'},
+      {speaker:'不動産',text:'はい、明日の午後はいかがですか？',romaji:'hai, ashita no gogo wa ikaga desu ka?',translation:'Sí, ¿qué tal mañana por la tarde?'}
     ]},
     {id:'c9',title:'📞 Llamada telefónica',emoji:'📞',dialogue:[
-      {speaker:'受付',text:'はい、ABCクリニックでございます。',translation:'Sí, Clínica ABC al habla.'},
-      {speaker:'患者',text:'予約をお願いしたいのですが。',translation:'Me gustaría hacer una cita.'},
-      {speaker:'受付',text:'いつがよろしいですか？',translation:'¿Cuándo le conviene?'},
-      {speaker:'患者',text:'来週の月曜日の午前中は空いていますか？',translation:'¿Hay disponibilidad el lunes por la mañana?'},
-      {speaker:'受付',text:'10時でしたら空いております。お名前をお願いします。',translation:'A las 10 hay disponible. Su nombre, por favor.'},
-      {speaker:'患者',text:'山田太郎です。よろしくお願いします。',translation:'Soy Taro Yamada. Gracias.'}
+      {speaker:'受付',text:'はい、ABCクリニックでございます。',romaji:'hai, ABC kurinikku de gozaimasu.',translation:'Sí, Clínica ABC al habla.'},
+      {speaker:'患者',text:'予約をお願いしたいのですが。',romaji:'yoyaku wo onegai shitai no desu ga.',translation:'Me gustaría hacer una cita.'},
+      {speaker:'受付',text:'いつがよろしいですか？',romaji:'itsu ga yoroshii desu ka?',translation:'¿Cuándo le conviene?'},
+      {speaker:'患者',text:'来週の月曜日の午前中は空いていますか？',romaji:'raishuu no getsuyoubi no gozenchu wa aite imasu ka?',translation:'¿Hay disponibilidad el lunes por la mañana?'},
+      {speaker:'受付',text:'10時でしたら空いております。お名前をお願いします。',romaji:'juuji deshitara aite orimasu. onamae wo onegai shimasu.',translation:'A las 10 hay disponible. Su nombre, por favor.'},
+      {speaker:'患者',text:'山田太郎です。よろしくお願いします。',romaji:'yamada tarou desu. yoroshiku onegai shimasu.',translation:'Soy Taro Yamada. Gracias.'}
     ]}
   ],
   b2: [
     {id:'c10',title:'💼 Entrevista de trabajo',emoji:'💼',dialogue:[
-      {speaker:'面接官',text:'自己紹介をお願いいたします。',translation:'Preséntese, por favor.'},
-      {speaker:'応募者',text:'山本花子と申します。大学でコンピューターサイエンスを専攻しておりました。',translation:'Me llamo Hanako Yamamoto. Estudié ciencias de la computación en la universidad.'},
-      {speaker:'面接官',text:'なぜ弊社を志望されましたか？',translation:'¿Por qué eligió nuestra empresa?'},
-      {speaker:'応募者',text:'御社の革新的な技術開発に大変感銘を受けました。',translation:'Me impresionó mucho el desarrollo tecnológico innovador de su empresa.'},
-      {speaker:'面接官',text:'あなたの強みは何だと思いますか？',translation:'¿Cuál cree que es su fortaleza?'},
-      {speaker:'応募者',text:'チームワークを大切にし、困難な状況でも諦めずに取り組むことです。',translation:'Valoro el trabajo en equipo y no me rindo ante situaciones difíciles.'}
+      {speaker:'面接官',text:'自己紹介をお願いいたします。',romaji:'jiko shoukai wo onegai itashimasu.',translation:'Preséntese, por favor.'},
+      {speaker:'応募者',text:'山本花子と申します。大学でコンピューターサイエンスを専攻しておりました。',romaji:'yamamoto hanako to moushimasu. daigaku de konpyuutaa saiensu wo senkou shite orimashita.',translation:'Me llamo Hanako Yamamoto. Estudié ciencias de la computación.'},
+      {speaker:'面接官',text:'なぜ弊社を志望されましたか？',romaji:'naze heisha wo shibou saremashita ka?',translation:'¿Por qué eligió nuestra empresa?'},
+      {speaker:'応募者',text:'御社の革新的な技術開発に大変感銘を受けました。',romaji:'onsha no kakushinteki na gijutsu kaihatsu ni taihen kanmei wo ukemashita.',translation:'Me impresionó el desarrollo tecnológico innovador de su empresa.'},
+      {speaker:'面接官',text:'あなたの強みは何だと思いますか？',romaji:'anata no tsuyomi wa nan da to omoimasu ka?',translation:'¿Cuál cree que es su fortaleza?'},
+      {speaker:'応募者',text:'チームワークを大切にし、困難な状況でも諦めずに取り組むことです。',romaji:'chiimuwaku wo taisetsu ni shi, konnan na joukyou demo akiramezu ni torikumu koto desu.',translation:'Valoro el trabajo en equipo y no me rindo ante situaciones difíciles.'}
     ]},
     {id:'c11',title:'🗾 Cultura japonesa',emoji:'🗾',dialogue:[
-      {speaker:'外国人',text:'日本の「空気を読む」という文化について教えてください。',translation:'Hábleme sobre la cultura de "leer el ambiente" en Japón.'},
-      {speaker:'日本人',text:'日本では、直接的に言わなくても相手の気持ちを察することが大切です。',translation:'En Japón es importante percibir los sentimientos del otro sin que los diga directamente.'},
-      {speaker:'外国人',text:'それは外国人にとって難しいですね。',translation:'Eso es difícil para los extranjeros.'},
-      {speaker:'日本人',text:'確かに。でも、少しずつ慣れていきますよ。大事なのは相手を思いやることです。',translation:'Es cierto. Pero uno se acostumbra poco a poco. Lo importante es ser considerado con los demás.'}
+      {speaker:'外国人',text:'日本の「空気を読む」という文化について教えてください。',romaji:'nihon no "kuuki wo yomu" to iu bunka ni tsuite oshiete kudasai.',translation:'Hábleme sobre la cultura de "leer el ambiente" en Japón.'},
+      {speaker:'日本人',text:'直接的に言わなくても相手の気持ちを察することが大切です。',romaji:'chokusetsuteki ni iwanakutemo aite no kimochi wo sassuru koto ga taisetsu desu.',translation:'Es importante percibir los sentimientos del otro sin que los diga.'},
+      {speaker:'外国人',text:'それは外国人にとって難しいですね。',romaji:'sore wa gaikokujin ni totte muzukashii desu ne.',translation:'Eso es difícil para los extranjeros.'},
+      {speaker:'日本人',text:'少しずつ慣れていきますよ。大事なのは相手を思いやることです。',romaji:'sukoshi zutsu narete ikimasu yo. daiji na no wa aite wo omoiyaru koto desu.',translation:'Uno se acostumbra poco a poco. Lo importante es ser considerado.'}
     ]}
   ],
   c1: [
     {id:'c12',title:'📰 Debate social',emoji:'📰',dialogue:[
-      {speaker:'A',text:'少子高齢化は日本の最大の課題だと思います。',translation:'Creo que la baja natalidad y envejecimiento es el mayor reto de Japón.'},
-      {speaker:'B',text:'確かに。労働力不足も深刻な問題ですね。',translation:'Es cierto. La falta de mano de obra también es un problema serio.'},
-      {speaker:'A',text:'移民政策を見直すべきだという意見もありますが。',translation:'Hay opiniones de que deberían revisar la política migratoria.'},
-      {speaker:'B',text:'一方で、日本の伝統文化を守りたいという声もあります。バランスが重要ですね。',translation:'Por otro lado, también hay voces que quieren preservar la cultura tradicional. El equilibrio es importante.'}
+      {speaker:'A',text:'少子高齢化は日本の最大の課題だと思います。',romaji:'shoushi koureika wa nihon no saidai no kadai da to omoimasu.',translation:'La baja natalidad y envejecimiento es el mayor reto de Japón.'},
+      {speaker:'B',text:'確かに。労働力不足も深刻な問題ですね。',romaji:'tashika ni. roudouryoku busoku mo shinkoku na mondai desu ne.',translation:'Es cierto. La falta de mano de obra también es un problema serio.'},
+      {speaker:'A',text:'移民政策を見直すべきだという意見もありますが。',romaji:'imin seisaku wo minaosu beki da to iu iken mo arimasu ga.',translation:'Hay opiniones de que deberían revisar la política migratoria.'},
+      {speaker:'B',text:'バランスが重要ですね。',romaji:'baransu ga juuyou desu ne.',translation:'El equilibrio es importante.'}
     ]}
   ],
   c2: [
     {id:'c13',title:'🎌 Filosofía japonesa',emoji:'🎌',dialogue:[
-      {speaker:'教授',text:'「もののあわれ」という概念をご存知ですか？',translation:'¿Conoce el concepto de "mono no aware"?'},
-      {speaker:'学生',text:'物事の移り変わりに対する哀愁や感動のことでしょうか。',translation:'¿Se refiere a la melancolía y emoción ante la transitoriedad de las cosas?'},
-      {speaker:'教授',text:'その通りです。桜が散る美しさに心を動かされる、あの感覚です。',translation:'Exacto. Es esa sensación de conmoverse por la belleza de los pétalos de cerezo cayendo.'},
-      {speaker:'学生',text:'西洋にはない、日本独自の美意識ですね。',translation:'Es una estética única de Japón que no existe en Occidente.'},
-      {speaker:'教授',text:'侘寂や幽玄と共に、日本文化の根幹を成す概念です。',translation:'Junto con wabi-sabi y yugen, es un concepto fundamental de la cultura japonesa.'}
+      {speaker:'教授',text:'「もののあわれ」という概念をご存知ですか？',romaji:'"mono no aware" to iu gainen wo gozonji desu ka?',translation:'¿Conoce el concepto de "mono no aware"?'},
+      {speaker:'学生',text:'物事の移り変わりに対する哀愁のことでしょうか。',romaji:'monogoto no utsurikawari ni taisuru aishuu no koto deshou ka.',translation:'¿Se refiere a la melancolía ante la transitoriedad de las cosas?'},
+      {speaker:'教授',text:'桜が散る美しさに心を動かされる、あの感覚です。',romaji:'sakura ga chiru utsukushisa ni kokoro wo ugokasareru, ano kankaku desu.',translation:'Es esa sensación de conmoverse por la belleza de los pétalos cayendo.'},
+      {speaker:'学生',text:'日本独自の美意識ですね。',romaji:'nihon dokuji no bi-ishiki desu ne.',translation:'Es una estética única de Japón.'},
+      {speaker:'教授',text:'侘寂や幽玄と共に、日本文化の根幹を成す概念です。',romaji:'wabi-sabi ya yuugen to tomo ni, nihon bunka no konkan wo nasu gainen desu.',translation:'Junto con wabi-sabi y yugen, es fundamental en la cultura japonesa.'}
     ]}
   ]
 };
@@ -2667,7 +2907,7 @@ function setLevel(level) {
 // ============================================
 // CONVERSATIONS FUNCTIONS
 // ============================================
-let currentConversationLevel = 'b1';
+let currentConversationLevel = 'a1';
 
 function showConversationLevel(level) {
   currentConversationLevel = level;
@@ -2689,7 +2929,7 @@ function renderConversationsList() {
     return;
   }
   
-  var lvlDisplay = currentConversationLevel.toUpperCase();
+  var lvlMap = {a1:'N5',a2:'N4',b1:'N3',b2:'N2',c1:'N1',c2:'N1'}; var lvlDisplay = lvlMap[currentConversationLevel] || currentConversationLevel.toUpperCase();
   let html = '<div class="vocab-grid">';
   conversations.forEach(conv => {
     html += `
@@ -2716,21 +2956,16 @@ function showConversation(id) {
   detail.style.display = 'block';
   
   let dialogueHtml = '';
-  conv.dialogue.forEach((line, i) => {
-    const isLeft = i % 2 === 0;
-    dialogueHtml += `
-      <div class="dialogue-line ${isLeft ? 'left' : 'right'}">
-        <div class="dialogue-speaker">${line.speaker}</div>
-        <div class="dialogue-bubble">
-          <div class="dialogue-text">${line.text}</div>
-          <div class="dialogue-translation">${line.translation}</div>
-          <button class="speak-btn small" onclick="event.stopPropagation();speakWord('${line.text.replace(/'/g, "\\'")}')">🔊</button>
-        </div>
-      </div>
-    `;
-  });
+  conv.dialogue.forEach(function(line) {
+      var safeText = line.text.replace(/'/g, '');
+      dialogueHtml += '<div style="margin-bottom:12px;padding:10px;border-radius:8px;background:rgba(255,255,255,0.05)">' +
+        '<div style="font-weight:700;color:#fbbf24;margin-bottom:4px">' + line.speaker + '</div>' +
+        '<div class="dialogue-text" style="font-size:1.15rem;margin-bottom:3px" data-speech="' + safeText + '">' + line.text + ' <button class="speak-btn" onclick="speakWord(this.dataset.t)" data-t="' + safeText + '">🔊</button></div>' +
+        (line.romaji ? '<div class="romaji" style="margin-bottom:4px">' + line.romaji + '</div>' : '') +
+        '<div style="color:#94a3b8;font-style:italic;font-size:0.9rem">' + line.translation + '</div></div>';
+    });
   
-  let vocabHtml = conv.vocabulary.map(v => `<span class="vocab-tag">${v}</span>`).join('');
+  let vocabHtml = (conv.vocabulary || []).map(v => `<span class="vocab-tag">${v}</span>`).join('');
   
   let questionsHtml = '';
   if(conv.questions && conv.questions.length > 0) {
@@ -2753,7 +2988,7 @@ function showConversation(id) {
   detail.innerHTML = `
     <button class="back-btn" onclick="renderConversationsList()">← Volver</button>
     <h3 style="text-align:center;margin:1rem 0;">${conv.title}</h3>
-    <p style="text-align:center;opacity:0.7;margin-bottom:0.5rem;">${conv.situation}</p>
+    <p style="text-align:center;opacity:0.7;margin-bottom:0.5rem;">${conv.situation || ''}</p>
     <div style="text-align:center;margin-bottom:1rem;">
       <button onclick="speakConversation()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;cursor:pointer;font-weight:600" id="listenConvBtn">🔊 Escuchar conversación</button>
       <button onclick="stopFullText()" style="padding:10px 16px;border:none;border-radius:12px;background:rgba(239,68,68,0.2);color:#ef4444;cursor:pointer;font-weight:600;margin-left:8px">⏹ Parar</button>
@@ -2785,7 +3020,7 @@ function checkConvAnswer(qIndex, selected, correct) {
 // ============================================
 // READINGS FUNCTIONS
 // ============================================
-let currentReadingLevel = 'b1';
+let currentReadingLevel = 'a1';
 
 function showReadingLevel(level) {
   currentReadingLevel = level;
@@ -2811,10 +3046,10 @@ function renderReadingsList() {
   readings.forEach(reading => {
     html += `
       <div class="category-card" onclick="showReading('${reading.id}')">
-        <span class="category-level" style="background:${getLevelColor(reading.level)}">${reading.level}</span>
+        <span class="category-level" style="background:${getLevelColor(currentReadingLevel)}">${{a1:'N5',a2:'N4',b1:'N3',b2:'N2',c1:'N1',c2:'N1+'}[currentReadingLevel]||'N5'}</span>
         <span class="category-icon">📖</span>
         <div class="category-title">${reading.title}</div>
-        <div class="category-count">${reading.wordCount} palabras</div>
+        <div class="category-count">${reading.text ? reading.text.length : 0} 文字</div>
       </div>
     `;
   });
@@ -2857,9 +3092,10 @@ function showReading(id) {
   
   detail.innerHTML = `
     <button class="back-btn" onclick="renderReadingsList()">← Volver</button>
+      <button onclick="speakWord(document.getElementById('reading-japanese-text')?.innerText || '')" style="background:linear-gradient(135deg,#dc2626,#991b1b);color:white;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:0.9rem;margin-left:10px">🔊 Escuchar texto</button>
     <h3 style="text-align:center;margin:1rem 0;">${reading.title}</h3>
     <p style="text-align:center;opacity:0.7;margin-bottom:0.5rem;">${reading.titleEs}</p>
-    <p style="text-align:center;opacity:0.5;margin-bottom:1rem;font-size:0.85rem;">📊 ${reading.wordCount} palabras • ${reading.level}</p>
+    <p style="text-align:center;opacity:0.5;margin-bottom:1rem;font-size:0.85rem;">📊 ${reading.text ? reading.text.length : 0} 文字 • ${reading.level}</p>
     <p style="text-align:center;color:#a5b4fc;font-size:0.85rem;margin-bottom:0.5rem;">💡 Toca cualquier palabra para ver su significado</p>
     <div style="text-align:center;margin-bottom:1rem;">
       <button onclick="speakFullText()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;cursor:pointer;font-weight:600;font-size:0.95rem" id="listenFullBtn">🔊 Escuchar texto completo</button>
@@ -2917,6 +3153,7 @@ function refreshCurrentPanel() {
     case 'phrases': showPhrasesSection(currentPhrasesSection); break;
     case 'conversations': renderConversationsList(); break;
     case 'readings': renderReadingsList(); break;
+    case 'writing': startWritingPractice('hiragana'); break;
     case 'practice': showPracticeSection(currentPracticeSection); break;
     case 'games': renderGames(); break;
   }
@@ -3103,50 +3340,124 @@ function showVerbSection(section) {
   
   const content = document.getElementById('verbs-content');
   
-  if(section === 'irregular') {
-    let html = `
-      <div class="table-container">
-        <table>
-          <tr><th>Base</th><th>Past</th><th>Past Part.</th><th>Español</th></tr>
-    `;
-    irregularVerbs.forEach(v => {
-      html += `<tr>
-        <td><strong>${v.base}</strong> ${v.emoji}</td>
-        <td>${v.past}</td>
-        <td>${v.pp}</td>
-        <td>${v.es}</td>
-      </tr>`;
+  if(section === 'ichidan') {
+    const ichidanVerbs = [
+      {dict:'食べる',masu:'食べます',te:'食べて',nai:'食べない',ta:'食べた',romaji:'taberu',es:'Comer',emoji:'🍽️'},
+      {dict:'見る',masu:'見ます',te:'見て',nai:'見ない',ta:'見た',romaji:'miru',es:'Ver',emoji:'👁️'},
+      {dict:'起きる',masu:'起きます',te:'起きて',nai:'起きない',ta:'起きた',romaji:'okiru',es:'Levantarse',emoji:'🌅'},
+      {dict:'寝る',masu:'寝ます',te:'寝て',nai:'寝ない',ta:'寝た',romaji:'neru',es:'Dormir',emoji:'😴'},
+      {dict:'開ける',masu:'開けます',te:'開けて',nai:'開けない',ta:'開けた',romaji:'akeru',es:'Abrir',emoji:'🚪'},
+      {dict:'閉める',masu:'閉めます',te:'閉めて',nai:'閉めない',ta:'閉めた',romaji:'shimeru',es:'Cerrar',emoji:'🔒'},
+      {dict:'教える',masu:'教えます',te:'教えて',nai:'教えない',ta:'教えた',romaji:'oshieru',es:'Enseñar',emoji:'👨‍🏫'},
+      {dict:'覚える',masu:'覚えます',te:'覚えて',nai:'覚えない',ta:'覚えた',romaji:'oboeru',es:'Memorizar',emoji:'🧠'},
+      {dict:'忘れる',masu:'忘れます',te:'忘れて',nai:'忘れない',ta:'忘れた',romaji:'wasureru',es:'Olvidar',emoji:'💭'},
+      {dict:'着る',masu:'着ます',te:'着て',nai:'着ない',ta:'着た',romaji:'kiru',es:'Vestir',emoji:'👔'},
+      {dict:'出る',masu:'出ます',te:'出て',nai:'出ない',ta:'出た',romaji:'deru',es:'Salir',emoji:'🚶'},
+      {dict:'入れる',masu:'入れます',te:'入れて',nai:'入れない',ta:'入れた',romaji:'ireru',es:'Meter/Poner',emoji:'📥'},
+      {dict:'考える',masu:'考えます',te:'考えて',nai:'考えない',ta:'考えた',romaji:'kangaeru',es:'Pensar',emoji:'🤔'},
+      {dict:'答える',masu:'答えます',te:'答えて',nai:'答えない',ta:'答えた',romaji:'kotaeru',es:'Responder',emoji:'💬'},
+      {dict:'浴びる',masu:'浴びます',te:'浴びて',nai:'浴びない',ta:'浴びた',romaji:'abiru',es:'Ducharse',emoji:'🚿'},
+      {dict:'借りる',masu:'借ります',te:'借りて',nai:'借りない',ta:'借りた',romaji:'kariru',es:'Pedir prestado',emoji:'🤲'},
+      {dict:'調べる',masu:'調べます',te:'調べて',nai:'調べない',ta:'調べた',romaji:'shiraberu',es:'Investigar',emoji:'🔍'},
+      {dict:'つける',masu:'つけます',te:'つけて',nai:'つけない',ta:'つけた',romaji:'tsukeru',es:'Encender',emoji:'💡'}
+    ];
+    let html = '<div class="rule-box"><h3>🔖 Verbos Ichidan (る)</h3><p>Se conjugan quitando る y añadiendo la terminación. Son los más fáciles.</p></div>';
+    html += '<div class="table-container"><table>';
+    html += '<tr><th>Diccionario<br><small style="color:#a5b4fc;font-weight:normal">Forma base</small></th><th>ます形<br><small style="color:#a5b4fc;font-weight:normal">Forma cortés</small></th><th>て形<br><small style="color:#a5b4fc;font-weight:normal">Conectar/Pedir</small></th><th>ない形<br><small style="color:#a5b4fc;font-weight:normal">Negativo</small></th><th>た形<br><small style="color:#a5b4fc;font-weight:normal">Pasado</small></th><th>Romaji<br><small style="color:#a5b4fc;font-weight:normal">Pronunciación</small></th><th>Español<br><small style="color:#a5b4fc;font-weight:normal">Significado</small></th><th>🔊</th></tr>';
+    ichidanVerbs.forEach(v => {
+      html += '<tr>';
+      html += '<td><strong>' + v.dict + '</strong> ' + v.emoji + '</td>';
+      html += '<td>' + v.masu + '</td><td>' + v.te + '</td><td>' + v.nai + '</td><td>' + v.ta + '</td>';
+      html += '<td style="color:#a5b4fc;font-size:0.85rem">' + v.romaji + '</td>';
+      html += '<td>' + v.es + '</td>';
+      html += '<td><button onclick="speakWord(\'' + v.dict + '\')" style="background:none;border:none;cursor:pointer;font-size:1.2rem">🔊</button></td>';
+      html += '</tr>';
     });
     html += '</table></div>';
     content.innerHTML = html;
-  } else if(section === 'phrasal') {
-    let html = '';
-    phrasalVerbs.forEach(v => {
-      html += `
-        <div class="phrase-card" onclick="speakWord('${v.verb}')">
-          <div class="phrase-english">🔗 ${v.verb}</div>
-          <div class="phrase-spanish">${v.es}</div>
-          <div class="phrase-context">"${v.ex}"</div>
-        </div>
-      `;
+    
+  } else if(section === 'godan') {
+    const godanVerbs = [
+      {dict:'書く',masu:'書きます',te:'書いて',nai:'書かない',ta:'書いた',romaji:'kaku',es:'Escribir',emoji:'✍️',group:'く→いて'},
+      {dict:'聞く',masu:'聞きます',te:'聞いて',nai:'聞かない',ta:'聞いた',romaji:'kiku',es:'Escuchar',emoji:'👂',group:'く→いて'},
+      {dict:'泳ぐ',masu:'泳ぎます',te:'泳いで',nai:'泳がない',ta:'泳いだ',romaji:'oyogu',es:'Nadar',emoji:'🏊',group:'ぐ→いで'},
+      {dict:'話す',masu:'話します',te:'話して',nai:'話さない',ta:'話した',romaji:'hanasu',es:'Hablar',emoji:'🗣️',group:'す→して'},
+      {dict:'待つ',masu:'待ちます',te:'待って',nai:'待たない',ta:'待った',romaji:'matsu',es:'Esperar',emoji:'⏳',group:'つ→って'},
+      {dict:'死ぬ',masu:'死にます',te:'死んで',nai:'死なない',ta:'死んだ',romaji:'shinu',es:'Morir',emoji:'💀',group:'ぬ→んで'},
+      {dict:'遊ぶ',masu:'遊びます',te:'遊んで',nai:'遊ばない',ta:'遊んだ',romaji:'asobu',es:'Jugar',emoji:'🎮',group:'ぶ→んで'},
+      {dict:'読む',masu:'読みます',te:'読んで',nai:'読まない',ta:'読んだ',romaji:'yomu',es:'Leer',emoji:'📖',group:'む→んで'},
+      {dict:'買う',masu:'買います',te:'買って',nai:'買わない',ta:'買った',romaji:'kau',es:'Comprar',emoji:'🛒',group:'う→って'},
+      {dict:'飲む',masu:'飲みます',te:'飲んで',nai:'飲まない',ta:'飲んだ',romaji:'nomu',es:'Beber',emoji:'🍵',group:'む→んで'},
+      {dict:'行く',masu:'行きます',te:'行って',nai:'行かない',ta:'行った',romaji:'iku',es:'Ir',emoji:'🚶',group:'く→って(特)'},
+      {dict:'帰る',masu:'帰ります',te:'帰って',nai:'帰らない',ta:'帰った',romaji:'kaeru',es:'Volver',emoji:'🏠',group:'る→って'},
+      {dict:'作る',masu:'作ります',te:'作って',nai:'作らない',ta:'作った',romaji:'tsukuru',es:'Hacer/Crear',emoji:'🔨',group:'る→って'},
+      {dict:'乗る',masu:'乗ります',te:'乗って',nai:'乗らない',ta:'乗った',romaji:'noru',es:'Subir/Montar',emoji:'🚌',group:'る→って'},
+      {dict:'歩く',masu:'歩きます',te:'歩いて',nai:'歩かない',ta:'歩いた',romaji:'aruku',es:'Caminar',emoji:'🚶‍♂️',group:'く→いて'},
+      {dict:'持つ',masu:'持ちます',te:'持って',nai:'持たない',ta:'持った',romaji:'motsu',es:'Tener/Llevar',emoji:'🤲',group:'つ→って'},
+      {dict:'座る',masu:'座ります',te:'座って',nai:'座らない',ta:'座った',romaji:'suwaru',es:'Sentarse',emoji:'🪑',group:'る→って'},
+      {dict:'立つ',masu:'立ちます',te:'立って',nai:'立たない',ta:'立った',romaji:'tatsu',es:'Levantarse',emoji:'🧍',group:'つ→って'},
+      {dict:'送る',masu:'送ります',te:'送って',nai:'送らない',ta:'送った',romaji:'okuru',es:'Enviar',emoji:'📨',group:'る→って'},
+      {dict:'使う',masu:'使います',te:'使って',nai:'使わない',ta:'使った',romaji:'tsukau',es:'Usar',emoji:'🛠️',group:'う→って'}
+    ];
+    let html = '<div class="rule-box"><h3>⚡ Verbos Godan (う)</h3><p>La conjugación cambia según la última sílaba. Usa la tabla de reglas:</p></div>';
+    html += '<div class="warning-box"><strong>Reglas de conjugación て形:</strong><br>';
+    html += '• く → いて &nbsp; • ぐ → いで &nbsp; • す → して<br>';
+    html += '• つ/る/う → って &nbsp; • ぬ/ぶ/む → んで<br>';
+    html += '• 例外: 行く → 行って</div>';
+    html += '<div class="table-container"><table>';
+    html += '<tr><th>Diccionario<br><small style="color:#a5b4fc;font-weight:normal">Forma base</small></th><th>ます形<br><small style="color:#a5b4fc;font-weight:normal">Forma cortés</small></th><th>て形<br><small style="color:#a5b4fc;font-weight:normal">Conectar/Pedir</small></th><th>ない形<br><small style="color:#a5b4fc;font-weight:normal">Negativo</small></th><th>Regla<br><small style="color:#a5b4fc;font-weight:normal">Cambio</small></th><th>Romaji<br><small style="color:#a5b4fc;font-weight:normal">Pronunciación</small></th><th>Español<br><small style="color:#a5b4fc;font-weight:normal">Significado</small></th><th>🔊</th></tr>';
+    godanVerbs.forEach(v => {
+      html += '<tr>';
+      html += '<td><strong>' + v.dict + '</strong> ' + v.emoji + '</td>';
+      html += '<td>' + v.masu + '</td><td>' + v.te + '</td><td>' + v.nai + '</td>';
+      html += '<td style="color:#fbbf24;font-size:0.8rem">' + v.group + '</td>';
+      html += '<td style="color:#a5b4fc;font-size:0.85rem">' + v.romaji + '</td>';
+      html += '<td>' + v.es + '</td>';
+      html += '<td><button onclick="speakWord(\'' + v.dict + '\')" style="background:none;border:none;cursor:pointer;font-size:1.2rem">🔊</button></td>';
+      html += '</tr>';
     });
+    html += '</table></div>';
     content.innerHTML = html;
-  } else if(section === 'modal') {
-    content.innerHTML = grammarDB.intermediate.find(g => g.title.includes('Modal')).content;
-  } else {
-    content.innerHTML = `
-      <div class="rule-box">
-        <h3>Verbos Regulares</h3>
-        <p>Los verbos regulares forman su pasado y participio añadiendo <strong>-ED</strong>.</p>
-        <p>Ejemplos: work → worked, play → played, start → started</p>
-      </div>
-      <div class="warning-box">
-        <strong>Reglas de ortografía:</strong>
-        <br>• Verbos que terminan en -e: solo añadir -d (live → lived)
-        <br>• Verbos consonante + y: cambiar y por ied (study → studied)
-        <br>• Verbos CVC cortos: doblar consonante (stop → stopped)
-      </div>
-    `;
+
+  } else if(section === 'irregular') {
+    let html = '<div class="rule-box"><h3>🔗 Verbos Irregulares</h3><p>Solo hay 2 verbos irregulares en japonés: する y 来る. ¡Memorízalos!</p></div>';
+    html += '<div class="table-container"><table>';
+    html += '<tr><th>Diccionario<br><small style="color:#a5b4fc;font-weight:normal">Forma base</small></th><th>ます形<br><small style="color:#a5b4fc;font-weight:normal">Forma cortés</small></th><th>て形<br><small style="color:#a5b4fc;font-weight:normal">Conectar/Pedir</small></th><th>ない形<br><small style="color:#a5b4fc;font-weight:normal">Negativo</small></th><th>た形<br><small style="color:#a5b4fc;font-weight:normal">Pasado</small></th><th>Romaji<br><small style="color:#a5b4fc;font-weight:normal">Pronunciación</small></th><th>Español<br><small style="color:#a5b4fc;font-weight:normal">Significado</small></th><th>🔊</th></tr>';
+    irregularVerbs.forEach(v => {
+      html += '<tr>';
+      html += '<td><strong>' + v.base + '</strong> ' + v.emoji + '</td>';
+      html += '<td>' + v.past + '</td><td>' + v.pp + '</td>';
+      html += '<td>' + (v.nai || '-') + '</td><td>' + (v.ta || '-') + '</td>';
+      html += '<td style="color:#a5b4fc;font-size:0.85rem">' + (v.romaji || '') + '</td>';
+      html += '<td>' + v.es + '</td>';
+      html += '<td><button onclick="speakWord(\'' + v.base + '\')" style="background:none;border:none;cursor:pointer;font-size:1.2rem">🔊</button></td>';
+      html += '</tr>';
+    });
+    html += '</table></div>';
+    content.innerHTML = html;
+    
+  } else if(section === 'teform') {
+    content.innerHTML = '<div class="rule-box"><h3>🎛️ La Forma て - La Más Importante</h3>' +
+      '<p>La forma て conecta acciones, hace peticiones, da permiso y mucho más.</p></div>' +
+      '<div class="table-container"><table>' +
+      '<tr><th>Terminación</th><th>Ejemplo</th><th>Forma て</th><th>Regla</th></tr>' +
+      '<tr><td>る (Ichidan)</td><td>食べる → </td><td>食べ<strong>て</strong></td><td>Quitar る, añadir て</td></tr>' +
+      '<tr><td>う / つ / る</td><td>買う / 待つ / 帰る</td><td>買っ<strong>て</strong> / 待っ<strong>て</strong> / 帰っ<strong>て</strong></td><td>→ って</td></tr>' +
+      '<tr><td>む / ぶ / ぬ</td><td>読む / 遊ぶ / 死ぬ</td><td>読ん<strong>で</strong> / 遊ん<strong>で</strong> / 死ん<strong>で</strong></td><td>→ んで</td></tr>' +
+      '<tr><td>く</td><td>書く</td><td>書い<strong>て</strong></td><td>→ いて</td></tr>' +
+      '<tr><td>ぐ</td><td>泳ぐ</td><td>泳い<strong>で</strong></td><td>→ いで</td></tr>' +
+      '<tr><td>す</td><td>話す</td><td>話し<strong>て</strong></td><td>→ して</td></tr>' +
+      '<tr><td>する</td><td>勉強する</td><td>勉強し<strong>て</strong></td><td>Irregular</td></tr>' +
+      '<tr><td>来る</td><td>来る</td><td>来(き)<strong>て</strong></td><td>Irregular</td></tr>' +
+      '</table></div>' +
+      '<div class="rule-box"><h3>Usos principales de la forma て</h3>' +
+      '<div class="example-box">' +
+      '<div class="example-english">食べ<strong>て</strong>ください → Por favor coma (petición)</div>' +
+      '<div class="example-english">食べ<strong>て</strong>もいいですか？ → ¿Puedo comer? (permiso)</div>' +
+      '<div class="example-english">食べ<strong>て</strong>います → Estoy comiendo (progresivo)</div>' +
+      '<div class="example-english">食べ<strong>て</strong>はいけません → No se puede comer (prohibición)</div>' +
+      '<div class="example-english">食べ<strong>て</strong>から → Después de comer (secuencia)</div>' +
+      '</div></div>';
   }
 }
 
@@ -3177,57 +3488,41 @@ function showTenseSection(section) {
   document.querySelectorAll('#tenses-panel .subtab').forEach(t => t.classList.remove('active'));
   event?.target?.classList.add('active');
   
-  const content = document.getElementById('tenses-content');
-  const tenses = tensesDB[section] || [];
+  const container = document.getElementById('tenses-content');
+  const items = tensesDB[section] || [];
   
-  let html = '<div class="tense-grid">';
-  tenses.forEach((tense, i) => {
+  if(items.length === 0) {
+    container.innerHTML = '<p style="text-align:center;opacity:0.6;padding:2rem;">No hay contenido para esta sección aún.</p>';
+    return;
+  }
+  
+  let html = '<div class="grammar-grid">';
+  items.forEach((item, i) => {
     html += `
-      <div class="tense-card" onclick="showTenseDetail(${i}, '${section}')">
-        <div class="tense-name">${tense.name}</div>
-        <div class="tense-name-es">${tense.nameEs}</div>
-        <div class="tense-example">${tense.examples[0].en}</div>
+      <div class="grammar-card" onclick="showTenseDetail(${i}, '${section}')">
+        <div class="grammar-icon">${item.icon}</div>
+        <div class="grammar-title">${item.title}</div>
       </div>
     `;
   });
   html += '</div>';
-  content.innerHTML = html;
+  container.innerHTML = html;
 }
 
 function showTenseDetail(index, section) {
-  const tense = tensesDB[section][index];
-  const content = document.getElementById('tenses-content');
+  const item = tensesDB[section][index];
+  const container = document.getElementById('tenses-content');
   
-  let examplesHtml = '';
-  tense.examples.forEach(ex => {
-    examplesHtml += `
-      <div class="example-box">
-        <div class="example-english">${ex.en}</div>
-        <div class="example-spanish">${ex.es}</div>
-      </div>
-    `;
-  });
-  
-  content.innerHTML = `
+  container.innerHTML = `
     <div class="section-header">
       <button class="back-btn" onclick="showTenseSection('${section}')">← Volver</button>
-      <h2 class="section-title">${tense.name}</h2>
+      <h2 class="section-title">${item.icon} ${item.title}</h2>
     </div>
     <div class="lesson-text">
-      <div class="rule-box">
-        <strong>📐 Estructura:</strong> ${tense.structure}
-      </div>
-      <div class="rule-box">
-        <strong>🎯 Uso:</strong> ${tense.use}
-      </div>
-      <h3>📝 Ejemplos:</h3>
-      ${examplesHtml}
-      <div class="rule-box">
-        <strong>❌ Negativo:</strong> ${tense.negative}
-      </div>
-      <div class="rule-box">
-        <strong>❓ Pregunta:</strong> ${tense.question}
-      </div>
+      ${item.content}
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <button onclick="speakWord('${item.title.replace(/'/g, "\\'")}')" style="background:linear-gradient(135deg,#dc2626,#991b1b);color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:1rem">🔊 Escuchar pronunciación</button>
     </div>
   `;
 }
@@ -3974,6 +4269,396 @@ function getNaturalVariation() {
 // Alphabet pronunciation map - ensures correct Japanese pronunciation
 const alphabetPronunciation = {};
 
+
+// ============================================
+// WRITING PRACTICE - Draw & Check Characters
+// ============================================
+const writingData = {
+  hiragana: [
+    {char:'あ',romaji:'a',meaning:'vocal A',stroke:3},
+    {char:'い',romaji:'i',meaning:'vocal I',stroke:2},
+    {char:'う',romaji:'u',meaning:'vocal U',stroke:2},
+    {char:'え',romaji:'e',meaning:'vocal E',stroke:2},
+    {char:'お',romaji:'o',meaning:'vocal O',stroke:3},
+    {char:'か',romaji:'ka',meaning:'ka',stroke:3},
+    {char:'き',romaji:'ki',meaning:'ki',stroke:4},
+    {char:'く',romaji:'ku',meaning:'ku',stroke:1},
+    {char:'け',romaji:'ke',meaning:'ke',stroke:3},
+    {char:'こ',romaji:'ko',meaning:'ko',stroke:2},
+    {char:'さ',romaji:'sa',meaning:'sa',stroke:3},
+    {char:'し',romaji:'shi',meaning:'shi',stroke:1},
+    {char:'す',romaji:'su',meaning:'su',stroke:2},
+    {char:'せ',romaji:'se',meaning:'se',stroke:3},
+    {char:'そ',romaji:'so',meaning:'so',stroke:1},
+    {char:'た',romaji:'ta',meaning:'ta',stroke:4},
+    {char:'ち',romaji:'chi',meaning:'chi',stroke:2},
+    {char:'つ',romaji:'tsu',meaning:'tsu',stroke:1},
+    {char:'て',romaji:'te',meaning:'te',stroke:1},
+    {char:'と',romaji:'to',meaning:'to',stroke:2},
+    {char:'な',romaji:'na',meaning:'na',stroke:4},
+    {char:'に',romaji:'ni',meaning:'ni',stroke:3},
+    {char:'ぬ',romaji:'nu',meaning:'nu',stroke:2},
+    {char:'ね',romaji:'ne',meaning:'ne',stroke:2},
+    {char:'の',romaji:'no',meaning:'no',stroke:1},
+    {char:'は',romaji:'ha',meaning:'ha/wa',stroke:3},
+    {char:'ひ',romaji:'hi',meaning:'hi',stroke:1},
+    {char:'ふ',romaji:'fu',meaning:'fu',stroke:4},
+    {char:'へ',romaji:'he',meaning:'he/e',stroke:1},
+    {char:'ほ',romaji:'ho',meaning:'ho',stroke:4},
+    {char:'ま',romaji:'ma',meaning:'ma',stroke:3},
+    {char:'み',romaji:'mi',meaning:'mi',stroke:2},
+    {char:'む',romaji:'mu',meaning:'mu',stroke:3},
+    {char:'め',romaji:'me',meaning:'me',stroke:2},
+    {char:'も',romaji:'mo',meaning:'mo',stroke:3},
+    {char:'や',romaji:'ya',meaning:'ya',stroke:3},
+    {char:'ゆ',romaji:'yu',meaning:'yu',stroke:2},
+    {char:'よ',romaji:'yo',meaning:'yo',stroke:2},
+    {char:'ら',romaji:'ra',meaning:'ra',stroke:2},
+    {char:'り',romaji:'ri',meaning:'ri',stroke:2},
+    {char:'る',romaji:'ru',meaning:'ru',stroke:1},
+    {char:'れ',romaji:'re',meaning:'re',stroke:2},
+    {char:'ろ',romaji:'ro',meaning:'ro',stroke:1},
+    {char:'わ',romaji:'wa',meaning:'wa',stroke:2},
+    {char:'を',romaji:'wo',meaning:'wo(partícula)',stroke:3},
+    {char:'ん',romaji:'n',meaning:'n',stroke:1}
+  ],
+  katakana: [
+    {char:'ア',romaji:'a',meaning:'vocal A',stroke:2},
+    {char:'イ',romaji:'i',meaning:'vocal I',stroke:2},
+    {char:'ウ',romaji:'u',meaning:'vocal U',stroke:3},
+    {char:'エ',romaji:'e',meaning:'vocal E',stroke:3},
+    {char:'オ',romaji:'o',meaning:'vocal O',stroke:3},
+    {char:'カ',romaji:'ka',meaning:'ka',stroke:2},
+    {char:'キ',romaji:'ki',meaning:'ki',stroke:3},
+    {char:'ク',romaji:'ku',meaning:'ku',stroke:2},
+    {char:'ケ',romaji:'ke',meaning:'ke',stroke:3},
+    {char:'コ',romaji:'ko',meaning:'ko',stroke:2},
+    {char:'サ',romaji:'sa',meaning:'sa',stroke:3},
+    {char:'シ',romaji:'shi',meaning:'shi',stroke:3},
+    {char:'ス',romaji:'su',meaning:'su',stroke:2},
+    {char:'セ',romaji:'se',meaning:'se',stroke:2},
+    {char:'ソ',romaji:'so',meaning:'so',stroke:2},
+    {char:'タ',romaji:'ta',meaning:'ta',stroke:3},
+    {char:'チ',romaji:'chi',meaning:'chi',stroke:3},
+    {char:'ツ',romaji:'tsu',meaning:'tsu',stroke:3},
+    {char:'テ',romaji:'te',meaning:'te',stroke:3},
+    {char:'ト',romaji:'to',meaning:'to',stroke:2},
+    {char:'ナ',romaji:'na',meaning:'na',stroke:2},
+    {char:'ニ',romaji:'ni',meaning:'ni',stroke:2},
+    {char:'ヌ',romaji:'nu',meaning:'nu',stroke:2},
+    {char:'ネ',romaji:'ne',meaning:'ne',stroke:4},
+    {char:'ノ',romaji:'no',meaning:'no',stroke:1},
+    {char:'ハ',romaji:'ha',meaning:'ha',stroke:2},
+    {char:'ヒ',romaji:'hi',meaning:'hi',stroke:2},
+    {char:'フ',romaji:'fu',meaning:'fu',stroke:1},
+    {char:'ヘ',romaji:'he',meaning:'he',stroke:1},
+    {char:'ホ',romaji:'ho',meaning:'ho',stroke:4},
+    {char:'マ',romaji:'ma',meaning:'ma',stroke:2},
+    {char:'ミ',romaji:'mi',meaning:'mi',stroke:3},
+    {char:'ム',romaji:'mu',meaning:'mu',stroke:2},
+    {char:'メ',romaji:'me',meaning:'me',stroke:2},
+    {char:'モ',romaji:'mo',meaning:'mo',stroke:3},
+    {char:'ヤ',romaji:'ya',meaning:'ya',stroke:2},
+    {char:'ユ',romaji:'yu',meaning:'yu',stroke:2},
+    {char:'ヨ',romaji:'yo',meaning:'yo',stroke:3},
+    {char:'ラ',romaji:'ra',meaning:'ra',stroke:2},
+    {char:'リ',romaji:'ri',meaning:'ri',stroke:2},
+    {char:'ル',romaji:'ru',meaning:'ru',stroke:2},
+    {char:'レ',romaji:'re',meaning:'re',stroke:1},
+    {char:'ロ',romaji:'ro',meaning:'ro',stroke:3},
+    {char:'ワ',romaji:'wa',meaning:'wa',stroke:2},
+    {char:'ヲ',romaji:'wo',meaning:'wo',stroke:3},
+    {char:'ン',romaji:'n',meaning:'n',stroke:2}
+  ],
+  kanji: [
+    {char:'一',romaji:'ichi',meaning:'Uno',stroke:1},
+    {char:'二',romaji:'ni',meaning:'Dos',stroke:2},
+    {char:'三',romaji:'san',meaning:'Tres',stroke:3},
+    {char:'四',romaji:'shi/yon',meaning:'Cuatro',stroke:5},
+    {char:'五',romaji:'go',meaning:'Cinco',stroke:4},
+    {char:'六',romaji:'roku',meaning:'Seis',stroke:4},
+    {char:'七',romaji:'shichi/nana',meaning:'Siete',stroke:2},
+    {char:'八',romaji:'hachi',meaning:'Ocho',stroke:2},
+    {char:'九',romaji:'kyuu/ku',meaning:'Nueve',stroke:2},
+    {char:'十',romaji:'juu',meaning:'Diez',stroke:2},
+    {char:'日',romaji:'nichi/hi',meaning:'Día/Sol',stroke:4},
+    {char:'月',romaji:'getsu/tsuki',meaning:'Mes/Luna',stroke:4},
+    {char:'火',romaji:'ka/hi',meaning:'Fuego',stroke:4},
+    {char:'水',romaji:'sui/mizu',meaning:'Agua',stroke:4},
+    {char:'木',romaji:'moku/ki',meaning:'Árbol',stroke:4},
+    {char:'金',romaji:'kin/kane',meaning:'Oro/Dinero',stroke:8},
+    {char:'土',romaji:'do/tsuchi',meaning:'Tierra',stroke:3},
+    {char:'人',romaji:'jin/hito',meaning:'Persona',stroke:2},
+    {char:'大',romaji:'dai/ookii',meaning:'Grande',stroke:3},
+    {char:'小',romaji:'shou/chiisai',meaning:'Pequeño',stroke:3},
+    {char:'山',romaji:'san/yama',meaning:'Montaña',stroke:3},
+    {char:'川',romaji:'sen/kawa',meaning:'Río',stroke:3},
+    {char:'口',romaji:'kou/kuchi',meaning:'Boca',stroke:3},
+    {char:'目',romaji:'moku/me',meaning:'Ojo',stroke:5},
+    {char:'手',romaji:'shu/te',meaning:'Mano',stroke:4}
+  ]
+};
+
+let currentWritingSet = 'hiragana';
+let currentWritingIndex = 0;
+let writingScore = 0;
+let writingCanvas, writingCtx;
+let isDrawing = false;
+let hasDrawn = false;
+
+function startWritingPractice(set) {
+  currentWritingSet = set;
+  currentWritingIndex = 0;
+  writingScore = 0;
+  document.querySelectorAll('#writing-panel .subtab').forEach(t => t.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+  renderWritingChallenge();
+}
+
+function renderWritingChallenge() {
+  const data = writingData[currentWritingSet];
+  if(currentWritingIndex >= data.length) {
+    showWritingResults();
+    return;
+  }
+  const item = data[currentWritingIndex];
+  const container = document.getElementById('writing-content');
+  
+  container.innerHTML = `
+    <div style="max-width:500px;margin:0 auto;padding:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+        <span style="color:#94a3b8;font-size:0.9rem;">${currentWritingIndex + 1} / ${data.length}</span>
+        <span style="color:#22c55e;font-weight:700;">✅ ${writingScore} correctos</span>
+      </div>
+      
+      <div style="text-align:center;margin-bottom:1rem;">
+        <div style="font-size:0.9rem;color:#94a3b8;margin-bottom:4px;">Escribe este carácter:</div>
+        <div style="font-size:4rem;font-weight:700;line-height:1.2;" id="targetChar">${item.char}</div>
+        <div style="font-size:1.2rem;color:#a5b4fc;font-weight:600;">${item.romaji}</div>
+        <div style="font-size:0.9rem;color:#94a3b8;">${item.meaning} • ${item.stroke} trazos</div>
+        <button class="speak-btn" onclick="speakWord('${item.char}')" style="font-size:1.5rem;margin-top:4px;">🔊</button>
+      </div>
+      
+      <div style="position:relative;margin:0 auto;width:280px;height:280px;">
+        <canvas id="writingCanvas" width="280" height="280" 
+          style="border:2px solid rgba(255,255,255,0.2);border-radius:16px;background:rgba(0,0,0,0.3);cursor:crosshair;touch-action:none;"></canvas>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10rem;opacity:0.06;pointer-events:none;font-weight:700;" id="ghostChar">${item.char}</div>
+        <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:100%;background:rgba(255,255,255,0.05);pointer-events:none;"></div>
+        <div style="position:absolute;top:50%;left:0;transform:translateY(-50%);width:100%;height:1px;background:rgba(255,255,255,0.05);pointer-events:none;"></div>
+      </div>
+      
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:1rem;flex-wrap:wrap;">
+        <button onclick="clearWritingCanvas()" style="padding:10px 20px;border:none;border-radius:10px;background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size:0.95rem;">🗑️ Borrar</button>
+        <button onclick="toggleGhost()" style="padding:10px 20px;border:none;border-radius:10px;background:rgba(255,255,255,0.1);color:white;cursor:pointer;font-size:0.95rem;" id="ghostBtn">👻 Mostrar guía</button>
+        <button onclick="checkWriting()" style="padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#dc2626,#991b1b);color:white;cursor:pointer;font-weight:700;font-size:0.95rem;">✅ Verificar</button>
+      </div>
+      
+      <div id="writingResult" style="text-align:center;margin-top:1rem;min-height:60px;"></div>
+      
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:0.5rem;" id="writingNav" style="display:none;">
+        <button onclick="currentWritingIndex++;renderWritingChallenge();" style="padding:10px 24px;border:none;border-radius:10px;background:linear-gradient(135deg,#059669,#047857);color:white;cursor:pointer;font-weight:700;font-size:1rem;display:none;" id="nextCharBtn">Siguiente →</button>
+      </div>
+      
+      <div style="margin-top:1.5rem;background:rgba(255,255,255,0.05);border-radius:12px;padding:1rem;">
+        <div style="font-weight:700;margin-bottom:0.5rem;">📊 Progreso</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:12px;overflow:hidden;">
+          <div style="background:linear-gradient(90deg,#22c55e,#16a34a);height:100%;width:${((currentWritingIndex) / data.length * 100)}%;transition:width 0.5s;border-radius:8px;"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.8rem;color:#94a3b8;">
+          <span>${currentWritingIndex} de ${data.length}</span>
+          <span>${writingScore > 0 ? Math.round(writingScore/currentWritingIndex*100) : 0}% acierto</span>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  initWritingCanvas();
+}
+
+function initWritingCanvas() {
+  writingCanvas = document.getElementById('writingCanvas');
+  writingCtx = writingCanvas.getContext('2d');
+  hasDrawn = false;
+  
+  writingCtx.strokeStyle = '#ffffff';
+  writingCtx.lineWidth = 6;
+  writingCtx.lineCap = 'round';
+  writingCtx.lineJoin = 'round';
+  
+  function getPos(e) {
+    const rect = writingCanvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+  
+  function startDraw(e) {
+    e.preventDefault();
+    isDrawing = true;
+    hasDrawn = true;
+    const pos = getPos(e);
+    writingCtx.beginPath();
+    writingCtx.moveTo(pos.x, pos.y);
+  }
+  
+  function draw(e) {
+    e.preventDefault();
+    if (!isDrawing) return;
+    const pos = getPos(e);
+    writingCtx.lineTo(pos.x, pos.y);
+    writingCtx.stroke();
+  }
+  
+  function stopDraw(e) {
+    if(e) e.preventDefault();
+    isDrawing = false;
+  }
+  
+  writingCanvas.addEventListener('mousedown', startDraw);
+  writingCanvas.addEventListener('mousemove', draw);
+  writingCanvas.addEventListener('mouseup', stopDraw);
+  writingCanvas.addEventListener('mouseleave', stopDraw);
+  writingCanvas.addEventListener('touchstart', startDraw, {passive:false});
+  writingCanvas.addEventListener('touchmove', draw, {passive:false});
+  writingCanvas.addEventListener('touchend', stopDraw, {passive:false});
+}
+
+function clearWritingCanvas() {
+  if(writingCtx) {
+    writingCtx.clearRect(0, 0, 280, 280);
+    hasDrawn = false;
+  }
+  var result = document.getElementById('writingResult');
+  if(result) result.innerHTML = '';
+  var nextBtn = document.getElementById('nextCharBtn');
+  if(nextBtn) nextBtn.style.display = 'none';
+}
+
+function toggleGhost() {
+  var ghost = document.getElementById('ghostChar');
+  var btn = document.getElementById('ghostBtn');
+  if(ghost) {
+    if(ghost.style.opacity === '0') {
+      ghost.style.opacity = '0.08';
+      btn.textContent = '👻 Ocultar guía';
+    } else {
+      ghost.style.opacity = '0';
+      btn.textContent = '👻 Mostrar guía';
+    }
+  }
+}
+
+function checkWriting() {
+  if(!hasDrawn) {
+    document.getElementById('writingResult').innerHTML = '<div style="color:#f59e0b;font-weight:600;">⚠️ ¡Dibuja algo primero!</div>';
+    return;
+  }
+  
+  const data = writingData[currentWritingSet];
+  const item = data[currentWritingIndex];
+  
+  // Create reference canvas with the correct character
+  const refCanvas = document.createElement('canvas');
+  refCanvas.width = 280;
+  refCanvas.height = 280;
+  const refCtx = refCanvas.getContext('2d');
+  refCtx.fillStyle = 'white';
+  refCtx.font = 'bold 200px sans-serif';
+  refCtx.textAlign = 'center';
+  refCtx.textBaseline = 'middle';
+  refCtx.fillText(item.char, 140, 150);
+  
+  // Get pixel data from both canvases
+  const refData = refCtx.getImageData(0, 0, 280, 280).data;
+  const userImgData = writingCtx.getImageData(0, 0, 280, 280).data;
+  
+  // Analyze similarity by dividing into grid cells
+  const gridSize = 7;
+  const cellW = 280 / gridSize;
+  const cellH = 280 / gridSize;
+  let matchCells = 0;
+  let totalActiveCells = 0;
+  let userExtraCells = 0;
+  
+  for(let gy = 0; gy < gridSize; gy++) {
+    for(let gx = 0; gx < gridSize; gx++) {
+      let refPixels = 0, userPixels = 0;
+      for(let y = Math.floor(gy*cellH); y < Math.floor((gy+1)*cellH); y++) {
+        for(let x = Math.floor(gx*cellW); x < Math.floor((gx+1)*cellW); x++) {
+          const idx = (y * 280 + x) * 4;
+          if(refData[idx+3] > 50) refPixels++;
+          if(userImgData[idx+3] > 50) userPixels++;
+        }
+      }
+      const refHas = refPixels > 20;
+      const userHas = userPixels > 15;
+      if(refHas) {
+        totalActiveCells++;
+        if(userHas) matchCells++;
+      }
+      if(userHas && !refHas) userExtraCells++;
+    }
+  }
+  
+  // Calculate score
+  let coverage = totalActiveCells > 0 ? matchCells / totalActiveCells : 0;
+  let penalty = userExtraCells / (gridSize * gridSize);
+  let score = Math.max(0, Math.min(10, Math.round((coverage * 10) - (penalty * 3))));
+  
+  // Determine result
+  const result = document.getElementById('writingResult');
+  const nextBtn = document.getElementById('nextCharBtn');
+  
+  if(score >= 6) {
+    writingScore++;
+    result.innerHTML = `
+      <div style="background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:12px;">
+        <div style="font-size:2rem;">✅</div>
+        <div style="color:#22c55e;font-weight:700;font-size:1.1rem;">¡Correcto! Puntuación: ${score}/10</div>
+        <div style="color:#94a3b8;font-size:0.85rem;margin-top:4px;">「${item.char}」= ${item.romaji} (${item.meaning})</div>
+      </div>`;
+    nextBtn.style.display = 'inline-block';
+    speakWord(item.char);
+  } else {
+    result.innerHTML = `
+      <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:12px;padding:12px;">
+        <div style="font-size:2rem;">❌</div>
+        <div style="color:#ef4444;font-weight:700;font-size:1.1rem;">Intenta de nuevo (${score}/10)</div>
+        <div style="color:#94a3b8;font-size:0.85rem;margin-top:4px;">Necesitas 6/10 para aprobar. Mira la forma de 「${item.char}」</div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+          <button onclick="clearWritingCanvas()" style="padding:8px 16px;border:none;border-radius:8px;background:rgba(255,255,255,0.1);color:white;cursor:pointer;">🗑️ Reintentar</button>
+          <button onclick="currentWritingIndex++;renderWritingChallenge();" style="padding:8px 16px;border:none;border-radius:8px;background:rgba(255,255,255,0.1);color:white;cursor:pointer;">⏭️ Saltar</button>
+        </div>
+      </div>`;
+  }
+}
+
+function showWritingResults() {
+  const data = writingData[currentWritingSet];
+  const total = data.length;
+  const pct = Math.round(writingScore / total * 100);
+  const container = document.getElementById('writing-content');
+  
+  let stars = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : pct >= 50 ? '⭐' : '';
+  let msg = pct >= 90 ? '¡Excelente! ¡Dominas la escritura!' : 
+            pct >= 70 ? '¡Muy bien! Sigue practicando.' :
+            pct >= 50 ? 'Buen intento. Practica más.' : 'No te rindas. ¡Practica todos los días!';
+  
+  container.innerHTML = `
+    <div style="max-width:400px;margin:2rem auto;text-align:center;padding:2rem;background:linear-gradient(135deg,rgba(220,38,38,0.1),rgba(139,92,246,0.1));border-radius:20px;">
+      <div style="font-size:4rem;margin-bottom:1rem;">${pct >= 70 ? '🎉' : '📝'}</div>
+      <h3 style="margin-bottom:0.5rem;">Resultado: ${writingScore} / ${total}</h3>
+      <div style="font-size:2rem;margin-bottom:0.5rem;">${pct}%</div>
+      <div style="font-size:1.5rem;margin-bottom:1rem;">${stars}</div>
+      <p style="color:#94a3b8;margin-bottom:1.5rem;">${msg}</p>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <button onclick="startWritingPractice('${currentWritingSet}')" style="padding:12px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#dc2626,#991b1b);color:white;cursor:pointer;font-weight:700;">🔄 Repetir</button>
+        <button onclick="showPanel('writing')" style="padding:12px 24px;border:none;border-radius:12px;background:rgba(255,255,255,0.1);color:white;cursor:pointer;">📋 Otro set</button>
+      </div>
+    </div>
+  `;
+}
+
 function speakWord(text) {
   if(!('speechSynthesis' in window)) return;
   
@@ -4338,7 +5023,7 @@ function checkLocalTrialStatus() {
 // ============================================
 
 // FREE content (always available without trial/premium)
-const FREE_VOCAB_CATEGORIES = ['hiragana_basic', 'numbers', 'colors', 'greetings', 'katakana_words', 'daily_routines'];
+const FREE_VOCAB_CATEGORIES = ['hiragana_basic', 'numbers', 'colors', 'greetings', 'katakana_words', 'daily_routines', 'food', 'animals', 'family', 'time', 'verbs_basic', 'verbs_daily', 'house', 'bodyParts', 'places', 'adjectives', 'emotions', 'nature', 'transport', 'school'];
 const FREE_PANELS = ['vocabulary', 'practice']; // Basic panels always accessible
 
 function isContentFree(panelId, categoryKey) {
@@ -6325,7 +7010,7 @@ function speakConversation() {
       if (btn) btn.innerHTML = '🔊 Escuchar conversación';
       return;
     }
-    var text = lines[idx].textContent.trim();
+    var text = lines[idx].getAttribute('data-speech') || lines[idx].textContent.replace('🔊','').trim();
     if (!text) { idx++; speakNext(); return; }
     // Highlight current line
     lines.forEach(function(l) { l.style.background = ''; });
